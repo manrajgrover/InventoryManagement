@@ -15,32 +15,34 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 @Entity
 @Table(name = "history", catalog = "inventory")
 public class History implements java.io.Serializable {
 
 	private Integer id;
-	private Items items;
+	private Item item;
 	private Product product;
 	private User user;
+	private String userName;
 	private Date issueTimestamp;
 	private Date returnTimestamp;
 
 	public History() {
 	}
 
-	public History(Items items, Product product, User user, Date issueTimestamp) {
-		this.items = items;
+	public History(Item item, Product product, User user, String userName, Date issueTimestamp) {
+		this.item = item;
 		this.product = product;
 		this.user = user;
+		this.userName = userName;
 		this.issueTimestamp = issueTimestamp;
 	}
 
-	public History(Items items, Product product, User user, Date issueTimestamp, Date returnTimestamp) {
-		this.items = items;
+	public History(Item item, Product product, User user, String userName, Date issueTimestamp, Date returnTimestamp) {
+		this.item = item;
 		this.product = product;
 		this.user = user;
+		this.userName = userName;
 		this.issueTimestamp = issueTimestamp;
 		this.returnTimestamp = returnTimestamp;
 	}
@@ -58,12 +60,12 @@ public class History implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "item_id", nullable = false)
-	public Items getItems() {
-		return this.items;
+	public Item getItem() {
+		return this.item;
 	}
 
-	public void setItems(Items items) {
-		this.items = items;
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -86,6 +88,15 @@ public class History implements java.io.Serializable {
 		this.user = user;
 	}
 
+	@Column(name = "user_name", nullable = false, length = 50)
+	public String getUserName() {
+		return this.userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "issue_timestamp", nullable = false, length = 19)
 	public Date getIssueTimestamp() {
@@ -105,4 +116,5 @@ public class History implements java.io.Serializable {
 	public void setReturnTimestamp(Date returnTimestamp) {
 		this.returnTimestamp = returnTimestamp;
 	}
+
 }

@@ -14,26 +14,30 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Version;
-
 
 @Entity
 @Table(name = "request", catalog = "inventory")
 public class Request implements java.io.Serializable {
 
 	private Integer id;
-	private Date timestamp;
 	private Product product;
 	private User user;
 	private String reply;
+	private Date modifiedTimestamp;
+	private Date createdTimestamp;
+	private boolean status;
 
 	public Request() {
 	}
 
-	public Request(Product product, User user, String reply) {
+	public Request(Product product, User user, String reply, Date modifiedTimestamp, Date createdTimestamp,
+			boolean status) {
 		this.product = product;
 		this.user = user;
 		this.reply = reply;
+		this.modifiedTimestamp = modifiedTimestamp;
+		this.createdTimestamp = createdTimestamp;
+		this.status = status;
 	}
 
 	@Id
@@ -45,16 +49,6 @@ public class Request implements java.io.Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	@Version@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "timestamp", nullable = false, length = 19)
-	public Date getTimestamp() {
-		return this.timestamp;
-	}
-
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -85,4 +79,34 @@ public class Request implements java.io.Serializable {
 	public void setReply(String reply) {
 		this.reply = reply;
 	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "modified_timestamp", nullable = false, length = 19)
+	public Date getModifiedTimestamp() {
+		return this.modifiedTimestamp;
+	}
+
+	public void setModifiedTimestamp(Date modifiedTimestamp) {
+		this.modifiedTimestamp = modifiedTimestamp;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_timestamp", nullable = false, length = 19)
+	public Date getCreatedTimestamp() {
+		return this.createdTimestamp;
+	}
+
+	public void setCreatedTimestamp(Date createdTimestamp) {
+		this.createdTimestamp = createdTimestamp;
+	}
+
+	@Column(name = "status", nullable = false)
+	public boolean isStatus() {
+		return this.status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
 }

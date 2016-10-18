@@ -1,13 +1,15 @@
 package in.manrajsingh.entities;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -23,26 +25,31 @@ public class Product implements java.io.Serializable {
 	private String version;
 	private String name;
 	private String company;
-	private Date timestamp;
-	private Set<Items> itemses = new HashSet<Items>(0);
+	private Date createTimestamp;
+	private Date modifiedTimestamp;
+	private Date removedTimestamp;
+	private Set<Item> items = new HashSet<Item>(0);
 	private Set<History> histories = new HashSet<History>(0);
 	private Set<Request> requests = new HashSet<Request>(0);
 
 	public Product() {
 	}
 
-	public Product(String name, String company, Date timestamp) {
+	public Product(String name, String company, Date createTimestamp, Date modifiedTimestamp) {
 		this.name = name;
 		this.company = company;
-		this.timestamp = timestamp;
+		this.createTimestamp = createTimestamp;
+		this.modifiedTimestamp = modifiedTimestamp;
 	}
 
-	public Product(String name, String company, Date timestamp, Set<Items> itemses, Set<History> histories,
-			Set<Request> requests) {
+	public Product(String name, String company, Date createTimestamp, Date modifiedTimestamp, Date removedTimestamp,
+			Set<Item> items, Set<History> histories, Set<Request> requests) {
 		this.name = name;
 		this.company = company;
-		this.timestamp = timestamp;
-		this.itemses = itemses;
+		this.createTimestamp = createTimestamp;
+		this.modifiedTimestamp = modifiedTimestamp;
+		this.removedTimestamp = removedTimestamp;
+		this.items = items;
 		this.histories = histories;
 		this.requests = requests;
 	}
@@ -86,22 +93,42 @@ public class Product implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "timestamp", nullable = false, length = 19)
-	public Date getTimestamp() {
-		return this.timestamp;
+	@Column(name = "create_timestamp", nullable = false, length = 19)
+	public Date getCreateTimestamp() {
+		return this.createTimestamp;
 	}
 
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
+	public void setCreateTimestamp(Date createTimestamp) {
+		this.createTimestamp = createTimestamp;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "modified_timestamp", nullable = false, length = 19)
+	public Date getModifiedTimestamp() {
+		return this.modifiedTimestamp;
+	}
+
+	public void setModifiedTimestamp(Date modifiedTimestamp) {
+		this.modifiedTimestamp = modifiedTimestamp;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "removed_timestamp", length = 19)
+	public Date getRemovedTimestamp() {
+		return this.removedTimestamp;
+	}
+
+	public void setRemovedTimestamp(Date removedTimestamp) {
+		this.removedTimestamp = removedTimestamp;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-	public Set<Items> getItemses() {
-		return this.itemses;
+	public Set<Item> getItems() {
+		return this.items;
 	}
 
-	public void setItemses(Set<Items> itemses) {
-		this.itemses = itemses;
+	public void setItems(Set<Item> items) {
+		this.items = items;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
@@ -121,4 +148,5 @@ public class Product implements java.io.Serializable {
 	public void setRequests(Set<Request> requests) {
 		this.requests = requests;
 	}
+
 }

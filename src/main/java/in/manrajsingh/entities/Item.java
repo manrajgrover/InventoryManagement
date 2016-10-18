@@ -20,30 +20,37 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "items", catalog = "inventory", uniqueConstraints = @UniqueConstraint(columnNames = "tag"))
-public class Items implements java.io.Serializable {
+@Table(name = "item", catalog = "inventory", uniqueConstraints = @UniqueConstraint(columnNames = "tag"))
+public class Item implements java.io.Serializable {
 
 	private Integer id;
 	private Product product;
 	private String tag;
-	private Date buyTimestamp;
+	private Date createTimestamp;
 	private String available;
+	private Date modifiedTimestamp;
+	private Date removedTimestamp;
 	private Set<History> histories = new HashSet<History>(0);
 
-	public Items() {
+	public Item() {
 	}
 
-	public Items(Product product, String tag, String available) {
+	public Item(Product product, String tag, Date createTimestamp, String available, Date modifiedTimestamp) {
 		this.product = product;
 		this.tag = tag;
+		this.createTimestamp = createTimestamp;
 		this.available = available;
+		this.modifiedTimestamp = modifiedTimestamp;
 	}
 
-	public Items(Product product, String tag, Date buyTimestamp, String available, Set<History> histories) {
+	public Item(Product product, String tag, Date createTimestamp, String available, Date modifiedTimestamp,
+			Date removedTimestamp, Set<History> histories) {
 		this.product = product;
 		this.tag = tag;
-		this.buyTimestamp = buyTimestamp;
+		this.createTimestamp = createTimestamp;
 		this.available = available;
+		this.modifiedTimestamp = modifiedTimestamp;
+		this.removedTimestamp = removedTimestamp;
 		this.histories = histories;
 	}
 
@@ -78,13 +85,13 @@ public class Items implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "buy_timestamp", length = 19)
-	public Date getBuyTimestamp() {
-		return this.buyTimestamp;
+	@Column(name = "create_timestamp", nullable = false, length = 19)
+	public Date getCreateTimestamp() {
+		return this.createTimestamp;
 	}
 
-	public void setBuyTimestamp(Date buyTimestamp) {
-		this.buyTimestamp = buyTimestamp;
+	public void setCreateTimestamp(Date createTimestamp) {
+		this.createTimestamp = createTimestamp;
 	}
 
 	@Column(name = "available", nullable = false, length = 50)
@@ -96,7 +103,27 @@ public class Items implements java.io.Serializable {
 		this.available = available;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "items")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "modified_timestamp", nullable = false, length = 19)
+	public Date getModifiedTimestamp() {
+		return this.modifiedTimestamp;
+	}
+
+	public void setModifiedTimestamp(Date modifiedTimestamp) {
+		this.modifiedTimestamp = modifiedTimestamp;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "removed_timestamp", length = 19)
+	public Date getRemovedTimestamp() {
+		return this.removedTimestamp;
+	}
+
+	public void setRemovedTimestamp(Date removedTimestamp) {
+		this.removedTimestamp = removedTimestamp;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
 	public Set<History> getHistories() {
 		return this.histories;
 	}
@@ -104,4 +131,5 @@ public class Items implements java.io.Serializable {
 	public void setHistories(Set<History> histories) {
 		this.histories = histories;
 	}
+
 }

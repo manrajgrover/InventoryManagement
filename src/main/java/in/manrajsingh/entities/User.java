@@ -15,35 +15,48 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Version;
 
 @Entity
 @Table(name = "user", catalog = "inventory")
 public class User implements java.io.Serializable {
+
 	private Integer id;
-	private Date timestamp;
 	private String name;
 	private String email;
 	private String contact;
-	private Set<UserRoles> userRoleses = new HashSet<UserRoles>(0);
+	private Date createdTimestamp;
+	private Date modifiedTimestamp;
+	private Date removedTimestamp;
+	private Set<UserRole> userRoles = new HashSet<UserRole>(0);
 	private Set<History> histories = new HashSet<History>(0);
 	private Set<Request> requests = new HashSet<Request>(0);
 
 	public User() {
 	}
-
+	
 	public User(String name, String email, String contact) {
 		this.name = name;
 		this.email = email;
 		this.contact = contact;
 	}
 
-	public User(String name, String email, String contact, Set<UserRoles> userRoleses, Set<History> histories,
-			Set<Request> requests) {
+	public User(String name, String email, String contact, Date createdTimestamp, Date modifiedTimestamp) {
 		this.name = name;
 		this.email = email;
 		this.contact = contact;
-		this.userRoleses = userRoleses;
+		this.createdTimestamp = createdTimestamp;
+		this.modifiedTimestamp = modifiedTimestamp;
+	}
+
+	public User(String name, String email, String contact, Date createdTimestamp, Date modifiedTimestamp,
+			Date removedTimestamp, Set<UserRole> userRoles, Set<History> histories, Set<Request> requests) {
+		this.name = name;
+		this.email = email;
+		this.contact = contact;
+		this.createdTimestamp = createdTimestamp;
+		this.modifiedTimestamp = modifiedTimestamp;
+		this.removedTimestamp = removedTimestamp;
+		this.userRoles = userRoles;
 		this.histories = histories;
 		this.requests = requests;
 	}
@@ -57,16 +70,6 @@ public class User implements java.io.Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	@Version@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "timestamp", nullable = false, length = 19)
-	public Date getTimestamp() {
-		return this.timestamp;
-	}
-
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
 	}
 
 	@Column(name = "name", nullable = false, length = 50)
@@ -96,13 +99,43 @@ public class User implements java.io.Serializable {
 		this.contact = contact;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	public Set<UserRoles> getUserRoleses() {
-		return this.userRoleses;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_timestamp", nullable = false, length = 19)
+	public Date getCreatedTimestamp() {
+		return this.createdTimestamp;
 	}
 
-	public void setUserRoleses(Set<UserRoles> userRoleses) {
-		this.userRoleses = userRoleses;
+	public void setCreatedTimestamp(Date createdTimestamp) {
+		this.createdTimestamp = createdTimestamp;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "modified_timestamp", nullable = false, length = 19)
+	public Date getModifiedTimestamp() {
+		return this.modifiedTimestamp;
+	}
+
+	public void setModifiedTimestamp(Date modifiedTimestamp) {
+		this.modifiedTimestamp = modifiedTimestamp;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "removed_timestamp", length = 19)
+	public Date getRemovedTimestamp() {
+		return this.removedTimestamp;
+	}
+
+	public void setRemovedTimestamp(Date removedTimestamp) {
+		this.removedTimestamp = removedTimestamp;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<UserRole> getUserRoles() {
+		return this.userRoles;
+	}
+
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
@@ -122,4 +155,5 @@ public class User implements java.io.Serializable {
 	public void setRequests(Set<Request> requests) {
 		this.requests = requests;
 	}
+
 }
