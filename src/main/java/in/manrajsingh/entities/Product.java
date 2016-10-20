@@ -12,13 +12,17 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.SQLDelete;
+
 @Entity
 @Table(name = "product", catalog = "inventory")
+@SQLDelete(sql = "UPDATE product SET removed_timestamp = NOW() WHERE id = ?")
 public class Product implements java.io.Serializable {
 
 	private Integer id;
@@ -31,8 +35,23 @@ public class Product implements java.io.Serializable {
 	private Set<Item> items = new HashSet<Item>(0);
 	private Set<History> histories = new HashSet<History>(0);
 	private Set<Request> requests = new HashSet<Request>(0);
+	
+	@PreUpdate
+	public void setModifiedTimestamp() {
+		this.modifiedTimestamp = new Date();
+	}
 
 	public Product() {
+	}
+	
+	public Product(int id) {
+		this.id = id;
+	}
+	
+	public Product(String name, String company, String version) {
+		this.name = name;
+		this.company = company;
+		this.version = version;
 	}
 
 	public Product(String name, String company, Date createTimestamp, Date modifiedTimestamp) {
@@ -103,7 +122,7 @@ public class Product implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "modified_timestamp", nullable = false, length = 19)
+	@Column(name = "modified_timestamp", nullable = false, updatable=false, length = 19)
 	public Date getModifiedTimestamp() {
 		return this.modifiedTimestamp;
 	}
@@ -122,7 +141,7 @@ public class Product implements java.io.Serializable {
 		this.removedTimestamp = removedTimestamp;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
 	public Set<Item> getItems() {
 		return this.items;
 	}
