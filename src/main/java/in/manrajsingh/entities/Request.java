@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 @Table(name = "request", catalog = "inventory")
 public class Request implements java.io.Serializable {
 
-	private Integer id;
+	private int id;
 	private Product product;
 	private User user;
 	private String reply;
@@ -28,6 +28,13 @@ public class Request implements java.io.Serializable {
 	private boolean status;
 
 	public Request() {
+	}
+	
+	public Request(User user, Product product, String reply, boolean status) {
+		this.user = user;
+		this.product = product;
+		this.reply = reply;
+		this.status = status;
 	}
 
 	public Request(Product product, User user, String reply, Date modifiedTimestamp, Date createdTimestamp,
@@ -51,7 +58,7 @@ public class Request implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id", nullable = false)
 	public Product getProduct() {
 		return this.product;
@@ -61,7 +68,7 @@ public class Request implements java.io.Serializable {
 		this.product = product;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", nullable = false)
 	public User getUser() {
 		return this.user;
@@ -81,7 +88,7 @@ public class Request implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "modified_timestamp", nullable = false, length = 19)
+	@Column(name = "modified_timestamp", nullable = false, updatable = false, length = 19)
 	public Date getModifiedTimestamp() {
 		return this.modifiedTimestamp;
 	}
