@@ -16,8 +16,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.SQLDelete;
+
 @Entity
 @Table(name = "user", catalog = "inventory")
+@SQLDelete(sql = "UPDATE user SET removed_timestamp = NOW() WHERE id = ?")
 public class User implements java.io.Serializable {
 
 	private Integer id;
@@ -32,6 +35,10 @@ public class User implements java.io.Serializable {
 	private Set<Request> requests = new HashSet<Request>(0);
 
 	public User() {
+	}
+	
+	public User(int id) {
+		this.id = id;
 	}
 	
 	public User(String name, String email, String contact) {
@@ -110,7 +117,7 @@ public class User implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "modified_timestamp", nullable = false, length = 19)
+	@Column(name = "modified_timestamp", nullable = false, updatable = false, length = 19)
 	public Date getModifiedTimestamp() {
 		return this.modifiedTimestamp;
 	}

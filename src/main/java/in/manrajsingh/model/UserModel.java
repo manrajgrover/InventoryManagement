@@ -7,14 +7,22 @@ import in.manrajsingh.entities.User;
 public class UserModel {
 
 	private int id;	
+	@JsonInclude(JsonInclude.Include.NON_NULL) 
 	private String name;
+	@JsonInclude(JsonInclude.Include.NON_NULL) 
 	private String email;
+	@JsonInclude(JsonInclude.Include.NON_NULL) 
 	private String contact;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL) 
 	private String message;
 	
 	public UserModel() { }
+	
+	public UserModel(int id, String message) {
+		this.id = id;
+		this.message = message;
+	}
 	
 	public UserModel(User user) {
 		this.id = user.getId();

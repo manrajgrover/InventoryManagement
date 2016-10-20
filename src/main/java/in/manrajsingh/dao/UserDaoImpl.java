@@ -28,30 +28,23 @@ public class UserDaoImpl implements UserDaoInterface {
 	
 	@Override
 	public void delete(User user) {
+		System.out.println("PLEASE WORK "+user.getId());
 		getSession().delete(user);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getAll() {
-		return getSession().createQuery("from User").list();
-	}
-	
-	@Override
-	public User getByEmail(String email) {
-		return (User) getSession()
-				.createQuery("from User where email=:email")
-				.setParameter("email", email)
-				.uniqueResult();
-	}
-	
-	@Override
-	public User getId(int id) {
-		return (User) getSession().load(User.class, id);
+		return getSession().createCriteria(User.class).list();
 	}
 	
 	@Override
 	public void update(User user) {
 		getSession().update(user);
+	}
+
+	@Override
+	public User getById(int id) {
+		return (User) getSession().get(User.class, id);
 	}
 }

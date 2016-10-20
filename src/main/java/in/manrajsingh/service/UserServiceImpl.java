@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import in.manrajsingh.constants.Constants;
 import in.manrajsingh.dao.UserDaoInterface;
 import in.manrajsingh.entities.User;
+import in.manrajsingh.model.IncomingUserModel;
 import in.manrajsingh.model.UserModel;
 import in.manrajsingh.utilities.UserServiceUtils;
 
@@ -29,16 +30,34 @@ public class UserServiceImpl implements UserServiceInterface {
 	}
 	
 	@Override
+	public UserModel updateUser(int id, IncomingUserModel userModel) {
+		User user = userDaoImpl.getById(id);
+		
+		userUtils.mapFromUpdateUser(userModel, user);
+		userDaoImpl.update(user);
+		
+		UserModel um = new UserModel(user, Constants.USER_UPDATED_MESSAGE);
+		return um;
+	}
+	
+	@Override
 	public List<UserModel> getAllUsers() {
 		List<User> users = userDaoImpl.getAll();
 		List<UserModel> usersModel = userUtils.mapUsersToModels(users);
 		return usersModel;
 	}
-	
-	/*@Override
-	public UserModel updateUser(int userId, User user) {
-		UpdateUserModel user = userUtils.mapUpdateUser(userId, user);
-		return user;
-	}*/
+
+	@Override
+	public void deleteUser(int id) {
+		User user = new User(id);
+		userDaoImpl.delete(user);
+	}
+
+	@Override
+	public UserModel getUserById(int id) {
+		User user = userDaoImpl.getById(id);
+		UserModel userModel = userUtils.mapUser(user);
+		return userModel;
+	}
 	
 }
