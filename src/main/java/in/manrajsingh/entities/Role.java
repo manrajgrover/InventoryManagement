@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "role", catalog = "inventory")
 public class Role implements java.io.Serializable {
@@ -52,7 +54,8 @@ public class Role implements java.io.Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
 	public Set<UserRole> getUserRoles() {
 		return this.userRoles;
