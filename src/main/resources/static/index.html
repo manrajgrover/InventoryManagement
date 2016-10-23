@@ -5,35 +5,16 @@
     <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="./dist/css/style.min.css" rel="stylesheet" />
     <script src="./dist/js/script.js"></script>
+    <style>
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+      }
+    </style>
   </head>
-  <body ng-app="app" ng-controller="home as home">
+  <body ng-app="app" ng-cloak>
     <div class="container">
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">
-              <img class="brand-navbar" src="./dist/images/practo_logo.svg" />
-            </a>
-          </div>
-          <ul class="nav navbar-nav navbar-right">
-            <li ng-show="!home.authenticated">
-              <a href="/login">Sign In</a>
-            </li>
-            <li class="dropdown" ng-show="home.authenticated">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <span ng-bind="home.user"></span>
-                <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a ng-click="home.logout()">Logout</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </nav>
+      <div ng-include="'./dist/views/navbar.html'"></div>
+      <div ng-view></div>
     </div>
   </body>
 </html>

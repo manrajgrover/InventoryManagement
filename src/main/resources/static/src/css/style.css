@@ -1,3 +1,30 @@
 .brand-navbar {
   width: 100px;
 }
+
+.info {
+  padding: 30px;
+}
+
+.grid--borderBetween > [class*='col-']:before,
+.grid--borderBetween > [class*='col-']:after {
+  background: #b2b2b2;
+  bottom: 0;
+  content: " ";
+  position: absolute;
+  width: 1px;
+  top: 0;
+}
+
+.grid--borderBetween > [class*='col-']:before {
+  left: 0;
+}
+
+.grid--borderBetween > [class*='col-']:after {
+  right: -1px;
+}
+
+.grid--borderBetween > [class*='col-']:first-child:before,
+.grid--borderBetween > [class*='col-']:last-child:after {
+  display: none;
+}

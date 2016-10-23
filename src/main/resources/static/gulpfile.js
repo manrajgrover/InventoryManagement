@@ -18,7 +18,7 @@ gulp.task('scripts', () => {
 });
 
 /**
- * Copies CSS from source to distribution
+ * Combines and minifies CSS
  */
 gulp.task('css', () => {
   let opts = {comments:true,spare:true};
@@ -29,14 +29,32 @@ gulp.task('css', () => {
     .pipe(gulp.dest('./dist/css'));
 });
 
+/**
+ * Copies images from src to dist
+ */
+gulp.task('images', () => {
+  gulp.src('src/images/*')
+    .pipe(gulp.dest('./dist/images'));
+});
+
+/**
+ * Copies views from src to dist
+ */
+gulp.task('views', () => {
+  gulp.src('src/views/*')
+    .pipe(gulp.dest('./dist/views'));
+});
+
 gulp.task('watch', () => {
   gulp.watch('src/js/*.js', ['scripts']);
   gulp.watch('src/css/*.css', ['css']);
+  gulp.watch('src/views/*.html', ['views']);
+  gulp.watch('src/images/*', ['images']);
 })
 
 /**
  * Gulp default task for running other tasks
  */
-gulp.task('default', ['css', 'scripts'],  () => {
+gulp.task('default', ['css', 'scripts', 'images', 'views'],  () => {
   console.log("Building project!");
 });
