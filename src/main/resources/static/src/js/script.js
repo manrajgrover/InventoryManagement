@@ -1,2 +1,2 @@
-require('./angular-scripts');
 require('./jquery-scripts');
+require('./angular-scripts');

@@ -4,17 +4,18 @@
     <title>Practo Inventory Management System</title>
     <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="./dist/css/style.min.css" rel="stylesheet" />
-    <script src="./dist/js/script.js"></script>
     <style>
       [ng\:cloak], [ng-cloak], .ng-cloak {
         display: none;
       }
     </style>
+    <!--[if lt IE 9]><script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js"></script><![endif]-->
   </head>
   <body ng-app="app" ng-cloak>
     <div class="container">
       <div ng-include="'./dist/views/navbar.html'"></div>
       <div ng-view></div>
     </div>
+    <script src="./dist/js/script.js"></script>
   </body>
 </html>

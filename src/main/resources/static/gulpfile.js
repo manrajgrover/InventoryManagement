@@ -23,7 +23,11 @@ gulp.task('scripts', () => {
 gulp.task('css', () => {
   let opts = {comments:true,spare:true};
 
-  gulp.src(['node_modules/bootstrap/dist/css/bootstrap.min.css', 'src/css/*.css'])
+  gulp.src([
+      'node_modules/bootstrap/dist/css/bootstrap.min.css',
+      'node_modules/selectize/dist/css/selectize.bootstrap3.css',
+      'src/css/*.css'
+    ])
     .pipe(minifyCSS(opts))
     .pipe(concat('style.min.css'))
     .pipe(gulp.dest('./dist/css'));

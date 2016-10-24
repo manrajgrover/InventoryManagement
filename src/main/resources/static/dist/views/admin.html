@@ -1,0 +1,117 @@
+<div class="row alert text-center" id="httpMessage" ng-show="requestMessageShow">
+  {{requestMessage}}
+</div>
+<div class="row">
+  <h3>Requests</h3>
+</div>
+
+  <div class="row">
+
+    <table class="table">
+      <tr style="background-color: #F2C780">
+        <th>Job Id</th>
+        <th>Category</th>
+        <th>Team</th>
+        <th>Description</th>
+        <th>Posted On</th>
+        <th>Status</th>
+        <th></th>
+
+        <!-- <th>Recruited</th> -->
+      </tr>
+      <tr dir-paginate="job in jobs|itemsPerPage:perpage"
+        total-items="total*perpage">
+        <td>{{ job.jId }}</td>
+        <td>{{ job.category.categoryName }}</td>
+        <td>{{ job.team.name }}</td>
+        <td>{{ job.description }}</td>
+        <td>{{ job.postedOn|date }}</td>
+        <td>{{ job.closed ? "Closed":"Open" }}</td>
+        <!-- </td>
+      <td>{{ job.recruited.emailId==null? "N/A":
+        job.recruited.emailId}} -->
+        <td>
+          <button class="btn btn-info" ng-click="viewApplications($index)">Applications</button>
+
+          <button class="btn btn-success" ng-click="viewUpdateJob($index)">Edit</button>
+
+          <button class="btn btn-danger" ng-click="deleteJob($index)">Delete</button>
+        </td>
+
+
+      </tr>
+    </table>
+    <dir-pagination-controls max-size="8" direction-links="true"
+      boundary-links="true" on-page-change="listJobs(newPageNumber)">
+    </dir-pagination-controls>
+    <!-- <ul class="pager">
+      <li class="previous"><a href ng-click="">Previous</a></li>
+      <li class="next"><a href ng-click="">Next</a></li>
+    </ul> -->
+
+    <div>{{jobsError}}</div>
+
+  </div>
+<div class="row">
+  <table id="requestTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Company</th>
+        <th>Product</th>
+        <th>Version</th>
+        <th>Reply</th>
+      </tr>
+    </thead>
+    <tr ng-repeat="request in data">
+      <td>{{request.id}}</td>
+      <td>{{request.userName}}</td>
+      <td>{{request.productCompany}}</td>
+      <td>{{request.productName}}</td>
+      <td>{{request.version}}</td>
+      <td><button ng-click="populateModal(request.id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#reply">Edit</button></td>
+    </tr>
+  </table>
+  <div class="modal fade" id="reply" tabindex="-1" role="dialog" aria-labelledby="replyLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Request #{{modalData.id}}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Name:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">{{modalData.userName}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Company:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">{{modalData.productCompany}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Product:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">{{modalData.productName}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Version:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">{{modalData.version}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              Reply:
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              <textarea name="reply" class="form-control" rows="5" id="reply">{{modalData.reply}}</textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button ng-click="updateRequest(modalData.id)" type="button" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
