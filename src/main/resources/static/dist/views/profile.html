@@ -1,9 +1,19 @@
-<div class="row grid--borderBetween" ng-controller="profileController">
-  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 info">
-    <img class="img-circle" src={{session.picture}} alt="Picture of {{session.name}}"/>
-  </div>
-  <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 info">
-    <div class="row">Name : {{session.name}}</div>
-    <div class="row">Email: {{session.email}}</div>
+<div class="row" ng-controller="profileController">
+  <div class="row text-center info header">
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-centered info">
+        <img class="img-circle img-reduced" src={{session.picture}} alt="Picture of {{session.name}}"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-centered">
+        <div class="row">
+          {{session.name}}
+        </div>
+        <div class="row">
+          {{session.email}}
+        </div>
+      </div>
+    </div>
   </div>
 </div>

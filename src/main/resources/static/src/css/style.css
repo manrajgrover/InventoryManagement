@@ -1,3 +1,16 @@
+.col-centered {
+  float: none;
+  margin: 0 auto;
+}
+
+.small-margin {
+  margin: 0px 10px 20px;
+}
+
+.img-reduced {
+  width: 150px;
+}
+
 .brand-navbar {
   width: 100px;
 }

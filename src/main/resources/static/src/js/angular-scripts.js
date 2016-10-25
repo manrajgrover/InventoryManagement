@@ -19,6 +19,15 @@ app.config(function($routeProvider) {
   }).when('/admin', {
     controller: 'adminController',
     templateUrl: '/dist/views/admin.html'
+  }).when('/selectRole', {
+    controller: 'selectRoleController',
+    templateUrl: '/dist/views/selectRole.html'
+  }).when('/incoming/requests', {
+    controller: 'incomingRequestsController',
+    templateUrl: '/dist/views/incomingRequests.html'
+  }).when('/returns', {
+    controller: 'returnsController',
+    templateUrl: '/dist/views/returns.html'
   }).otherwise({
     redirectTo: '/'
   });
@@ -48,17 +57,35 @@ app.run(function($rootScope, $location, sessionService){
       if ( next.templateUrl !== "/dist/views/home.html" ) {
         $location.path( "/" );
       }
+    } else if ((!session.hasOwnProperty('admin') || session.admin === false) && (next.templateUrl === "/dist/views/admin.html" || next.templateUrl === "/dist/views/selectRole.html")) {
+      $location.path( "/dashboard" );
     }
   });
 
 });
 
 
-app.controller("homeController", function($scope, $location, sessionService) {
+app.controller("homeController", function($scope) {
 
   $scope.login = () => {
     window.location.replace("/login");
   }
+});
+
+app.controller("selectRoleController", function($scope, $location, sessionService) {
+  
+  $scope.roleSelected = (role) => {
+    if(role === "admin") {
+      $location.path("/admin");
+    }
+    else {
+      let session = sessionService.getSession();
+      session.admin = false;
+      sessionService.setSession(session);
+      $location.path("/dashboard");
+    }
+  }
+
 });
 
 app.controller("navController", function($scope, $http, $location, sessionService) {
@@ -75,13 +102,19 @@ app.controller("navController", function($scope, $http, $location, sessionServic
       email: data.email,
       picture: data.picture,
       id: data.id,
+      admin: data.admin,
       authenticated: true
     };
 
     sessionService.setSession(session);
     console.log(session);
     $scope.session = session;
-    $location.path("/dashboard");
+    if (data.admin) {
+      $location.path("/selectRole");
+    } else {
+      $location.path("/dashboard");
+    }
+    
 
   }).error(function() {
     self.authenticated = false;
@@ -108,6 +141,10 @@ const initializeSelect = () => {
 }
 
 const getProductInformation = ($http, $scope, id) => {
+  if(id === "") {
+    return;
+  }
+
   $http.get(`/items/${id}/count`).success(function(data) {
     $scope.metaInfo.visible = true;
     $scope.metaInfo.count = data;
@@ -116,7 +153,6 @@ const getProductInformation = ($http, $scope, id) => {
     if (data > 0) {
       $scope.requestButton = true;
       $scope.requestId = id;
-      $scope.requestText = "Request Item";
     }
   }).error(function() {
     self.authenticated = false;
@@ -163,7 +199,116 @@ app.controller("dashboardController", function($scope, $http, $location, $timeou
 
 });
 
-app.controller("adminController", function($http, $scope, $timeout, sessionService) {
+app.controller("adminController", function($scope, $http, $location, $timeout, sessionService) {
+
+  $http.get("/products").success(function(data) {
+    console.log(data);
+    $scope.products = data;
+    $scope.metaInfo = {
+      visible: false,
+      count: 0
+    };
+
+    $timeout(() => {
+      jQuery('.dropdown-product').selectize({
+        create: true,
+        sortField: 'text'
+      });
+    }, 30);
+
+  }).error(function() {
+    self.authenticated = false;
+    $location.path("/");
+  });
+
+  $http.get("/users").success(function(data) {
+    console.log(data);
+    $scope.users = data;
+
+    $timeout(() => {
+      jQuery('.dropdown-user').selectize({
+        create: true,
+        sortField: 'text'
+      });
+    }, 30);
+
+  }).error(function() {
+    self.authenticated = false;
+    $location.path("/");
+  });
+
+  $scope.issueItem = () => {
+    let productId = jQuery("#product").val();
+    let userId = jQuery("#user").val();
+    let productTag = jQuery("#productTag").val();
+
+    $http.post('/history', {
+      userId: userId,
+      productId: productId,
+      productTag: productTag
+    }).success(function(data) {
+      if(data.availability) {
+        jQuery('#httpMessage').removeClass('alert-danger');
+        jQuery('#httpMessage').addClass('alert-success');
+      } else {
+        jQuery('#httpMessage').removeClass('alert-success');
+        jQuery('#httpMessage').addClass('alert-danger');
+      }
+      console.log(data);
+      $scope.requestMessageShow = true;
+      $scope.id = data.id;
+      $scope.requestMessage = `${data.message}!`;
+      if (data.availability) {
+        $scope.requestMessage = `${data.message}! Your issue ticket number is ${data.id}`
+      }
+      $timeout(function(){
+        $scope.requestMessageShow = false;
+      }, 15000);
+    }).error(function(data) {
+      console.log("Error");
+      $scope.message = "Error requesting the item";
+    });
+
+  }
+
+});
+
+app.controller("returnsController", function($scope, $http, $location, $timeout, sessionService) {
+
+  $scope.returnItem = () => {
+    let issueNumber = jQuery("#issueNumber").val();
+    let productTag = jQuery("#productTag").val();
+
+    if(issueNumber === "") {
+      return;
+    }
+
+    $http.patch(`/history/${issueNumber}`, {
+      productTag: productTag
+    }).success(function(data) {
+      console.log(data);
+      if(data.availability) {
+        jQuery('#httpMessage').removeClass('alert-danger');
+        jQuery('#httpMessage').addClass('alert-success');
+      } else {
+        jQuery('#httpMessage').removeClass('alert-success');
+        jQuery('#httpMessage').addClass('alert-danger');
+      }
+      $scope.requestMessageShow = true;
+      $scope.requestMessage = data.message;
+      $timeout(function(){
+        $scope.requestMessageShow = false;
+      }, 5000);
+    }).error(function(data) {
+      console.log("Error");
+      $scope.message = "Error requesting the item";
+    });
+
+  }
+
+});
+
+app.controller("incomingRequestsController", function($http, $scope, $timeout, sessionService) {
 
   $http.get("/requests").success(function(data) {
     $scope.data = data;

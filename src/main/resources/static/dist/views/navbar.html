@@ -11,9 +11,17 @@
           <span>{{session.name}}</span>
           <span class="caret"></span>
         </a>
-        <ul class="dropdown-menu">
+
+        <ul class="dropdown-menu" ng-if="!session.admin">
           <li><a href="#/dashboard">Dashboard</a></li>
-          <li><a href="#/requests">Requests</a></li>
+          <li><a href="#/profile">Profile</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#" ng-click="logout()">Logout</a></li>
+        </ul>
+        <ul class="dropdown-menu" ng-if="session.admin">
+          <li><a href="#/admin">Dashboard</a></li>
+          <li><a href="#/incoming/requests">Requests</a></li>
+          <li><a href="#/returns">Returns</a></li>
           <li><a href="#/profile">Profile</a></li>
           <li role="separator" class="divider"></li>
           <li><a href="#" ng-click="logout()">Logout</a></li>
