@@ -25,6 +25,12 @@ app.config(function($routeProvider) {
   }).when('/incoming/requests', {
     controller: 'incomingRequestsController',
     templateUrl: '/dist/views/incomingRequests.html'
+  }).when('/products', {
+    controller: 'productController',
+    templateUrl: '/dist/views/product.html'
+  }).when('/items', {
+    controller: 'itemController',
+    templateUrl: '/dist/views/item.html'
   }).when('/returns', {
     controller: 'returnsController',
     templateUrl: '/dist/views/returns.html'
@@ -70,6 +76,7 @@ app.controller("homeController", function($scope) {
   $scope.login = () => {
     window.location.replace("/login");
   }
+
 });
 
 app.controller("selectRoleController", function($scope, $location, sessionService) {
@@ -350,6 +357,216 @@ app.controller("incomingRequestsController", function($http, $scope, $timeout, s
         $timeout(function(){
           $scope.requestMessageShow = false;
         }, 5000);
+        console.log("Error");
+      });
+    }
+
+  });
+
+});
+
+app.controller("productController", function($http, $scope, $timeout, $location, $route, sessionService) {
+
+  $http.get("/products").success(function(data) {
+    console.log(data);
+    $scope.data = data;
+  }).error(function() {
+    console.log("Error");
+  });
+
+  $scope.populateEdit = (id) => {
+    $http.get(`/products/${id}`).success(function(data) {
+      jQuery("#editProductCompany").val(data.company);
+      jQuery("#editProductVersion").val(data.version);
+      jQuery("#editProductName").val(data.name);      
+      $scope.edit = data;
+    }).error(function() {
+      console.log("Error");
+    });
+  }
+
+  $scope.populateDelete = (id) => {
+    console.log(id);
+    $http.get(`/products/${id}`).success(function(data) { 
+      console.log(data); 
+      $scope.delete = data;
+    }).error(function() {
+      console.log("Error");
+    });
+  }
+
+  jQuery('#edit').on('shown.bs.modal', function (e) {
+
+    $scope.updateProduct = (id) => {
+      console.log(id);
+      let company = jQuery(e.currentTarget).find('input[name="editProductCompany"]').val();
+      let name = jQuery(e.currentTarget).find('input[name="editProductName"]').val();
+      let version = jQuery(e.currentTarget).find('input[name="editProductVersion"]').val();
+
+      console.log(company + " "+ name + " " + version);
+
+      $http.patch(`/products/${id}`, {
+        name: name,
+        company: company,
+        version: version
+      }).success(function(data) {
+        jQuery('#httpMessage').removeClass('alert-danger');
+        jQuery('#httpMessage').addClass('alert-success');
+        jQuery('#edit').modal('hide');
+        $scope.productMessageShow = true;
+        $scope.productMessage = "Product updated! Refreshing..";
+        $timeout(function(){
+          $scope.productMessageShow = false;
+          $route.reload();
+        }, 3000);
+
+      }).error(function() {
+        jQuery('#httpMessage').removeClass('alert-success');
+        jQuery('#httpMessage').addClass('alert-danger');
+        jQuery('#edit').modal('hide');
+        $scope.productMessageShow = true;
+        $scope.productMessage = "An error occured";
+        $timeout(function(){
+          $scope.productMessageShow = false;
+        }, 3000);
+        console.log("Error");
+      });
+    }
+
+  });
+
+  jQuery('#delete').on('shown.bs.modal', function (e) {
+
+    $scope.deleteProduct = (id) => {
+      console.log(id);
+
+      $http.delete(`/products/${id}`).success(function(data) {
+        jQuery('#httpMessage').removeClass('alert-danger');
+        jQuery('#httpMessage').addClass('alert-success');
+        jQuery('#delete').modal('hide');
+        $scope.productMessageShow = true;
+        $scope.productMessage = "Product Deleted";
+        $timeout(function(){
+          $scope.productMessageShow = false;
+          $route.reload();
+        }, 3000);
+
+      }).error(function() {
+        jQuery('#httpMessage').removeClass('alert-success');
+        jQuery('#httpMessage').addClass('alert-danger');
+        jQuery('#delete').modal('hide');
+        $scope.productMessageShow = true;
+        $scope.productMessage = "An error occured";
+        $timeout(function(){
+          $scope.productMessageShow = false;
+        }, 3000);
+        console.log("Error");
+      });
+    }
+
+  });
+
+});
+
+app.controller("itemController", function($http, $scope, $timeout, $location, $route, sessionService) {
+
+  $http.get("/items").success(function(data) {
+    console.log(data);
+    $scope.data = data;
+  }).error(function() {
+    console.log("Error");
+  });
+
+  $scope.populateEdit = (id, productId) => {
+    $http.get(`/items/${id}`).success(function(data) {  
+      $scope.edit = data;
+      jQuery('#editItemTag').val(data.tag);
+    }).error(function() {
+      console.log("Error");
+    });
+
+    $http.get(`/products`).success(function(data) {  
+      $scope.products = data;
+      $timeout(function(){
+        console.log("Selecting");
+        jQuery("#product option[value="+productId+"]").attr("selected","selected");
+      }, 30);
+    }).error(function() {
+      console.log("Error");
+    });
+  }
+
+  $scope.populateDelete = (id) => {
+    console.log(id);
+    $http.get(`/items/${id}`).success(function(data) { 
+      console.log(data); 
+      $scope.delete = data;
+    }).error(function() {
+      console.log("Error");
+    });
+  }
+
+  jQuery('#edit').on('shown.bs.modal', function (e) {
+
+    $scope.updateItem = (id) => {
+      console.log(id);
+      let company = jQuery(e.currentTarget).find('select[name="productSelect"]').val();
+      let tag = jQuery(e.currentTarget).find('input[name="editItemTag"]').val();
+      console.log(company + " " + tag);
+      $http.patch(`/items/${id}`, {
+        productId: company,
+        productTag: tag
+      }).success(function(data) {
+        jQuery('#httpMessage').removeClass('alert-danger');
+        jQuery('#httpMessage').addClass('alert-success');
+        jQuery('#edit').modal('hide');
+        $scope.itemMessageShow = true;
+        $scope.itemMessage = "Item updated! Refreshing..";
+        $timeout(function(){
+          $scope.itemMessageShow = false;
+          $route.reload();
+        }, 3000);
+
+      }).error(function() {
+        jQuery('#httpMessage').removeClass('alert-success');
+        jQuery('#httpMessage').addClass('alert-danger');
+        jQuery('#edit').modal('hide');
+        $scope.itemMessageShow = true;
+        $scope.itemMessage = "An error occured";
+        $timeout(function(){
+          $scope.itemMessageShow = false;
+        }, 3000);
+        console.log("Error");
+      });
+    }
+
+  });
+
+  jQuery('#delete').on('shown.bs.modal', function (e) {
+
+    $scope.deleteProduct = (id) => {
+      console.log(id);
+
+      $http.delete(`/items/${id}`).success(function(data) {
+        jQuery('#httpMessage').removeClass('alert-danger');
+        jQuery('#httpMessage').addClass('alert-success');
+        jQuery('#delete').modal('hide');
+        $scope.itemMessageShow = true;
+        $scope.itemMessage = "Item Deleted";
+        $timeout(function(){
+          $scope.itemMessageShow = false;
+          $route.reload();
+        }, 3000);
+
+      }).error(function() {
+        jQuery('#httpMessage').removeClass('alert-success');
+        jQuery('#httpMessage').addClass('alert-danger');
+        jQuery('#delete').modal('hide');
+        $scope.itemMessageShow = true;
+        $scope.itemMessage = "An error occured";
+        $timeout(function(){
+          $scope.itemMessageShow = false;
+        }, 3000);
         console.log("Error");
       });
     }
