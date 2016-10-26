@@ -48,5 +48,4 @@ public class IncomingUserModel {
 	public void setUserRoles(Set<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
-
 }

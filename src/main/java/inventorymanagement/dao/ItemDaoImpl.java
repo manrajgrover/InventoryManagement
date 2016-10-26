@@ -72,5 +72,4 @@ public class ItemDaoImpl implements ItemDaoInterface {
 	public Item getById(int id) {
 		return getSession().get(Item.class, id);
 	}
-
 }

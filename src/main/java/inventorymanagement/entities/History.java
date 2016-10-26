@@ -1,4 +1,3 @@
-
 package inventorymanagement.entities;
 
 import static javax.persistence.GenerationType.IDENTITY;

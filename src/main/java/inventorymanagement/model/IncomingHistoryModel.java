@@ -28,4 +28,5 @@ public class IncomingHistoryModel {
 	public void setProductTag(String productTag) {
 		this.productTag = productTag;
 	}
+
 }

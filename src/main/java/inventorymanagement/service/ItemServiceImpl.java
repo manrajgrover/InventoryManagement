@@ -1,4 +1,3 @@
-
 package inventorymanagement.service;
 
 import java.util.List;
@@ -74,5 +73,4 @@ public class ItemServiceImpl implements ItemServiceInterface {
 	public int getCountItem(int id) {
 		return itemDaoImpl.getCountByProductId(id);
 	}
-
 }
