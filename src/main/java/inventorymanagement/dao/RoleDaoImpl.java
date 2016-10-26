@@ -14,17 +14,17 @@ import inventorymanagement.entities.Role;
 @Transactional
 public class RoleDaoImpl implements RoleDaoInterface {
 
-	@Autowired
-	private SessionFactory sessionFactory;
+  @Autowired
+  private SessionFactory sessionFactory;
 
-	private Session getSession() {
-		return sessionFactory.getCurrentSession();
-	}
+  private Session getSession() {
+    return sessionFactory.getCurrentSession();
+  }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Role> getAll() {
-		return getSession().createCriteria(Role.class).list();
-	}
+  @SuppressWarnings("unchecked")
+  @Override
+  public List<Role> getAll() {
+    return getSession().createCriteria(Role.class).list();
+  }
 
 }

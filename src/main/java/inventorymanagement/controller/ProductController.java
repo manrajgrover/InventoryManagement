@@ -20,57 +20,57 @@ import inventorymanagement.service.ProductServiceInterface;
 @RestController
 public class ProductController {
 
-	private static final Logger LOG = Logger.getLogger(ProductController.class);
+  private static final Logger LOG = Logger.getLogger(ProductController.class);
 
-	@Autowired
-	ProductServiceInterface productService;
+  @Autowired
+  ProductServiceInterface productService;
 
-	@RequestMapping(value = "/products", method = RequestMethod.POST)
-	@ResponseBody
-	@ResponseStatus(HttpStatus.CREATED)
-	public ProductModel create(@RequestBody IncomingProductModel productModel) {
-		LOG.info("Request received for adding a product");
-		ProductModel product = productService.addProduct(productModel);
-		LOG.info("Request for adding a product successful");
-		return product;
-	}
+  @RequestMapping(value = "/products", method = RequestMethod.POST)
+  @ResponseBody
+  @ResponseStatus(HttpStatus.CREATED)
+  public ProductModel create(@RequestBody IncomingProductModel productModel) {
+    LOG.info("Request received for adding a product");
+    ProductModel product = productService.addProduct(productModel);
+    LOG.info("Request for adding a product successful");
+    return product;
+  }
 
-	@RequestMapping(value = "/products/{id}", method = RequestMethod.PATCH)
-	@ResponseBody
-	@ResponseStatus(HttpStatus.OK)
-	public ProductModel update(@PathVariable int id, @RequestBody IncomingProductModel productModel) {
-		LOG.info("Request received for updating a product");
-		ProductModel product = productService.updateProduct(id, productModel);
-		LOG.info("Request for updating a product successful");
-		return product;
-	}
+  @RequestMapping(value = "/products/{id}", method = RequestMethod.PATCH)
+  @ResponseBody
+  @ResponseStatus(HttpStatus.OK)
+  public ProductModel update(@PathVariable int id, @RequestBody IncomingProductModel productModel) {
+    LOG.info("Request received for updating a product");
+    ProductModel product = productService.updateProduct(id, productModel);
+    LOG.info("Request for updating a product successful");
+    return product;
+  }
 
-	@RequestMapping(value = "/products/{id}", method = RequestMethod.DELETE)
-	@ResponseBody
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable int id) {
-		LOG.info("Request received for deleting a product");
-		productService.deleteProduct(id);
-		LOG.info("Request for deleting a product successful");
-	}
+  @RequestMapping(value = "/products/{id}", method = RequestMethod.DELETE)
+  @ResponseBody
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable int id) {
+    LOG.info("Request received for deleting a product");
+    productService.deleteProduct(id);
+    LOG.info("Request for deleting a product successful");
+  }
 
-	@RequestMapping(value = "/products", method = RequestMethod.GET)
-	@ResponseBody
-	@ResponseStatus(HttpStatus.OK)
-	public List<IncomingProductModel> getAll() {
-		LOG.info("Request received for getting all products");
-		List<IncomingProductModel> products = productService.getAllProducts();
-		LOG.info("Request for getting all products successful");
-		return products;
-	}
+  @RequestMapping(value = "/products", method = RequestMethod.GET)
+  @ResponseBody
+  @ResponseStatus(HttpStatus.OK)
+  public List<IncomingProductModel> getAll() {
+    LOG.info("Request received for getting all products");
+    List<IncomingProductModel> products = productService.getAllProducts();
+    LOG.info("Request for getting all products successful");
+    return products;
+  }
 
-	@RequestMapping(value = "/products/{id}", method = RequestMethod.GET)
-	@ResponseBody
-	@ResponseStatus(HttpStatus.OK)
-	public IncomingProductModel getById(@PathVariable int id) {
-		LOG.info("Request received for getting product by id");
-		IncomingProductModel product = productService.getProductById(id);
-		LOG.info("Request for getting product by id successful");
-		return product;
-	}
+  @RequestMapping(value = "/products/{id}", method = RequestMethod.GET)
+  @ResponseBody
+  @ResponseStatus(HttpStatus.OK)
+  public IncomingProductModel getById(@PathVariable int id) {
+    LOG.info("Request received for getting product by id");
+    IncomingProductModel product = productService.getProductById(id);
+    LOG.info("Request for getting product by id successful");
+    return product;
+  }
 }

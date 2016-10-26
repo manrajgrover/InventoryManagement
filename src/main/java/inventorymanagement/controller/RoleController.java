@@ -17,19 +17,19 @@ import inventorymanagement.service.RoleServiceInterface;
 @RestController
 public class RoleController {
 
-	private static final Logger LOG = Logger.getLogger(RoleController.class);
+  private static final Logger LOG = Logger.getLogger(RoleController.class);
 
-	@Autowired
-	RoleServiceInterface roleService;
+  @Autowired
+  RoleServiceInterface roleService;
 
-	@RequestMapping(value = "/roles", method = RequestMethod.GET)
-	@ResponseBody
-	@ResponseStatus(HttpStatus.OK)
-	public List<Role> getAll() {
-		LOG.info("Request received for getting roles");
-		List<Role> roles = roleService.getAllRoles();
-		LOG.info("Request for getting roles successful");
-		return roles;
-	}
+  @RequestMapping(value = "/roles", method = RequestMethod.GET)
+  @ResponseBody
+  @ResponseStatus(HttpStatus.OK)
+  public List<Role> getAll() {
+    LOG.info("Request received for getting roles");
+    List<Role> roles = roleService.getAllRoles();
+    LOG.info("Request for getting roles successful");
+    return roles;
+  }
 
 }

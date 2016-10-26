@@ -15,48 +15,47 @@ import javax.persistence.Table;
 @Table(name = "user_role", catalog = "inventory")
 public class UserRole implements java.io.Serializable {
 
-	private static final long serialVersionUID = 6013934253856799513L;
-	private Integer id;
-	private Role role;
-	private User user;
+  private static final long serialVersionUID = 6013934253856799513L;
+  private Integer id;
+  private Role role;
+  private User user;
 
-	public UserRole() {
-	}
+  public UserRole() {}
 
-	public UserRole(Role role, User user) {
-		this.role = role;
-		this.user = user;
-	}
+  public UserRole(Role role, User user) {
+    this.role = role;
+    this.user = user;
+  }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
-		return this.id;
-	}
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
+  @Column(name = "id", unique = true, nullable = false)
+  public Integer getId() {
+    return this.id;
+  }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "role_id", nullable = false)
-	public Role getRole() {
-		return this.role;
-	}
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "role_id", nullable = false)
+  public Role getRole() {
+    return this.role;
+  }
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
+  public void setRole(Role role) {
+    this.role = role;
+  }
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id", nullable = false)
-	public User getUser() {
-		return this.user;
-	}
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "user_id", nullable = false)
+  public User getUser() {
+    return this.user;
+  }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+  public void setUser(User user) {
+    this.user = user;
+  }
 
 }

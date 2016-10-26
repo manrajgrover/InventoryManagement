@@ -12,15 +12,15 @@ import inventorymanagement.entities.UserRole;
 @Transactional
 public class UserRoleDaoImpl implements UserRoleDaoInterface {
 
-	@Autowired
-	private SessionFactory sessionFactory;
+  @Autowired
+  private SessionFactory sessionFactory;
 
-	private Session getSession() {
-		return sessionFactory.getCurrentSession();
-	}
+  private Session getSession() {
+    return sessionFactory.getCurrentSession();
+  }
 
-	@Override
-	public void save(UserRole user) {
-		getSession().save(user);
-	}
+  @Override
+  public void save(UserRole user) {
+    getSession().save(user);
+  }
 }

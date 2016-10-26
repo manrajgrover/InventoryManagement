@@ -12,34 +12,34 @@ import inventorymanagement.model.UserModel;
 @Service
 public class UserServiceUtils {
 
-	public User mapFromUpdateUser(IncomingUserModel userModel, User user) {
-		String name = userModel.getName();
-		String email = userModel.getEmail();
-		String contact = userModel.getContact();
+  public User mapFromUpdateUser(IncomingUserModel userModel, User user) {
+    String name = userModel.getName();
+    String email = userModel.getEmail();
+    String contact = userModel.getContact();
 
-		user.setContact(contact);
-		user.setEmail(email);
-		user.setName(name);
+    user.setContact(contact);
+    user.setEmail(email);
+    user.setName(name);
 
-		return user;
-	}
+    return user;
+  }
 
-	public List<UserModel> mapUsersToModels(List<User> users) {
-		List<UserModel> userModels = new ArrayList<>();
+  public List<UserModel> mapUsersToModels(List<User> users) {
+    List<UserModel> userModels = new ArrayList<>();
 
-		for (User user : users) {
-			userModels.add(mapUser(user));
-		}
-		return userModels;
-	}
+    for (User user : users) {
+      userModels.add(mapUser(user));
+    }
+    return userModels;
+  }
 
-	public UserModel mapUser(User user) {
-		UserModel userModel = new UserModel();
-		userModel.setId(user.getId());
-		userModel.setName(user.getName());
-		userModel.setEmail(user.getEmail());
-		userModel.setContact(user.getContact());
-		return userModel;
-	}
+  public UserModel mapUser(User user) {
+    UserModel userModel = new UserModel();
+    userModel.setId(user.getId());
+    userModel.setName(user.getName());
+    userModel.setEmail(user.getEmail());
+    userModel.setContact(user.getContact());
+    return userModel;
+  }
 
 }

@@ -7,11 +7,11 @@ import inventorymanagement.model.IncomingUpdateRequest;
 import inventorymanagement.model.RequestModel;
 
 public interface RequestServiceInterface {
-	public RequestModel addRequest(IncomingRequestModel requestModel);
+  public RequestModel addRequest(IncomingRequestModel requestModel);
 
-	public List<RequestModel> getAllRequests();
+  public List<RequestModel> getAllRequests();
 
-	RequestModel getRequestById(int id);
+  RequestModel getRequestById(int id);
 
-	public RequestModel updateRequest(int id, IncomingUpdateRequest request);
+  public RequestModel updateRequest(int id, IncomingUpdateRequest request);
 }

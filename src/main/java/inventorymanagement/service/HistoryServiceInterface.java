@@ -7,7 +7,8 @@ import inventorymanagement.model.IncomingReturnModel;
 
 public interface HistoryServiceInterface {
 
-	HistoryModel issueItem(IncomingHistoryModel historyModel);
+  HistoryModel issueItem(IncomingHistoryModel historyModel);
 
-	HistoryModel returnItem(int issueNumber, IncomingReturnModel historyModel) throws NotFoundException;
+  HistoryModel returnItem(int issueNumber, IncomingReturnModel historyModel)
+      throws NotFoundException;
 }

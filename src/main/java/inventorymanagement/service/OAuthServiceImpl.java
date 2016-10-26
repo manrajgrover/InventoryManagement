@@ -23,68 +23,69 @@ import inventorymanagement.model.UserModel;
 @Service
 public class OAuthServiceImpl implements OAuthServiceInterface {
 
-	@Autowired
-	private UserServiceInterface userService;
+  @Autowired
+  private UserServiceInterface userService;
 
-	public LoginResponseModel authenticate(Principal principal, HttpSession session)
-			throws UnauthorizedException, ForbiddenException, BadRequestException {
-		
-		if (principal == null) {
-			throw new ForbiddenException("Access denied");
-		}
+  public LoginResponseModel authenticate(Principal principal, HttpSession session)
+      throws UnauthorizedException, ForbiddenException, BadRequestException {
 
-		OAuth2Authentication oauth = (OAuth2Authentication) principal;
+    if (principal == null) {
+      throw new ForbiddenException("Access denied");
+    }
 
-		if (oauth.isAuthenticated()) {
-			@SuppressWarnings("unchecked")
-			HashMap<String, String> details = (HashMap<String, String>) oauth.getUserAuthentication().getDetails();
+    OAuth2Authentication oauth = (OAuth2Authentication) principal;
 
-			String domain = details.get(Constants.DOMAIN_KEY);
+    if (oauth.isAuthenticated()) {
+      @SuppressWarnings("unchecked")
+      HashMap<String, String> details =
+          (HashMap<String, String>) oauth.getUserAuthentication().getDetails();
 
-			System.out.println(domain);
+      String domain = details.get(Constants.DOMAIN_KEY);
 
-			if (!(Constants.ALLOW_DOMAIN).equalsIgnoreCase(domain)) {
-				System.out.println("Hello here!");
-				throw new UnauthorizedException("Unauthorized access");
-			}
-			System.out.println(details);
+      System.out.println(domain);
 
-			String email = details.get(Constants.EMAIL_KEY);
-			String name = details.get(Constants.NAME_KEY);
-			String contact = "9898989898";
-			String picture = details.get(Constants.PICTURE_KEY);
+      if (!(Constants.ALLOW_DOMAIN).equalsIgnoreCase(domain)) {
+        System.out.println("Hello here!");
+        throw new UnauthorizedException("Unauthorized access");
+      }
+      System.out.println(details);
 
-			IncomingUserModel user = new IncomingUserModel(name, email, contact);
+      String email = details.get(Constants.EMAIL_KEY);
+      String name = details.get(Constants.NAME_KEY);
+      String contact = "9898989898";
+      String picture = details.get(Constants.PICTURE_KEY);
 
-			UserModel userModel = userService.addUserIfNotExist(user);
+      IncomingUserModel user = new IncomingUserModel(name, email, contact);
 
-			String id = Integer.toString(userModel.getId());
+      UserModel userModel = userService.addUserIfNotExist(user);
 
-			session.setAttribute(Constants.SESSION_EMAIL, email);
-			session.setAttribute(Constants.SESSION_NAME, name);
-			session.setAttribute(Constants.SESSION_ID, id);
-			session.setAttribute(Constants.SESSION_PICTURE, picture);
+      String id = Integer.toString(userModel.getId());
 
-			Set<UserRole> roles = userModel.getRole();
-			Boolean admin = false;
+      session.setAttribute(Constants.SESSION_EMAIL, email);
+      session.setAttribute(Constants.SESSION_NAME, name);
+      session.setAttribute(Constants.SESSION_ID, id);
+      session.setAttribute(Constants.SESSION_PICTURE, picture);
 
-			for (UserRole userRole : roles) {
-				Role role = userRole.getRole();
-				if (role.getId() == 1) {
-					admin = true;
-				}
-			}
-			session.setAttribute(Constants.SESSION_ADMIN, admin);
-			LoginResponseModel loginResponse = new LoginResponseModel();
-			loginResponse.setEmail(email);
-			loginResponse.setId(id);
-			loginResponse.setName(name);
-			loginResponse.setPicture(picture);
-			loginResponse.setAdmin(admin);
+      Set<UserRole> roles = userModel.getRole();
+      Boolean admin = false;
 
-			return loginResponse;
-		} else {
-			throw new UnauthorizedException("Login failed");
-		}
-	}
+      for (UserRole userRole : roles) {
+        Role role = userRole.getRole();
+        if (role.getId() == 1) {
+          admin = true;
+        }
+      }
+      session.setAttribute(Constants.SESSION_ADMIN, admin);
+      LoginResponseModel loginResponse = new LoginResponseModel();
+      loginResponse.setEmail(email);
+      loginResponse.setId(id);
+      loginResponse.setName(name);
+      loginResponse.setPicture(picture);
+      loginResponse.setAdmin(admin);
+
+      return loginResponse;
+    } else {
+      throw new UnauthorizedException("Login failed");
+    }
+  }
 }

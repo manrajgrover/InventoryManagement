@@ -13,36 +13,37 @@ import inventorymanagement.model.OutgoingHistoryModel;
 @Service
 public class HistoryServiceUtils {
 
-	@Autowired
-	ItemDaoInterface itemDaoImpl;
+  @Autowired
+  ItemDaoInterface itemDaoImpl;
 
-	public OutgoingHistoryModel checkAvailability(IncomingHistoryModel historyModel) {
-		Item item = itemDaoImpl.getByItemTag(historyModel.getProductTag());
-		OutgoingHistoryModel outgoingModel = new OutgoingHistoryModel();
+  public OutgoingHistoryModel checkAvailability(IncomingHistoryModel historyModel) {
+    Item item = itemDaoImpl.getByItemTag(historyModel.getProductTag());
+    OutgoingHistoryModel outgoingModel = new OutgoingHistoryModel();
 
-		if (item == null || item.getAvailable().equals("No")) {
-			outgoingModel.setAvailability(false);
-			return outgoingModel;
-		}
-		outgoingModel.setAvailability(true);
-		outgoingModel.setId(item.getId());
-		return outgoingModel;
-	}
+    if (item == null || item.getAvailable().equals("No")) {
+      outgoingModel.setAvailability(false);
+      return outgoingModel;
+    }
+    outgoingModel.setAvailability(true);
+    outgoingModel.setId(item.getId());
+    return outgoingModel;
+  }
 
-	public OutgoingHistoryModel checkIfExist(IncomingReturnModel historyModel) throws NotFoundException {
-		Item item = itemDaoImpl.getByItemTag(historyModel.getProductTag());
+  public OutgoingHistoryModel checkIfExist(IncomingReturnModel historyModel)
+      throws NotFoundException {
+    Item item = itemDaoImpl.getByItemTag(historyModel.getProductTag());
 
-		OutgoingHistoryModel outgoingModel = new OutgoingHistoryModel();
+    OutgoingHistoryModel outgoingModel = new OutgoingHistoryModel();
 
-		if (item != null && item.getAvailable().equals("Yes")) {
-			outgoingModel.setAvailability(true);
-			return outgoingModel;
-		} else if (item != null && item.getAvailable().equals("No")) {
-			outgoingModel.setAvailability(false);
-			return outgoingModel;
-		} else {
-			throw new NotFoundException("Item not found");
-		}
-	}
+    if (item != null && item.getAvailable().equals("Yes")) {
+      outgoingModel.setAvailability(true);
+      return outgoingModel;
+    } else if (item != null && item.getAvailable().equals("No")) {
+      outgoingModel.setAvailability(false);
+      return outgoingModel;
+    } else {
+      throw new NotFoundException("Item not found");
+    }
+  }
 
 }

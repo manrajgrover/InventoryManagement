@@ -17,47 +17,47 @@ import inventorymanagement.entities.User;
 @Transactional
 public class UserDaoImpl implements UserDaoInterface {
 
-	@Autowired
-	private SessionFactory sessionFactory;
+  @Autowired
+  private SessionFactory sessionFactory;
 
-	private Session getSession() {
-		return sessionFactory.getCurrentSession();
-	}
+  private Session getSession() {
+    return sessionFactory.getCurrentSession();
+  }
 
-	@Override
-	public void save(User user) {
-		getSession().save(user);
-	}
+  @Override
+  public void save(User user) {
+    getSession().save(user);
+  }
 
-	@Override
-	public void delete(User user) {
-		System.out.println("PLEASE WORK " + user.getId());
-		getSession().delete(user);
-	}
+  @Override
+  public void delete(User user) {
+    System.out.println("PLEASE WORK " + user.getId());
+    getSession().delete(user);
+  }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<User> getAll() {
-		return getSession().createCriteria(User.class).list();
-	}
+  @SuppressWarnings("unchecked")
+  @Override
+  public List<User> getAll() {
+    return getSession().createCriteria(User.class).list();
+  }
 
-	@Override
-	public User getUserByEmail(String email) {
-		DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
+  @Override
+  public User getUserByEmail(String email) {
+    DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
 
-		criteria.add(Restrictions.eq("email", email));
-		Criteria executableCriteria = criteria.getExecutableCriteria(getSession());
+    criteria.add(Restrictions.eq("email", email));
+    Criteria executableCriteria = criteria.getExecutableCriteria(getSession());
 
-		return (User) executableCriteria.uniqueResult();
-	}
+    return (User) executableCriteria.uniqueResult();
+  }
 
-	@Override
-	public void update(User user) {
-		getSession().update(user);
-	}
+  @Override
+  public void update(User user) {
+    getSession().update(user);
+  }
 
-	@Override
-	public User getById(int id) {
-		return (User) getSession().get(User.class, id);
-	}
+  @Override
+  public User getById(int id) {
+    return (User) getSession().get(User.class, id);
+  }
 }

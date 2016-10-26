@@ -6,12 +6,12 @@ import inventorymanagement.entities.History;
 
 public interface HistoryDaoInterface {
 
-	public void save(History history);
+  public void save(History history);
 
-	public void update(History history);
+  public void update(History history);
 
-	public List<History> getAll();
+  public List<History> getAll();
 
-	public History getById(int id);
+  public History getById(int id);
 
 }

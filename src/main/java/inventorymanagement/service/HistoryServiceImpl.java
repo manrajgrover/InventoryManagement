@@ -23,79 +23,80 @@ import inventorymanagement.utilities.HistoryServiceUtils;
 @Service
 public class HistoryServiceImpl implements HistoryServiceInterface {
 
-	@Autowired
-	HistoryDaoInterface historyDaoImpl;
+  @Autowired
+  HistoryDaoInterface historyDaoImpl;
 
-	@Autowired
-	UserDaoInterface userDaoImpl;
+  @Autowired
+  UserDaoInterface userDaoImpl;
 
-	@Autowired
-	ItemDaoInterface itemDaoImpl;
+  @Autowired
+  ItemDaoInterface itemDaoImpl;
 
-	@Autowired
-	HistoryServiceUtils historyServiceUtils;
+  @Autowired
+  HistoryServiceUtils historyServiceUtils;
 
-	@Override
-	public HistoryModel issueItem(IncomingHistoryModel historyModel) {
-		OutgoingHistoryModel avail = historyServiceUtils.checkAvailability(historyModel);
-		HistoryModel hm = new HistoryModel();
-		if (!avail.getAvailability()) {
-			hm.setAvailability(false);
-			hm.setMessage(Constants.ITEM_NOT_AVAILABLE);
-			return hm;
-		} else {
-			int userId = historyModel.getUserId();
-			User user = userDaoImpl.getById(userId);
+  @Override
+  public HistoryModel issueItem(IncomingHistoryModel historyModel) {
+    OutgoingHistoryModel avail = historyServiceUtils.checkAvailability(historyModel);
+    HistoryModel hm = new HistoryModel();
+    if (!avail.getAvailability()) {
+      hm.setAvailability(false);
+      hm.setMessage(Constants.ITEM_NOT_AVAILABLE);
+      return hm;
+    } else {
+      int userId = historyModel.getUserId();
+      User user = userDaoImpl.getById(userId);
 
-			String name = user.getName();
-			int productId = historyModel.getProductId();
-			Product product = new Product(productId);
+      String name = user.getName();
+      int productId = historyModel.getProductId();
+      Product product = new Product(productId);
 
-			int itemId = avail.getId();
-			Item item = itemDaoImpl.getById(itemId);
-			item.setAvailable("No");
-			itemDaoImpl.update(item);
+      int itemId = avail.getId();
+      Item item = itemDaoImpl.getById(itemId);
+      item.setAvailable("No");
+      itemDaoImpl.update(item);
 
-			History history = new History(user, product, item, name);
-			historyDaoImpl.save(history);
-			hm.setId(history.getId());
-			hm.setAvailability(true);
-			hm.setMessage(Constants.ITEM_AVAILABLE_ISSUED);
-			return hm;
-		}
-	}
+      History history = new History(user, product, item, name);
+      historyDaoImpl.save(history);
+      hm.setId(history.getId());
+      hm.setAvailability(true);
+      hm.setMessage(Constants.ITEM_AVAILABLE_ISSUED);
+      return hm;
+    }
+  }
 
-	@Override
-	public HistoryModel returnItem(int issueNumber, IncomingReturnModel historyModel) throws NotFoundException {
+  @Override
+  public HistoryModel returnItem(int issueNumber, IncomingReturnModel historyModel)
+      throws NotFoundException {
 
-		OutgoingHistoryModel avail = historyServiceUtils.checkIfExist(historyModel);
+    OutgoingHistoryModel avail = historyServiceUtils.checkIfExist(historyModel);
 
-		HistoryModel hm = new HistoryModel();
+    HistoryModel hm = new HistoryModel();
 
-		if (avail.getAvailability()) {
-			hm.setAvailability(true);
-			hm.setMessage(Constants.ITEM_ALREADY_RETURNED);
-			return hm;
-		} else {
-			History history = historyDaoImpl.getById(issueNumber);
-			Item itemByIssueNumber = history.getItem();
+    if (avail.getAvailability()) {
+      hm.setAvailability(true);
+      hm.setMessage(Constants.ITEM_ALREADY_RETURNED);
+      return hm;
+    } else {
+      History history = historyDaoImpl.getById(issueNumber);
+      Item itemByIssueNumber = history.getItem();
 
-			String itemTag = historyModel.getProductTag();
+      String itemTag = historyModel.getProductTag();
 
-			Item itemByTag = itemDaoImpl.getByItemTag(itemTag);
+      Item itemByTag = itemDaoImpl.getByItemTag(itemTag);
 
-			if (itemByIssueNumber.getId() == itemByTag.getId()) {
-				history.setReturnTimestamp(new Date());
-				historyDaoImpl.update(history);
-				itemByTag.setAvailable("Yes");
-				itemDaoImpl.update(itemByTag);
-				hm.setAvailability(true);
-				hm.setMessage(Constants.ITEM_RETURNED);
-				return hm;
-			} else {
-				hm.setMessage(Constants.ITEM_MISMATCH);
-				return hm;
-			}
-		}
-	}
+      if (itemByIssueNumber.getId() == itemByTag.getId()) {
+        history.setReturnTimestamp(new Date());
+        historyDaoImpl.update(history);
+        itemByTag.setAvailable("Yes");
+        itemDaoImpl.update(itemByTag);
+        hm.setAvailability(true);
+        hm.setMessage(Constants.ITEM_RETURNED);
+        return hm;
+      } else {
+        hm.setMessage(Constants.ITEM_MISMATCH);
+        return hm;
+      }
+    }
+  }
 }

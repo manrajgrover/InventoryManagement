@@ -29,28 +29,28 @@ import inventorymanagement.service.OAuthServiceInterface;
 @EnableWebSecurity
 public class OAuthController extends WebSecurityConfigurerAdapter {
 
-	private static final Logger LOG = Logger.getLogger(OAuthController.class);
+  private static final Logger LOG = Logger.getLogger(OAuthController.class);
 
-	@Autowired
-	OAuthServiceInterface oauthService;
+  @Autowired
+  OAuthServiceInterface oauthService;
 
-	@RequestMapping(value = "/userLogin", method = RequestMethod.GET)
-	@ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public LoginResponseModel user(Principal principal, HttpSession session)
-			throws UnauthorizedException, ForbiddenException, BadRequestException {
-		LOG.info("Request received for user details");
-		LoginResponseModel loginResponse = oauthService.authenticate(principal, session);
-		LOG.info("Request for user details successful");
-		return loginResponse;
-	}
+  @RequestMapping(value = "/userLogin", method = RequestMethod.GET)
+  @ResponseStatus(HttpStatus.OK)
+  @ResponseBody
+  public LoginResponseModel user(Principal principal, HttpSession session)
+      throws UnauthorizedException, ForbiddenException, BadRequestException {
+    LOG.info("Request received for user details");
+    LoginResponseModel loginResponse = oauthService.authenticate(principal, session);
+    LOG.info("Request for user details successful");
+    return loginResponse;
+  }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.antMatcher("/**").authorizeRequests()
-				.antMatchers("/", "/login**", "/node_modules/**", "/dist/**", "/src/**").permitAll().anyRequest()
-				.authenticated().and().logout().logoutSuccessUrl("/").invalidateHttpSession(true)
-				.deleteCookies("JSESSIONID").permitAll().and().csrf()
-				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-	}
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.antMatcher("/**").authorizeRequests()
+        .antMatchers("/", "/login**", "/node_modules/**", "/dist/**", "/src/**").permitAll()
+        .anyRequest().authenticated().and().logout().logoutSuccessUrl("/")
+        .invalidateHttpSession(true).deleteCookies("JSESSIONID").permitAll().and().csrf()
+        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+  }
 }

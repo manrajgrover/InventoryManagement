@@ -14,31 +14,31 @@ import inventorymanagement.entities.History;
 @Transactional
 public class HistoryDaoImpl implements HistoryDaoInterface {
 
-	@Autowired
-	private SessionFactory sessionFactory;
+  @Autowired
+  private SessionFactory sessionFactory;
 
-	private Session getSession() {
-		return sessionFactory.getCurrentSession();
-	}
+  private Session getSession() {
+    return sessionFactory.getCurrentSession();
+  }
 
-	@Override
-	public void save(History history) {
-		getSession().save(history);
-	}
+  @Override
+  public void save(History history) {
+    getSession().save(history);
+  }
 
-	@Override
-	public void update(History history) {
-		getSession().update(history);
-	}
+  @Override
+  public void update(History history) {
+    getSession().update(history);
+  }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<History> getAll() {
-		return getSession().createCriteria(History.class).list();
-	}
+  @SuppressWarnings("unchecked")
+  @Override
+  public List<History> getAll() {
+    return getSession().createCriteria(History.class).list();
+  }
 
-	@Override
-	public History getById(int id) {
-		return (History) getSession().get(History.class, id);
-	}
+  @Override
+  public History getById(int id) {
+    return (History) getSession().get(History.class, id);
+  }
 }

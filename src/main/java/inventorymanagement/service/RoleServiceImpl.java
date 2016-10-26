@@ -11,13 +11,13 @@ import inventorymanagement.entities.Role;
 @Service
 public class RoleServiceImpl implements RoleServiceInterface {
 
-	@Autowired
-	RoleDaoInterface roleDaoImpl;
+  @Autowired
+  RoleDaoInterface roleDaoImpl;
 
-	@Override
-	public List<Role> getAllRoles() {
+  @Override
+  public List<Role> getAllRoles() {
 
-		return roleDaoImpl.getAll();
-	}
+    return roleDaoImpl.getAll();
+  }
 
 }

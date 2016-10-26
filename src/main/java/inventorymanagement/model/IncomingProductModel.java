@@ -2,44 +2,44 @@ package inventorymanagement.model;
 
 public class IncomingProductModel {
 
-	private int id;
+  private int id;
 
-	private String name;
+  private String name;
 
-	private String company;
+  private String company;
 
-	private String version;
+  private String version;
 
-	public int getId() {
-		return id;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+  public void setId(int id) {
+    this.id = id;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public String getCompany() {
-		return company;
-	}
+  public String getCompany() {
+    return company;
+  }
 
-	public void setCompany(String company) {
-		this.company = company;
-	}
+  public void setCompany(String company) {
+    this.company = company;
+  }
 
-	public String getVersion() {
-		return version;
-	}
+  public String getVersion() {
+    return version;
+  }
 
-	public void setVersion(String version) {
-		this.version = version;
-	}
+  public void setVersion(String version) {
+    this.version = version;
+  }
 
 }

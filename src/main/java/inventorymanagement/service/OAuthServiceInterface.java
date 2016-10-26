@@ -11,7 +11,7 @@ import inventorymanagement.model.LoginResponseModel;
 
 public interface OAuthServiceInterface {
 
-	public LoginResponseModel authenticate(Principal principal, HttpSession session)
-			throws UnauthorizedException, ForbiddenException, BadRequestException;
+  public LoginResponseModel authenticate(Principal principal, HttpSession session)
+      throws UnauthorizedException, ForbiddenException, BadRequestException;
 
 }

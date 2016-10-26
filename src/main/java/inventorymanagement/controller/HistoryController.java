@@ -19,21 +19,21 @@ import inventorymanagement.service.HistoryServiceInterface;
 @RestController
 public class HistoryController {
 
-	@Autowired
-	HistoryServiceInterface historyService;
+  @Autowired
+  HistoryServiceInterface historyService;
 
-	@RequestMapping(value = "/history", method = RequestMethod.POST)
-	@ResponseBody
-	@ResponseStatus(HttpStatus.CREATED)
-	public HistoryModel create(@RequestBody IncomingHistoryModel historyModel) {
-		return historyService.issueItem(historyModel);
-	}
+  @RequestMapping(value = "/history", method = RequestMethod.POST)
+  @ResponseBody
+  @ResponseStatus(HttpStatus.CREATED)
+  public HistoryModel create(@RequestBody IncomingHistoryModel historyModel) {
+    return historyService.issueItem(historyModel);
+  }
 
-	@RequestMapping(value = "/history/{id}", method = RequestMethod.PATCH)
-	@ResponseBody
-	@ResponseStatus(HttpStatus.OK)
-	public HistoryModel update(@PathVariable int id, @RequestBody IncomingReturnModel historyModel)
-			throws NotFoundException {
-		return historyService.returnItem(id, historyModel);
-	}
+  @RequestMapping(value = "/history/{id}", method = RequestMethod.PATCH)
+  @ResponseBody
+  @ResponseStatus(HttpStatus.OK)
+  public HistoryModel update(@PathVariable int id, @RequestBody IncomingReturnModel historyModel)
+      throws NotFoundException {
+    return historyService.returnItem(id, historyModel);
+  }
 }

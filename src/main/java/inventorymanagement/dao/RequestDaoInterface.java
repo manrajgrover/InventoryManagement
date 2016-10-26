@@ -6,12 +6,12 @@ import inventorymanagement.entities.Request;
 
 public interface RequestDaoInterface {
 
-	public void save(Request request);
+  public void save(Request request);
 
-	public void update(Request request);
+  public void update(Request request);
 
-	public List<Request> getAll();
+  public List<Request> getAll();
 
-	public Request getById(int id);
+  public Request getById(int id);
 
 }
