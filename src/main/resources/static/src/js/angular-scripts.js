@@ -60,10 +60,10 @@ app.run(function($rootScope, $location, sessionService){
   $rootScope.$on( "$routeChangeStart", function(event, next, current) {
     let session = sessionService.getSession();
     if (!session.hasOwnProperty('authenticated') || session.authenticated === false) {
-      if ( next.templateUrl !== "/dist/views/home.html" ) {
+      if ( next.templateUrl !== "dist/views/home.html" ) {
         $location.path( "/" );
       }
-    } else if ((!session.hasOwnProperty('admin') || session.admin === false) && (next.templateUrl === "/dist/views/admin.html" || next.templateUrl === "/dist/views/selectRole.html")) {
+    } else if ((!session.hasOwnProperty('admin') || session.admin === false) && (next.templateUrl === "dist/views/admin.html" || next.templateUrl === "dist/views/selectRole.html")) {
       $location.path( "/dashboard" );
     }
   });
@@ -101,7 +101,7 @@ app.controller("navController", function($scope, $http, $location, sessionServic
     jQuery(".dropdown-toggle").dropdown();
   });
 
-  $http.get("/userLogin").success(function(data) {
+  $http.get("userLogin").success(function(data) {
     console.log(data);
 
     let session = {
@@ -128,7 +128,7 @@ app.controller("navController", function($scope, $http, $location, sessionServic
   });
 
   $scope.logout = function() {
-    $http.post('/logout', {}).success(function() {
+    $http.post('logout', {}).success(function() {
       sessionService.resetSession();
       $scope.session = {};
       $location.path("/");
@@ -152,7 +152,7 @@ const getProductInformation = ($http, $scope, id) => {
     return;
   }
 
-  $http.get(`/items/${id}/count`).success(function(data) {
+  $http.get(`items/${id}/count`).success(function(data) {
     $scope.metaInfo.visible = true;
     $scope.metaInfo.count = data;
     $scope.message = "";
@@ -168,7 +168,7 @@ const getProductInformation = ($http, $scope, id) => {
 
 app.controller("dashboardController", function($scope, $http, $location, $timeout, sessionService) {
 
-  $http.get("/products").success(function(data) {
+  $http.get("products").success(function(data) {
     console.log(data);
     $scope.products = data;
     $scope.metaInfo = {
@@ -193,7 +193,7 @@ app.controller("dashboardController", function($scope, $http, $location, $timeou
 
     let userId = $scope.session.id;
 
-    $http.post('/requests', {
+    $http.post('requests', {
       userId: userId,
       productId: productId
     }).success(function() {
@@ -208,7 +208,7 @@ app.controller("dashboardController", function($scope, $http, $location, $timeou
 
 app.controller("adminController", function($scope, $http, $location, $timeout, sessionService) {
 
-  $http.get("/products").success(function(data) {
+  $http.get("products").success(function(data) {
     console.log(data);
     $scope.products = data;
     $scope.metaInfo = {
@@ -228,7 +228,7 @@ app.controller("adminController", function($scope, $http, $location, $timeout, s
     $location.path("/");
   });
 
-  $http.get("/users").success(function(data) {
+  $http.get("users").success(function(data) {
     console.log(data);
     $scope.users = data;
 
@@ -249,7 +249,7 @@ app.controller("adminController", function($scope, $http, $location, $timeout, s
     let userId = jQuery("#user").val();
     let productTag = jQuery("#productTag").val();
 
-    $http.post('/history', {
+    $http.post('history', {
       userId: userId,
       productId: productId,
       productTag: productTag
@@ -290,7 +290,7 @@ app.controller("returnsController", function($scope, $http, $location, $timeout,
       return;
     }
 
-    $http.patch(`/history/${issueNumber}`, {
+    $http.patch(`history/${issueNumber}`, {
       productTag: productTag
     }).success(function(data) {
       console.log(data);
@@ -317,7 +317,7 @@ app.controller("returnsController", function($scope, $http, $location, $timeout,
 
 app.controller("incomingRequestsController", function($http, $scope, $timeout, sessionService) {
 
-  $http.get("/requests").success(function(data) {
+  $http.get("requests").success(function(data) {
     $scope.data = data;
     
   }).error(function() {
@@ -325,7 +325,7 @@ app.controller("incomingRequestsController", function($http, $scope, $timeout, s
   });
 
   $scope.populateModal = (id) => {
-    $http.get(`/requests/${id}`).success(function(data) {
+    $http.get(`requests/${id}`).success(function(data) {
       $scope.modalData = data;
     }).error(function() {
       console.log("Error");
@@ -337,7 +337,7 @@ app.controller("incomingRequestsController", function($http, $scope, $timeout, s
     $scope.updateRequest = (id) => {
       let reply = jQuery(e.currentTarget).find('textarea[name="reply"]').val();
 
-      $http.patch(`/requests/${id}`, {
+      $http.patch(`requests/${id}`, {
         reply: reply
       }).success(function(data) {
         jQuery('#httpMessage').removeClass('alert-danger');
@@ -367,7 +367,7 @@ app.controller("incomingRequestsController", function($http, $scope, $timeout, s
 
 app.controller("productController", function($http, $scope, $timeout, $location, $route, sessionService) {
 
-  $http.get("/products").success(function(data) {
+  $http.get("products").success(function(data) {
     console.log(data);
     $scope.data = data;
   }).error(function() {
@@ -375,7 +375,7 @@ app.controller("productController", function($http, $scope, $timeout, $location,
   });
 
   $scope.populateEdit = (id) => {
-    $http.get(`/products/${id}`).success(function(data) {
+    $http.get(`products/${id}`).success(function(data) {
       jQuery("#editProductCompany").val(data.company);
       jQuery("#editProductVersion").val(data.version);
       jQuery("#editProductName").val(data.name);      
@@ -387,7 +387,7 @@ app.controller("productController", function($http, $scope, $timeout, $location,
 
   $scope.populateDelete = (id) => {
     console.log(id);
-    $http.get(`/products/${id}`).success(function(data) { 
+    $http.get(`products/${id}`).success(function(data) { 
       console.log(data); 
       $scope.delete = data;
     }).error(function() {
@@ -405,7 +405,7 @@ app.controller("productController", function($http, $scope, $timeout, $location,
 
       console.log(company + " "+ name + " " + version);
 
-      $http.patch(`/products/${id}`, {
+      $http.patch(`products/${id}`, {
         name: name,
         company: company,
         version: version
@@ -440,7 +440,7 @@ app.controller("productController", function($http, $scope, $timeout, $location,
     $scope.deleteProduct = (id) => {
       console.log(id);
 
-      $http.delete(`/products/${id}`).success(function(data) {
+      $http.delete(`products/${id}`).success(function(data) {
         jQuery('#httpMessage').removeClass('alert-danger');
         jQuery('#httpMessage').addClass('alert-success');
         jQuery('#delete').modal('hide');
@@ -470,7 +470,7 @@ app.controller("productController", function($http, $scope, $timeout, $location,
 
 app.controller("itemController", function($http, $scope, $timeout, $location, $route, sessionService) {
 
-  $http.get("/items").success(function(data) {
+  $http.get("items").success(function(data) {
     console.log(data);
     $scope.data = data;
   }).error(function() {
@@ -478,14 +478,14 @@ app.controller("itemController", function($http, $scope, $timeout, $location, $r
   });
 
   $scope.populateEdit = (id, productId) => {
-    $http.get(`/items/${id}`).success(function(data) {  
+    $http.get(`items/${id}`).success(function(data) {  
       $scope.edit = data;
       jQuery('#editItemTag').val(data.tag);
     }).error(function() {
       console.log("Error");
     });
 
-    $http.get(`/products`).success(function(data) {  
+    $http.get(`products`).success(function(data) {  
       $scope.products = data;
       $timeout(function(){
         console.log("Selecting");
@@ -498,7 +498,7 @@ app.controller("itemController", function($http, $scope, $timeout, $location, $r
 
   $scope.populateDelete = (id) => {
     console.log(id);
-    $http.get(`/items/${id}`).success(function(data) { 
+    $http.get(`items/${id}`).success(function(data) { 
       console.log(data); 
       $scope.delete = data;
     }).error(function() {
@@ -513,7 +513,7 @@ app.controller("itemController", function($http, $scope, $timeout, $location, $r
       let company = jQuery(e.currentTarget).find('select[name="productSelect"]').val();
       let tag = jQuery(e.currentTarget).find('input[name="editItemTag"]').val();
       console.log(company + " " + tag);
-      $http.patch(`/items/${id}`, {
+      $http.patch(`items/${id}`, {
         productId: company,
         productTag: tag
       }).success(function(data) {
@@ -547,7 +547,7 @@ app.controller("itemController", function($http, $scope, $timeout, $location, $r
     $scope.deleteProduct = (id) => {
       console.log(id);
 
-      $http.delete(`/items/${id}`).success(function(data) {
+      $http.delete(`items/${id}`).success(function(data) {
         jQuery('#httpMessage').removeClass('alert-danger');
         jQuery('#httpMessage').addClass('alert-success');
         jQuery('#delete').modal('hide');
