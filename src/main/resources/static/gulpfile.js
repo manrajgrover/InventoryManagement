@@ -12,7 +12,7 @@ const concat = require('gulp-concat');
 gulp.task('scripts', () => {
   gulp.src('src/js/script.js')
     .pipe(browserify({
-      debug : true
+      debug : false
     }))
     .pipe(gulp.dest('./dist/js'))
 });
