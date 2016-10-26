@@ -74,7 +74,7 @@ app.run(function($rootScope, $location, sessionService){
 app.controller("homeController", function($scope) {
 
   $scope.login = () => {
-    window.location.replace("/login");
+    window.location.replace("login");
   }
 
 });
