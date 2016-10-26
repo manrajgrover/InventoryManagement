@@ -26,7 +26,7 @@ public class UserController {
 	@Autowired
 	UserServiceInterface userService;
 
-	@RequestMapping(value = "/users", method = RequestMethod.POST)
+	@RequestMapping(value = "users", method = RequestMethod.POST)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.CREATED)
 	public UserModel create(@RequestBody IncomingUserModel userModel) throws BadRequestException {
@@ -36,7 +36,7 @@ public class UserController {
 		return user;
 	}
 
-	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	@RequestMapping(value = "users", method = RequestMethod.GET)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public List<UserModel> getAll() {
@@ -46,7 +46,7 @@ public class UserController {
 		return users;
 	}
 
-	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "users/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public UserModel getById(@PathVariable int id) {
@@ -56,7 +56,7 @@ public class UserController {
 		return user;
 	}
 
-	@RequestMapping(value = "/users/{id}", method = RequestMethod.PATCH)
+	@RequestMapping(value = "users/{id}", method = RequestMethod.PATCH)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public UserModel updateUser(@PathVariable int id, @RequestBody IncomingUserModel userModel) {
@@ -66,7 +66,7 @@ public class UserController {
 		return user;
 	}
 
-	@RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "users/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteUser(@PathVariable int id) {

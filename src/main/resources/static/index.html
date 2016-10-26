@@ -3,8 +3,8 @@
   <head>
     <title>Practo Inventory Management System</title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="./dist/css/style.min.css" rel="stylesheet" />
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="dist/css/style.min.css" rel="stylesheet" />
     <style>
       [ng\:cloak], [ng-cloak], .ng-cloak {
         display: none;
@@ -14,9 +14,9 @@
   </head>
   <body ng-app="app" ng-cloak>
     <div class="container">
-      <div ng-include="'./dist/views/navbar.html'"></div>
+      <div ng-include="'dist/views/navbar.html'"></div>
       <div ng-view></div>
     </div>
-    <script src="./dist/js/script.js"></script>
+    <script src="dist/js/script.js"></script>
   </body>
 </html>

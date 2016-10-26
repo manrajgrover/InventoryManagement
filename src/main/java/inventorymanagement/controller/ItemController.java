@@ -25,7 +25,7 @@ public class ItemController {
 	@Autowired
 	ItemServiceInterface itemService;
 
-	@RequestMapping(value = "/items", method = RequestMethod.POST)
+	@RequestMapping(value = "items", method = RequestMethod.POST)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.CREATED)
 	public ItemModel create(@RequestBody IncomingItemModel itemModel) {
@@ -35,7 +35,7 @@ public class ItemController {
 		return item;
 	}
 
-	@RequestMapping(value = "/items/{id}", method = RequestMethod.PATCH)
+	@RequestMapping(value = "items/{id}", method = RequestMethod.PATCH)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public ItemModel update(@PathVariable int id, @RequestBody IncomingItemModel itemModel) {
@@ -45,7 +45,7 @@ public class ItemController {
 		return item;
 	}
 
-	@RequestMapping(value = "/items/{id}/count", method = RequestMethod.GET)
+	@RequestMapping(value = "items/{id}/count", method = RequestMethod.GET)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public int getCount(@PathVariable int id) {
@@ -53,7 +53,7 @@ public class ItemController {
 		return count;
 	}
 
-	@RequestMapping(value = "/items/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "items/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable int id) {
@@ -62,7 +62,7 @@ public class ItemController {
 		LOG.info("Request to delete an item successful");
 	}
 
-	@RequestMapping(value = "/items", method = RequestMethod.GET)
+	@RequestMapping(value = "items", method = RequestMethod.GET)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public List<ItemModel> getAll() {
@@ -72,7 +72,7 @@ public class ItemController {
 		return itemModels;
 	}
 
-	@RequestMapping(value = "/items/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "items/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public ItemModel getById(@PathVariable int id) {

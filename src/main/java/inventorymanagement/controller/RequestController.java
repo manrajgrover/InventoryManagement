@@ -27,7 +27,7 @@ public class RequestController {
 	@Autowired
 	RequestServiceInterface requestService;
 
-	@RequestMapping(value = "/requests", method = RequestMethod.POST)
+	@RequestMapping(value = "requests", method = RequestMethod.POST)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.CREATED)
 	public RequestModel create(@RequestBody IncomingRequestModel request) throws BadRequestException {
@@ -37,7 +37,7 @@ public class RequestController {
 		return requestModel;
 	}
 
-	@RequestMapping(value = "/requests/{id}", method = RequestMethod.PATCH)
+	@RequestMapping(value = "requests/{id}", method = RequestMethod.PATCH)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public RequestModel update(@PathVariable int id, @RequestBody IncomingUpdateRequest request)
@@ -48,7 +48,7 @@ public class RequestController {
 		return requestModel;
 	}
 
-	@RequestMapping(value = "/requests", method = RequestMethod.GET)
+	@RequestMapping(value = "requests", method = RequestMethod.GET)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public List<RequestModel> getAll() {
@@ -58,7 +58,7 @@ public class RequestController {
 		return requests;
 	}
 
-	@RequestMapping(value = "/requests/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "requests/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public RequestModel getById(@PathVariable int id) {
