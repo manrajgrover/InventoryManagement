@@ -34,7 +34,7 @@ public class OAuthController extends WebSecurityConfigurerAdapter {
 	@Autowired
 	OAuthServiceInterface oauthService;
 
-	@RequestMapping(value = "userLogin", method = RequestMethod.GET)
+	@RequestMapping(value = "/userLogin", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public LoginResponseModel user(Principal principal, HttpSession session)

@@ -22,14 +22,14 @@ public class HistoryController {
 	@Autowired
 	HistoryServiceInterface historyService;
 
-	@RequestMapping(value = "history", method = RequestMethod.POST)
+	@RequestMapping(value = "/history", method = RequestMethod.POST)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.CREATED)
 	public HistoryModel create(@RequestBody IncomingHistoryModel historyModel) {
 		return historyService.issueItem(historyModel);
 	}
 
-	@RequestMapping(value = "history/{id}", method = RequestMethod.PATCH)
+	@RequestMapping(value = "/history/{id}", method = RequestMethod.PATCH)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public HistoryModel update(@PathVariable int id, @RequestBody IncomingReturnModel historyModel)

@@ -25,7 +25,7 @@ public class ProductController {
 	@Autowired
 	ProductServiceInterface productService;
 
-	@RequestMapping(value = "products", method = RequestMethod.POST)
+	@RequestMapping(value = "/products", method = RequestMethod.POST)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.CREATED)
 	public ProductModel create(@RequestBody IncomingProductModel productModel) {
@@ -35,7 +35,7 @@ public class ProductController {
 		return product;
 	}
 
-	@RequestMapping(value = "products/{id}", method = RequestMethod.PATCH)
+	@RequestMapping(value = "/products/{id}", method = RequestMethod.PATCH)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public ProductModel update(@PathVariable int id, @RequestBody IncomingProductModel productModel) {
@@ -45,7 +45,7 @@ public class ProductController {
 		return product;
 	}
 
-	@RequestMapping(value = "products/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/products/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable int id) {
@@ -54,7 +54,7 @@ public class ProductController {
 		LOG.info("Request for deleting a product successful");
 	}
 
-	@RequestMapping(value = "products", method = RequestMethod.GET)
+	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public List<IncomingProductModel> getAll() {

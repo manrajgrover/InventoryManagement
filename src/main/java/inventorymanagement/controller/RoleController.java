@@ -22,7 +22,7 @@ public class RoleController {
 	@Autowired
 	RoleServiceInterface roleService;
 
-	@RequestMapping(value = "roles", method = RequestMethod.GET)
+	@RequestMapping(value = "/roles", method = RequestMethod.GET)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public List<Role> getAll() {
