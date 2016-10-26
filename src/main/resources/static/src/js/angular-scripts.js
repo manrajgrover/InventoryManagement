@@ -9,31 +9,31 @@ app.config(function($httpProvider) {
 app.config(function($routeProvider) {
   $routeProvider.when('/', {
     controller: 'homeController',
-    templateUrl: '/dist/views/home.html'
+    templateUrl: 'dist/views/home.html'
   }).when('/dashboard', {
     controller: 'dashboardController',
-    templateUrl: '/dist/views/dashboard.html'
+    templateUrl: 'dist/views/dashboard.html'
   }).when('/profile', {
     controller: 'profileController',
-    templateUrl: '/dist/views/profile.html'
+    templateUrl: 'dist/views/profile.html'
   }).when('/admin', {
     controller: 'adminController',
-    templateUrl: '/dist/views/admin.html'
+    templateUrl: 'dist/views/admin.html'
   }).when('/selectRole', {
     controller: 'selectRoleController',
-    templateUrl: '/dist/views/selectRole.html'
+    templateUrl: 'dist/views/selectRole.html'
   }).when('/incoming/requests', {
     controller: 'incomingRequestsController',
-    templateUrl: '/dist/views/incomingRequests.html'
+    templateUrl: 'dist/views/incomingRequests.html'
   }).when('/products', {
     controller: 'productController',
-    templateUrl: '/dist/views/product.html'
+    templateUrl: 'dist/views/product.html'
   }).when('/items', {
     controller: 'itemController',
-    templateUrl: '/dist/views/item.html'
+    templateUrl: 'dist/views/item.html'
   }).when('/returns', {
     controller: 'returnsController',
-    templateUrl: '/dist/views/returns.html'
+    templateUrl: 'dist/views/returns.html'
   }).otherwise({
     redirectTo: '/'
   });
