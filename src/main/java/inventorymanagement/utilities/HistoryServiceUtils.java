@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import inti.ws.spring.exception.client.NotFoundException;
 import inventorymanagement.dao.ItemDaoInterface;
 import inventorymanagement.entities.Item;
+import inventorymanagement.entities.Product;
 import inventorymanagement.model.IncomingHistoryModel;
 import inventorymanagement.model.IncomingReturnModel;
 import inventorymanagement.model.OutgoingHistoryModel;
@@ -19,8 +20,10 @@ public class HistoryServiceUtils {
   public OutgoingHistoryModel checkAvailability(IncomingHistoryModel historyModel) {
     Item item = itemDaoImpl.getByItemTag(historyModel.getProductTag());
     OutgoingHistoryModel outgoingModel = new OutgoingHistoryModel();
-
-    if (item == null || item.getAvailable().equals("No")) {
+    Product productOfItem = item.getProduct();
+    int idOfProductOfItem = productOfItem.getId();
+    
+    if (item == null || item.getAvailable().equals("No") || historyModel.getProductId() != idOfProductOfItem) {
       outgoingModel.setAvailability(false);
       return outgoingModel;
     }
