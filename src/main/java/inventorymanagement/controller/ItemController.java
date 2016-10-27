@@ -2,6 +2,8 @@ package inventorymanagement.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import inti.ws.spring.exception.client.UnauthorizedException;
+import inventorymanagement.constants.Constants;
 import inventorymanagement.model.IncomingItemModel;
 import inventorymanagement.model.ItemModel;
 import inventorymanagement.service.ItemServiceInterface;
@@ -28,7 +32,11 @@ public class ItemController {
   @RequestMapping(value = "/items", method = RequestMethod.POST)
   @ResponseBody
   @ResponseStatus(HttpStatus.CREATED)
-  public ItemModel create(@RequestBody IncomingItemModel itemModel) {
+  public ItemModel create(@RequestBody IncomingItemModel itemModel, HttpSession session) throws UnauthorizedException {
+    Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
+    if (admin == false) {
+      throw new UnauthorizedException("Unauthorized access");
+    }
     LOG.info("Request received to add an item");
     ItemModel item = itemService.addItem(itemModel);
     LOG.info("Request to add an item successful");
@@ -38,7 +46,11 @@ public class ItemController {
   @RequestMapping(value = "/items/{id}", method = RequestMethod.PATCH)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
-  public ItemModel update(@PathVariable int id, @RequestBody IncomingItemModel itemModel) {
+  public ItemModel update(@PathVariable int id, @RequestBody IncomingItemModel itemModel, HttpSession session) throws UnauthorizedException {
+    Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
+    if (admin == false) {
+      throw new UnauthorizedException("Unauthorized access");
+    }
     LOG.info("Request received to update an item");
     ItemModel item = itemService.updateItem(id, itemModel);
     LOG.info("Request to update an item successful");
@@ -56,7 +68,11 @@ public class ItemController {
   @RequestMapping(value = "/items/{id}", method = RequestMethod.DELETE)
   @ResponseBody
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable int id) {
+  public void delete(@PathVariable int id, HttpSession session) throws UnauthorizedException {
+    Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
+    if (admin == false) {
+      throw new UnauthorizedException("Unauthorized access");
+    }
     LOG.info("Request received to delete an item");
     itemService.deleteItem(id);
     LOG.info("Request to delete an item successful");

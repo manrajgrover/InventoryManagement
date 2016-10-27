@@ -28,12 +28,6 @@ public class UserDaoImpl implements UserDaoInterface {
     getSession().save(user);
   }
 
-  @Override
-  public void delete(User user) {
-    System.out.println("PLEASE WORK " + user.getId());
-    getSession().delete(user);
-  }
-
   @SuppressWarnings("unchecked")
   @Override
   public List<User> getAll() {
@@ -48,11 +42,6 @@ public class UserDaoImpl implements UserDaoInterface {
     Criteria executableCriteria = criteria.getExecutableCriteria(getSession());
 
     return (User) executableCriteria.uniqueResult();
-  }
-
-  @Override
-  public void update(User user) {
-    getSession().update(user);
   }
 
   @Override

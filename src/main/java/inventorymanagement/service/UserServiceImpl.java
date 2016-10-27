@@ -68,37 +68,10 @@ public class UserServiceImpl implements UserServiceInterface {
 
   @Override
   @Transactional
-  public UserModel updateUser(int id, IncomingUserModel userModel) {
-    User user = userDaoImpl.getById(id);
-
-    userUtils.mapFromUpdateUser(userModel, user);
-    userDaoImpl.update(user);
-
-    UserModel um = new UserModel(user, Constants.USER_UPDATED_MESSAGE);
-    return um;
-  }
-
-  @Override
-  @Transactional
   public List<UserModel> getAllUsers() {
     List<User> users = userDaoImpl.getAll();
     List<UserModel> usersModel = userUtils.mapUsersToModels(users);
     return usersModel;
-  }
-
-  @Override
-  @Transactional
-  public void deleteUser(int id) {
-    User user = new User(id);
-    userDaoImpl.delete(user);
-  }
-
-  @Override
-  @Transactional
-  public UserModel getUserById(int id) {
-    User user = userDaoImpl.getById(id);
-    UserModel userModel = userUtils.mapUser(user);
-    return userModel;
   }
 
 }

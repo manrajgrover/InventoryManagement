@@ -26,16 +26,6 @@ public class UserController {
   @Autowired
   UserServiceInterface userService;
 
-  @RequestMapping(value = "/users", method = RequestMethod.POST)
-  @ResponseBody
-  @ResponseStatus(HttpStatus.CREATED)
-  public UserModel create(@RequestBody IncomingUserModel userModel) throws BadRequestException {
-    LOG.info("Request received to add a user");
-    UserModel user = userService.addUser(userModel);
-    LOG.info("Request to add a user successful");
-    return user;
-  }
-
   @RequestMapping(value = "/users", method = RequestMethod.GET)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
@@ -46,32 +36,4 @@ public class UserController {
     return users;
   }
 
-  @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
-  @ResponseBody
-  @ResponseStatus(HttpStatus.OK)
-  public UserModel getById(@PathVariable int id) {
-    LOG.info("Request received to get information of particular user");
-    UserModel user = userService.getUserById(id);
-    LOG.info("Request to get information of particular user successful");
-    return user;
-  }
-
-  @RequestMapping(value = "/users/{id}", method = RequestMethod.PATCH)
-  @ResponseBody
-  @ResponseStatus(HttpStatus.OK)
-  public UserModel updateUser(@PathVariable int id, @RequestBody IncomingUserModel userModel) {
-    LOG.info("Request received to get a user's information");
-    UserModel user = userService.updateUser(id, userModel);
-    LOG.info("Request to get a user's information successful");
-    return user;
-  }
-
-  @RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
-  @ResponseBody
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void deleteUser(@PathVariable int id) {
-    LOG.info("Request received to delete a user");
-    userService.deleteUser(id);
-    LOG.info("Request to delete a user successful");
-  }
 }

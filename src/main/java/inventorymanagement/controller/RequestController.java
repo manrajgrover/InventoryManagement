@@ -2,6 +2,8 @@ package inventorymanagement.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import inti.ws.spring.exception.client.BadRequestException;
+import inti.ws.spring.exception.client.UnauthorizedException;
+import inventorymanagement.constants.Constants;
 import inventorymanagement.model.IncomingRequestModel;
 import inventorymanagement.model.IncomingUpdateRequest;
 import inventorymanagement.model.RequestModel;
@@ -40,8 +44,12 @@ public class RequestController {
   @RequestMapping(value = "/requests/{id}", method = RequestMethod.PATCH)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
-  public RequestModel update(@PathVariable int id, @RequestBody IncomingUpdateRequest request)
-      throws BadRequestException {
+  public RequestModel update(@PathVariable int id, @RequestBody IncomingUpdateRequest request, HttpSession session)
+      throws BadRequestException, UnauthorizedException {
+    Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
+    if (admin == false) {
+      throw new UnauthorizedException("Unauthorized access");
+    }
     LOG.info("Request received for updating request");
     RequestModel requestModel = requestService.updateRequest(id, request);
     LOG.info("Request for updating a request successful");
