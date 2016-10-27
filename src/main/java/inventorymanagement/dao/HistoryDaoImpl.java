@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import inventorymanagement.entities.History;
 
 @Repository
-@Transactional
 public class HistoryDaoImpl implements HistoryDaoInterface {
 
   @Autowired

@@ -136,7 +136,7 @@ public class User implements java.io.Serializable {
     this.removedTimestamp = removedTimestamp;
   }
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
   public Set<UserRole> getUserRoles() {
     return this.userRoles;
   }

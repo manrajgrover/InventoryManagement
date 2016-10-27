@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import inventorymanagement.entities.Request;
 
 @Repository
-@Transactional
 public class RequestDaoImpl implements RequestDaoInterface {
 
   @Autowired

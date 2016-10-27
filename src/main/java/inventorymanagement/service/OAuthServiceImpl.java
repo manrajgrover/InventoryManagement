@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -25,7 +26,9 @@ public class OAuthServiceImpl implements OAuthServiceInterface {
 
   @Autowired
   private UserServiceInterface userService;
-
+  
+  @Override
+  @Transactional
   public LoginResponseModel authenticate(Principal principal, HttpSession session)
       throws UnauthorizedException, ForbiddenException, BadRequestException {
 

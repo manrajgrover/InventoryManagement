@@ -2,6 +2,8 @@ package inventorymanagement.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ public class RequestServiceImpl implements RequestServiceInterface {
   RequestServiceUtils requestUtils;
 
   @Override
+  @Transactional
   public RequestModel addRequest(IncomingRequestModel requestModel) {
     User user = new User(requestModel.getUserId());
     Product product = new Product(requestModel.getProductId());
@@ -38,6 +41,7 @@ public class RequestServiceImpl implements RequestServiceInterface {
   }
 
   @Override
+  @Transactional
   public List<RequestModel> getAllRequests() {
     List<Request> requests = requestDaoImpl.getAll();
     List<RequestModel> requestModel = requestUtils.mapRequestsToModel(requests);
@@ -45,6 +49,7 @@ public class RequestServiceImpl implements RequestServiceInterface {
   }
 
   @Override
+  @Transactional
   public RequestModel getRequestById(int id) {
     Request request = requestDaoImpl.getById(id);
     RequestModel requestModel = requestUtils.mapRequest(request);
@@ -52,6 +57,7 @@ public class RequestServiceImpl implements RequestServiceInterface {
   }
 
   @Override
+  @Transactional
   public RequestModel updateRequest(int id, IncomingUpdateRequest requestModel) {
     Request request = requestDaoImpl.getById(id);
 

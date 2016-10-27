@@ -2,6 +2,8 @@ package inventorymanagement.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,7 @@ public class UserServiceImpl implements UserServiceInterface {
   UserServiceUtils userUtils;
 
   @Override
+  @Transactional
   public UserModel addUser(IncomingUserModel userModel) throws BadRequestException {
     if (userModel.getName() == null || userModel.getEmail() == null) {
       throw new BadRequestException("Required parameters are invalid");
@@ -52,6 +55,7 @@ public class UserServiceImpl implements UserServiceInterface {
   }
 
   @Override
+  @Transactional
   public UserModel addUserIfNotExist(IncomingUserModel userModel) throws BadRequestException {
     User user = userDaoImpl.getUserByEmail(userModel.getEmail());
     if (user == null) {
@@ -63,6 +67,7 @@ public class UserServiceImpl implements UserServiceInterface {
   }
 
   @Override
+  @Transactional
   public UserModel updateUser(int id, IncomingUserModel userModel) {
     User user = userDaoImpl.getById(id);
 
@@ -74,6 +79,7 @@ public class UserServiceImpl implements UserServiceInterface {
   }
 
   @Override
+  @Transactional
   public List<UserModel> getAllUsers() {
     List<User> users = userDaoImpl.getAll();
     List<UserModel> usersModel = userUtils.mapUsersToModels(users);
@@ -81,12 +87,14 @@ public class UserServiceImpl implements UserServiceInterface {
   }
 
   @Override
+  @Transactional
   public void deleteUser(int id) {
     User user = new User(id);
     userDaoImpl.delete(user);
   }
 
   @Override
+  @Transactional
   public UserModel getUserById(int id) {
     User user = userDaoImpl.getById(id);
     UserModel userModel = userUtils.mapUser(user);

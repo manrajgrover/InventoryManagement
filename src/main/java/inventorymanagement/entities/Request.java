@@ -57,7 +57,7 @@ public class Request implements java.io.Serializable {
     this.id = id;
   }
 
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "product_id", nullable = false)
   public Product getProduct() {
     return this.product;
@@ -67,7 +67,7 @@ public class Request implements java.io.Serializable {
     this.product = product;
   }
 
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   public User getUser() {
     return this.user;

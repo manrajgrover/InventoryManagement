@@ -66,7 +66,7 @@ public class History implements java.io.Serializable {
     this.id = id;
   }
 
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "item_id", nullable = false)
   public Item getItem() {
     return this.item;
@@ -86,7 +86,7 @@ public class History implements java.io.Serializable {
     this.product = product;
   }
 
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   public User getUser() {
     return this.user;

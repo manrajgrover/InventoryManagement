@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import inventorymanagement.entities.Product;
 
 @Repository
-@Transactional
 public class ProductDaoImpl implements ProductDaoInterface {
 
   @Autowired

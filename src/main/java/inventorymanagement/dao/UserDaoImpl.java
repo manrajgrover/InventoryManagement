@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import inventorymanagement.entities.User;
 
 @Repository
-@Transactional
 public class UserDaoImpl implements UserDaoInterface {
 
   @Autowired

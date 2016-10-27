@@ -2,6 +2,8 @@ package inventorymanagement.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +17,8 @@ public class RoleServiceImpl implements RoleServiceInterface {
   RoleDaoInterface roleDaoImpl;
 
   @Override
+  @Transactional
   public List<Role> getAllRoles() {
-
     return roleDaoImpl.getAll();
   }
 

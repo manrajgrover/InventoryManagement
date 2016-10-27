@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import inventorymanagement.entities.Role;
 
 @Repository
-@Transactional
 public class RoleDaoImpl implements RoleDaoInterface {
 
   @Autowired

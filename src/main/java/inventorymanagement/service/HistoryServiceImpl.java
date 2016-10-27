@@ -2,6 +2,8 @@ package inventorymanagement.service;
 
 import java.util.Date;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,7 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
   HistoryServiceUtils historyServiceUtils;
 
   @Override
+  @Transactional
   public HistoryModel issueItem(IncomingHistoryModel historyModel) {
     OutgoingHistoryModel avail = historyServiceUtils.checkAvailability(historyModel);
     HistoryModel hm = new HistoryModel();
@@ -66,6 +69,7 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
   }
 
   @Override
+  @Transactional
   public HistoryModel returnItem(int issueNumber, IncomingReturnModel historyModel)
       throws NotFoundException {
 

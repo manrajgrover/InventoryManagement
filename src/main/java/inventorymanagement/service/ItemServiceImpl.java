@@ -25,6 +25,7 @@ public class ItemServiceImpl implements ItemServiceInterface {
   ItemServiceUtils itemServiceUtils;
 
   @Override
+  @Transactional
   public ItemModel addItem(IncomingItemModel itemModel) {
 
     Product product = new Product(itemModel.getProductId());
@@ -39,6 +40,7 @@ public class ItemServiceImpl implements ItemServiceInterface {
   }
 
   @Override
+  @Transactional
   public ItemModel updateItem(int id, IncomingItemModel itemModel) {
     Item item = itemDaoImpl.getById(id);
 
@@ -50,6 +52,7 @@ public class ItemServiceImpl implements ItemServiceInterface {
   }
 
   @Override
+  @Transactional
   public void deleteItem(int id) {
     Item item = new Item(id);
     itemDaoImpl.delete(item);
@@ -70,6 +73,7 @@ public class ItemServiceImpl implements ItemServiceInterface {
   }
 
   @Override
+  @Transactional
   public int getCountItem(int id) {
     return itemDaoImpl.getCountByProductId(id);
   }
