@@ -395,6 +395,45 @@ app.controller("productController", function($http, $scope, $timeout, $location,
     });
   }
 
+  jQuery('#add').on('shown.bs.modal', function (e) {
+
+    $scope.addProduct = () => {
+      let company = jQuery(e.currentTarget).find('input[name="addProductCompany"]').val();
+      let name = jQuery(e.currentTarget).find('input[name="addProductName"]').val();
+      let version = jQuery(e.currentTarget).find('input[name="addProductVersion"]').val();
+
+      console.log(company + " "+ name + " " + version);
+
+      $http.post(`products`, {
+        name: name,
+        company: company,
+        version: version
+      }).success(function(data) {
+        jQuery('#httpMessage').removeClass('alert-danger');
+        jQuery('#httpMessage').addClass('alert-success');
+        jQuery('#add').modal('hide');
+        $scope.productMessageShow = true;
+        $scope.productMessage = "Product added! Refreshing..";
+        $timeout(function(){
+          $scope.productMessageShow = false;
+          $route.reload();
+        }, 3000);
+
+      }).error(function() {
+        jQuery('#httpMessage').removeClass('alert-success');
+        jQuery('#httpMessage').addClass('alert-danger');
+        jQuery('#add').modal('hide');
+        $scope.productMessageShow = true;
+        $scope.productMessage = "An error occured";
+        $timeout(function(){
+          $scope.productMessageShow = false;
+        }, 3000);
+        console.log("Error");
+      });
+    }
+
+  });
+
   jQuery('#edit').on('shown.bs.modal', function (e) {
 
     $scope.updateProduct = (id) => {
@@ -477,6 +516,15 @@ app.controller("itemController", function($http, $scope, $timeout, $location, $r
     console.log("Error");
   });
 
+  $scope.populateAdd = () => {
+    $http.get(`products`).success(function(data) {
+      console.log(data);
+      $scope.products = data;
+    }).error(function() {
+      console.log("Error");
+    });
+  }
+
   $scope.populateEdit = (id, productId) => {
     $http.get(`items/${id}`).success(function(data) {  
       $scope.edit = data;
@@ -506,11 +554,47 @@ app.controller("itemController", function($http, $scope, $timeout, $location, $r
     });
   }
 
+  jQuery('#add').on('shown.bs.modal', function (e) {
+
+    $scope.addItem = () => {
+      let company = jQuery(e.currentTarget).find('select[name="addProductSelect"]').val();
+      let tag = jQuery(e.currentTarget).find('input[name="addItemTag"]').val();
+
+      console.log(company + " " + tag);
+
+      $http.post(`items`, {
+        productId: company,
+        productTag: tag
+      }).success(function(data) {
+        jQuery('#httpMessage').removeClass('alert-danger');
+        jQuery('#httpMessage').addClass('alert-success');
+        jQuery('#add').modal('hide');
+        $scope.itemMessageShow = true;
+        $scope.itemMessage = "Item added! Refreshing..";
+        $timeout(function(){
+          $scope.itemMessageShow = false;
+          $route.reload();
+        }, 3000);
+
+      }).error(function() {
+        jQuery('#httpMessage').removeClass('alert-success');
+        jQuery('#httpMessage').addClass('alert-danger');
+        jQuery('#add').modal('hide');
+        $scope.itemMessageShow = true;
+        $scope.itemMessage = "An error occured";
+        $timeout(function(){
+          $scope.itemMessageShow = false;
+        }, 3000);
+        console.log("Error");
+      });
+    }
+  });
+
   jQuery('#edit').on('shown.bs.modal', function (e) {
 
     $scope.updateItem = (id) => {
       console.log(id);
-      let company = jQuery(e.currentTarget).find('select[name="productSelect"]').val();
+      let company = jQuery(e.currentTarget).find('select[name="editProductSelect"]').val();
       let tag = jQuery(e.currentTarget).find('input[name="editItemTag"]').val();
       console.log(company + " " + tag);
       $http.patch(`items/${id}`, {

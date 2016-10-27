@@ -13,7 +13,7 @@
         <th>Name</th>
         <th>Version</th>
         <th></th>
-        <th></th>
+        <th><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add">Add</button></th>
       </tr>
     </thead>
     <tr ng-repeat="product in data">
@@ -25,6 +25,46 @@
       <td><button ng-click="populateDelete(product.id)" type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#delete">Delete</button></td>
     </tr>
   </table>
+  <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Add Product</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Product Company</div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              <div class="form-group">
+                  <input type="text" class="form-control" id="addProductCompany" name="addProductCompany">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Product Name:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              <div class="form-group">
+                <input type="text" class="form-control" id="addProductName" name="addProductName"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Product Version</div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              <div class="form-group">
+                  <input type="text" class="form-control" id="addProductVersion" name="addProductVersion"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button ng-click="addProduct()" type="button" class="btn btn-primary">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="editLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
