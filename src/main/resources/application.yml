@@ -1,0 +1,35 @@
+security:
+  oauth2:
+    client:
+      clientId: 500564727706-96lvmciib2c61p5jb13tkkq3ieu7r53e.apps.googleusercontent.com
+      clientSecret: VsvIumjPhc2IKlJ-l_fV111H
+      accessTokenUri: https://www.googleapis.com/oauth2/v4/token
+      userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth?prompt=consent
+      clientAuthenticationScheme: form
+      scope:
+        - openid
+        - email
+        - profile
+    resource:
+      userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+      preferTokenInfo: true
+entitymanager:
+    packagesToScan: inventorymanagement.entities
+hibernate:
+    dialect: org.hibernate.dialect.MySQL5Dialect
+    hbm2ddl:
+        auto: update
+    show_sql: true
+jdbc:
+    driverClassName: com.mysql.jdbc.Driver
+    password: root
+    url: jdbc:mysql://localhost:3306/inventory
+    username: root
+logging:
+    level:
+        org:
+            hibernate: ERROR
+            springframework:
+                web: DEBUG
+        root: WARN
+      
