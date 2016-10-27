@@ -13,5 +13,4 @@ public interface UserDaoInterface {
   public User getUserByEmail(String email);
 
   User getById(int id);
-
 }
