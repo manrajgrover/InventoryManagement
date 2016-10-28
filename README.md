@@ -13,7 +13,7 @@ Requirement documentation explains the features that will be integrated into the
 
 ## Plan of Action
 
-Plan of action explains what and when the features of project will be completed
+Plan of action explains what and when the features of project will be completed. You may find same [here](https://drive.google.com/a/practo.com/file/d/0B4ctKIyIL2JOR1JEZTg3NmdCSXM/view?usp=sharing).
 
 ## API Documentation
 
