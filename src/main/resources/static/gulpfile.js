@@ -10,6 +10,8 @@ const buffer = require('vinyl-buffer');
 const source = require('vinyl-source-stream');
 const ngAnnotate = require('gulp-ng-annotate');
 const babelify  = require('babelify');
+const htmlmin = require('gulp-htmlmin');
+
 /**
  * Browserifies JavaScript for distribution
  */
@@ -61,6 +63,7 @@ gulp.task('images', () => {
  */
 gulp.task('views', () => {
   gulp.src('src/views/*')
+    .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('./dist/views'));
 });
 
