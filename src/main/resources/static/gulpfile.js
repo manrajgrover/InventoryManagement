@@ -1,27 +1,36 @@
 "use strict";
 
 const gulp = require('gulp');
-const browserify = require('gulp-browserify');
+const browserify = require('browserify');
 const minifyCSS = require('gulp-minify-css');
 const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
 const purify = require('gulp-purifycss');
-
+const buffer = require('vinyl-buffer');
+const source = require('vinyl-source-stream');
+const ngAnnotate = require('gulp-ng-annotate');
+const babelify  = require('babelify');
 /**
  * Browserifies JavaScript for distribution
  */
 gulp.task('scripts', () => {
-  gulp.src('src/js/angular-scripts.js')
-    .pipe(browserify({
-      debug : false
-    }))
+
+  browserify('src/js/angular-scripts.js')
+    .transform("babelify", { presets: ["es2015"] })
+    .bundle()
+    .pipe(source('angular-scripts.js'))
+    .pipe(buffer())
+    .pipe(ngAnnotate())
+    .pipe(uglify())
     .pipe(gulp.dest('./dist/js'));
 
-  gulp.src('src/js/jquery-scripts.js')
-    .pipe(browserify({
-      debug : false
-    }))
-    .pipe(gulp.dest('./dist/js'))
+  browserify('src/js/jquery-scripts.js')
+    .transform("babelify", { presets: ["es2015"] })
+    .bundle()
+    .pipe(source('jquery-scripts.js'))
+    .pipe(buffer())
+    .pipe(uglify())
+    .pipe(gulp.dest('./dist/js'));
 });
 
 /**

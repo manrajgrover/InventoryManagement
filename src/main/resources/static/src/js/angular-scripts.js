@@ -8,7 +8,7 @@ app.config(function($httpProvider) {
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 });
 
-app.config(function($routeProvider) {
+app.config(/*@ngInject*/function($routeProvider) {
   $routeProvider.when('/', {
     controller: 'homeController',
     templateUrl: 'dist/views/home.html'
@@ -57,7 +57,7 @@ app.service('sessionService', function() {
   }
 });
 
-app.run(function($rootScope, $location, sessionService){
+app.run(/*@ngInject*/function($rootScope, $location, sessionService){
 
   $rootScope.$on( "$routeChangeStart", function(event, next, current) {
     let session = sessionService.getSession();
@@ -73,7 +73,7 @@ app.run(function($rootScope, $location, sessionService){
 });
 
 
-app.controller("homeController", function($scope) {
+app.controller("homeController", /*@ngInject*/function($scope) {
 
   $scope.login = () => {
     window.location.replace("login");
@@ -81,7 +81,7 @@ app.controller("homeController", function($scope) {
 
 });
 
-app.controller("selectRoleController", function($scope, $location, sessionService) {
+app.controller("selectRoleController", /*@ngInject*/function($scope, $location, sessionService) {
   
   $scope.roleSelected = (role) => {
     if(role === "admin") {
@@ -97,7 +97,7 @@ app.controller("selectRoleController", function($scope, $location, sessionServic
 
 });
 
-app.controller("navController", function($scope, $http, $location, sessionService) {
+app.controller("navController", /*@ngInject*/function($scope, $http, $location, sessionService) {
 
   angular.element(document).ready(function () {
     jQuery(".dropdown-toggle").dropdown();
@@ -149,7 +149,7 @@ const initializeSelect = () => {
   });
 }
 
-const getProductInformation = ($http, $scope, id) => {
+const getProductInformation = /*@ngInject*/ function($http, $scope, id) {
   if(id === "") {
     return;
   }
@@ -168,7 +168,7 @@ const getProductInformation = ($http, $scope, id) => {
   });
 }
 
-app.controller("dashboardController", function($scope, $http, $location, $timeout, sessionService) {
+app.controller("dashboardController", /*@ngInject*/ function($scope, $http, $location, $timeout, sessionService) {
 
   $http.get("products").success(function(data) {
     console.log(data);
@@ -208,7 +208,7 @@ app.controller("dashboardController", function($scope, $http, $location, $timeou
 
 });
 
-app.controller("adminController", function($scope, $http, $location, $timeout, sessionService) {
+app.controller("adminController", /*@ngInject*/ function($scope, $http, $location, $timeout, sessionService) {
 
   $http.get("products").success(function(data) {
     console.log(data);
@@ -282,7 +282,7 @@ app.controller("adminController", function($scope, $http, $location, $timeout, s
 
 });
 
-app.controller("returnsController", function($scope, $http, $location, $timeout, sessionService) {
+app.controller("returnsController", /*@ngInject*/ function($scope, $http, $location, $timeout, sessionService) {
 
   $scope.returnItem = () => {
     let issueNumber = jQuery("#issueNumber").val();
@@ -317,7 +317,7 @@ app.controller("returnsController", function($scope, $http, $location, $timeout,
 
 });
 
-app.controller("incomingRequestsController", function($http, $scope, $timeout, sessionService) {
+app.controller("incomingRequestsController", /*@ngInject*/ function($http, $scope, $timeout, sessionService) {
 
   $http.get("requests").success(function(data) {
     $scope.data = data;
@@ -367,7 +367,7 @@ app.controller("incomingRequestsController", function($http, $scope, $timeout, s
 
 });
 
-app.controller("productController", function($http, $scope, $timeout, $location, $route, sessionService) {
+app.controller("productController", /*@ngInject*/ function($http, $scope, $timeout, $location, $route, sessionService) {
 
   $http.get("products").success(function(data) {
     console.log(data);
@@ -509,7 +509,7 @@ app.controller("productController", function($http, $scope, $timeout, $location,
 
 });
 
-app.controller("itemController", function($http, $scope, $timeout, $location, $route, sessionService) {
+app.controller("itemController", /*@ngInject*/ function($http, $scope, $timeout, $location, $route, sessionService) {
 
   $http.get("items").success(function(data) {
     console.log(data);
@@ -661,7 +661,7 @@ app.controller("itemController", function($http, $scope, $timeout, $location, $r
 
 });
 
-app.controller("profileController", function($scope, $location, sessionService) {
+app.controller("profileController", /*@ngInject*/function($scope, $location, sessionService) {
   console.log("profile called");
   $scope.session = sessionService.getSession();
 });

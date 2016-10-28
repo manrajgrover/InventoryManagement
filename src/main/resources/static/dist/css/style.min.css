@@ -885,6 +885,17 @@ hr {
   border-top: 1px solid #eee;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
 [role=button] {
   cursor: pointer;
 }
@@ -2502,6 +2513,10 @@ select[multiple].input-lg,textarea.input-lg {
 
 .has-feedback label~.form-control-feedback {
   top: 25px;
+}
+
+.has-feedback label.sr-only~.form-control-feedback {
+  top: 0;
 }
 
 .help-block {
