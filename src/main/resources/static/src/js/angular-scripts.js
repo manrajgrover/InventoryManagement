@@ -1,3 +1,5 @@
+"use strict";
+
 const angular = require('angular');
 
 const app = angular.module("app", [require('angular-utils-pagination'), require('angular-route')]);

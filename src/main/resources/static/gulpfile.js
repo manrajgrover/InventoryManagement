@@ -5,12 +5,19 @@ const browserify = require('gulp-browserify');
 const minifyCSS = require('gulp-minify-css');
 const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
+const purify = require('gulp-purifycss');
 
 /**
  * Browserifies JavaScript for distribution
  */
 gulp.task('scripts', () => {
-  gulp.src('src/js/script.js')
+  gulp.src('src/js/angular-scripts.js')
+    .pipe(browserify({
+      debug : false
+    }))
+    .pipe(gulp.dest('./dist/js'));
+
+  gulp.src('src/js/jquery-scripts.js')
     .pipe(browserify({
       debug : false
     }))
@@ -21,15 +28,14 @@ gulp.task('scripts', () => {
  * Combines and minifies CSS
  */
 gulp.task('css', () => {
-  let opts = {comments:true,spare:true};
-
   gulp.src([
       'node_modules/bootstrap/dist/css/bootstrap.min.css',
       'node_modules/selectize/dist/css/selectize.bootstrap3.css',
       'src/css/*.css'
     ])
-    .pipe(minifyCSS(opts))
+    .pipe(minifyCSS())
     .pipe(concat('style.min.css'))
+    .pipe(purify(['dist/js/*.js', 'dist/views/*.html']))
     .pipe(gulp.dest('./dist/css'));
 });
 
@@ -51,14 +57,14 @@ gulp.task('views', () => {
 
 gulp.task('watch', () => {
   gulp.watch('src/js/*.js', ['scripts']);
-  gulp.watch('src/css/*.css', ['css']);
   gulp.watch('src/views/*.html', ['views']);
+  gulp.watch('src/css/*.css', ['css']);
   gulp.watch('src/images/*', ['images']);
 })
 
 /**
  * Gulp default task for running other tasks
  */
-gulp.task('default', ['css', 'scripts', 'images', 'views'],  () => {
+gulp.task('default', ['scripts', 'views', 'css', 'images'],  () => {
   console.log("Building project!");
 });
