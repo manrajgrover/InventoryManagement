@@ -29,7 +29,8 @@ public class HistoryController {
   @RequestMapping(value = "/history", method = RequestMethod.POST)
   @ResponseBody
   @ResponseStatus(HttpStatus.CREATED)
-  public HistoryModel create(@RequestBody IncomingHistoryModel historyModel, HttpSession session) throws UnauthorizedException {
+  public HistoryModel create(@RequestBody IncomingHistoryModel historyModel, HttpSession session)
+      throws UnauthorizedException {
     Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
     if (admin == false) {
       throw new UnauthorizedException("Unauthorized access");
@@ -40,8 +41,8 @@ public class HistoryController {
   @RequestMapping(value = "/history/{id}", method = RequestMethod.PATCH)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
-  public HistoryModel update(@PathVariable int id, @RequestBody IncomingReturnModel historyModel, HttpSession session)
-      throws NotFoundException, UnauthorizedException {
+  public HistoryModel update(@PathVariable int id, @RequestBody IncomingReturnModel historyModel,
+      HttpSession session) throws NotFoundException, UnauthorizedException {
     Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
     if (admin == false) {
       throw new UnauthorizedException("Unauthorized access");

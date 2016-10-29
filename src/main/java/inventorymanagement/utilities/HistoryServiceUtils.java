@@ -22,8 +22,9 @@ public class HistoryServiceUtils {
     OutgoingHistoryModel outgoingModel = new OutgoingHistoryModel();
     Product productOfItem = item.getProduct();
     int idOfProductOfItem = productOfItem.getId();
-    
-    if (item == null || item.getAvailable().equals("No") || historyModel.getProductId() != idOfProductOfItem) {
+
+    if (item == null || item.getAvailable().equals("No")
+        || historyModel.getProductId() != idOfProductOfItem) {
       outgoingModel.setAvailability(false);
       return outgoingModel;
     }

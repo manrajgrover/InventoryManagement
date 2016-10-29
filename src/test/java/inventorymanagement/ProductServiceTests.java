@@ -19,29 +19,29 @@ import inventorymanagement.utilities.ProductServiceUtils;
 @SpringBootTest
 @ContextConfiguration(classes = {TestDatabaseConfig.class})
 public class ProductServiceTests {
-  
+
   @Autowired
   ProductServiceInterface productService;
-  
+
   @Autowired
   ProductServiceUtils productServiceUtils;
-  
+
   @Test
   public void getAllProductsTests() {
     List<IncomingProductModel> productModels = productService.getAllProducts();
     assertEquals(productModels.size(), 4);
-    
+
     IncomingProductModel product = productModels.get(0);
     assertEquals(product.getId(), 1);
     assertEquals(product.getCompany(), "Apple");
     assertEquals(product.getName(), "MacBook");
     assertEquals(product.getVersion(), "2017");
   }
-  
+
   @Test
   public void getProductByIdTests() {
     IncomingProductModel productModel = productService.getProductById(1);
-    
+
     assertEquals(productModel.getId(), 1);
     assertEquals(productModel.getCompany(), "Apple");
     assertEquals(productModel.getName(), "MacBook");

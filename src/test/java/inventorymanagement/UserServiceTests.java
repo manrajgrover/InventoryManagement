@@ -19,26 +19,27 @@ import inventorymanagement.utilities.UserServiceUtils;
 @SpringBootTest
 @ContextConfiguration(classes = {TestDatabaseConfig.class})
 public class UserServiceTests {
-  
+
   @Autowired
   UserServiceInterface userService;
-  
+
   @Autowired
   UserServiceUtils userServiceUtils;
-  
+
   @Test
   public void getAllUsersTests() {
     List<UserModel> users = userService.getAllUsers();
+
     assertEquals(users.size(), 1);
-    
+
     UserModel user = users.get(0);
     String name = user.getName();
     String email = user.getEmail();
     System.out.println(name);
     System.out.println(email);
-    
+
     assertEquals(name, "Manraj Singh Grover");
     assertEquals(email, "manraj.singh@practo.com");
   }
-  
+
 }

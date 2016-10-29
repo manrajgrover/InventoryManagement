@@ -32,7 +32,8 @@ public class ItemController {
   @RequestMapping(value = "/items", method = RequestMethod.POST)
   @ResponseBody
   @ResponseStatus(HttpStatus.CREATED)
-  public ItemModel create(@RequestBody IncomingItemModel itemModel, HttpSession session) throws UnauthorizedException {
+  public ItemModel create(@RequestBody IncomingItemModel itemModel, HttpSession session)
+      throws UnauthorizedException {
     Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
     if (admin == false) {
       throw new UnauthorizedException("Unauthorized access");
@@ -46,7 +47,8 @@ public class ItemController {
   @RequestMapping(value = "/items/{id}", method = RequestMethod.PATCH)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
-  public ItemModel update(@PathVariable int id, @RequestBody IncomingItemModel itemModel, HttpSession session) throws UnauthorizedException {
+  public ItemModel update(@PathVariable int id, @RequestBody IncomingItemModel itemModel,
+      HttpSession session) throws UnauthorizedException {
     Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
     if (admin == false) {
       throw new UnauthorizedException("Unauthorized access");

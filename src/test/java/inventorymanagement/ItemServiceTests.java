@@ -19,20 +19,20 @@ import inventorymanagement.service.ItemServiceInterface;
 @SpringBootTest
 @ContextConfiguration(classes = {TestDatabaseConfig.class})
 public class ItemServiceTests {
-  
+
   @Autowired
   ItemServiceInterface itemService;
-  
+
   @Test
   public void getAllItemsTests() {
     List<ItemModel> itemList = itemService.getAllItems();
     assertTrue(itemList.size() == 2);
-    
+
     ItemModel item = itemList.get(0);
     assertTrue(item.getItemId() > 0);
     assertEquals(item.getName(), "iPhone");
   }
-  
+
   @Test
   public void getItemsByIdTests() {
     ItemModel item = itemService.getItemById(7);
@@ -42,7 +42,7 @@ public class ItemServiceTests {
     assertEquals(item.getVersion(), "7");
     assertEquals(item.getTag(), "XYZ");
   }
-  
+
   @Test
   public void getCountItemTests() {
     int count = itemService.getCountItem(1);
@@ -52,6 +52,6 @@ public class ItemServiceTests {
     count = itemService.getCountItem(2);
     assertEquals(count, 0);
   }
-  
-  
+
+
 }

@@ -32,7 +32,8 @@ public class ProductController {
   @RequestMapping(value = "/products", method = RequestMethod.POST)
   @ResponseBody
   @ResponseStatus(HttpStatus.CREATED)
-  public ProductModel create(@RequestBody IncomingProductModel productModel, HttpSession session) throws UnauthorizedException {
+  public ProductModel create(@RequestBody IncomingProductModel productModel, HttpSession session)
+      throws UnauthorizedException {
     Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
     if (admin == false) {
       throw new UnauthorizedException("Unauthorized access");
@@ -46,7 +47,8 @@ public class ProductController {
   @RequestMapping(value = "/products/{id}", method = RequestMethod.PATCH)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
-  public ProductModel update(@PathVariable int id, @RequestBody IncomingProductModel productModel, HttpSession session) throws UnauthorizedException {
+  public ProductModel update(@PathVariable int id, @RequestBody IncomingProductModel productModel,
+      HttpSession session) throws UnauthorizedException {
     Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
     if (admin == false) {
       throw new UnauthorizedException("Unauthorized access");

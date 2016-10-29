@@ -27,10 +27,10 @@ public class OAuthServiceImpl implements OAuthServiceInterface {
 
   @Autowired
   private UserServiceInterface userService;
-  
+
   @Autowired
   private UserServiceUtils userServiceUtils;
-  
+
   @Override
   @Transactional
   public LoginResponseModel authenticate(Principal principal, HttpSession session)

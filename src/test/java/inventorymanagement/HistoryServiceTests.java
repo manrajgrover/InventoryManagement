@@ -17,23 +17,20 @@ import inventorymanagement.service.HistoryServiceInterface;
 @SpringBootTest
 @ContextConfiguration(classes = {TestDatabaseConfig.class})
 public class HistoryServiceTests {
-  
+
   @Autowired
   HistoryServiceInterface historyService;
-  
+
   @Test
   public void issueItemTests() {
     assertTrue(2 == 2);
   }
 
-  /*@Test
-  public void issueItemTests() {
-    IncomingHistoryModel historyModel = new IncomingHistoryModel();
-    historyModel.setProductId(7);
-    historyModel.setProductTag("XYZ");
-    historyModel.setUserId(6);
-    HistoryModel hm = historyService.issueItem(historyModel);
-    assertTrue(hm.getId() > 0);
-  }*/
+  /*
+   * @Test public void issueItemTests() { IncomingHistoryModel historyModel = new
+   * IncomingHistoryModel(); historyModel.setProductId(7); historyModel.setProductTag("XYZ");
+   * historyModel.setUserId(6); HistoryModel hm = historyService.issueItem(historyModel);
+   * assertTrue(hm.getId() > 0); }
+   */
 
 }

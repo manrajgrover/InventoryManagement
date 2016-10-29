@@ -34,7 +34,7 @@ public class TestDatabaseConfig {
 
   @Value("${hibernate.hbm2ddl.auto}")
   private String HIBERNATE_HBM2DDL_AUTO;
-  
+
   @Value("${hibernate.data}")
   private String SQL_FILE;
 

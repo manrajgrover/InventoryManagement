@@ -30,9 +30,9 @@ public class UserServiceUtils {
     userModel.setEmail(user.getEmail());
     return userModel;
   }
-  
+
   public Boolean checkIfAdmin(UserModel userModel) {
-    
+
     Set<UserRole> roles = userModel.getRole();
     Boolean admin = false;
 
@@ -42,8 +42,8 @@ public class UserServiceUtils {
         admin = true;
       }
     }
-    
+
     return admin;
   }
-  
+
 }

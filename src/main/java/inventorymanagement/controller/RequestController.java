@@ -44,8 +44,8 @@ public class RequestController {
   @RequestMapping(value = "/requests/{id}", method = RequestMethod.PATCH)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
-  public RequestModel update(@PathVariable int id, @RequestBody IncomingUpdateRequest request, HttpSession session)
-      throws BadRequestException, UnauthorizedException {
+  public RequestModel update(@PathVariable int id, @RequestBody IncomingUpdateRequest request,
+      HttpSession session) throws BadRequestException, UnauthorizedException {
     Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
     if (admin == false) {
       throw new UnauthorizedException("Unauthorized access");
