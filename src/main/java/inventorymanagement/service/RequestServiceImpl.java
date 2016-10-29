@@ -32,9 +32,8 @@ public class RequestServiceImpl implements RequestServiceInterface {
     User user = new User(requestModel.getUserId());
     Product product = new Product(requestModel.getProductId());
     String reply = "";
-    boolean status = false;
 
-    Request request = new Request(user, product, reply, status);
+    Request request = new Request(user, product, reply);
     requestDaoImpl.save(request);
     RequestModel rm = new RequestModel(request, Constants.REQUEST_CREATED_MESSAGE);
     return rm;

@@ -42,9 +42,8 @@ public class UserServiceImpl implements UserServiceInterface {
     LOG.debug("Parameters are valid");
     String name = userModel.getName();
     String email = userModel.getEmail();
-    String contact = userModel.getContact();
     Role role = new Role(2);
-    User user = new User(name, email, contact);
+    User user = new User(name, email);
     UserRole userRole = new UserRole(role, user);
     LOG.debug("Saving user");
     userDaoImpl.save(user);

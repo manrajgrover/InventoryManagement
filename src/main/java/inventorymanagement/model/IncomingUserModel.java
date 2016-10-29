@@ -8,13 +8,11 @@ import inventorymanagement.entities.UserRole;
 public class IncomingUserModel {
   private String name;
   private String email;
-  private String contact;
   private Set<UserRole> userRoles = new HashSet<UserRole>(0);
 
-  public IncomingUserModel(String name, String email, String contact) {
+  public IncomingUserModel(String name, String email) {
     this.name = name;
     this.email = email;
-    this.contact = contact;
   }
 
   public String getName() {
@@ -31,14 +29,6 @@ public class IncomingUserModel {
 
   public void setEmail(String email) {
     this.email = email;
-  }
-
-  public String getContact() {
-    return contact;
-  }
-
-  public void setContact(String contact) {
-    this.contact = contact;
   }
 
   public Set<UserRole> getUserRoles() {

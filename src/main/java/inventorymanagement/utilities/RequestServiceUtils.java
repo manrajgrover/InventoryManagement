@@ -27,7 +27,6 @@ public class RequestServiceUtils {
     RequestModel requestModel = new RequestModel();
     requestModel.setReply(request.getReply());
     requestModel.setId(request.getId());
-    requestModel.setStatus(request.isStatus());
     User user = request.getUser();
     Product product = request.getProduct();
     requestModel.setUserName(user.getName());

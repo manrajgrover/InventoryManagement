@@ -84,7 +84,7 @@ public class Product implements java.io.Serializable {
     this.id = id;
   }
 
-  @Column(name = "version", nullable = false, length = 10)
+  @Column(name = "version", nullable = false, length = 65535)
   public String getVersion() {
     return this.version;
   }
@@ -93,7 +93,7 @@ public class Product implements java.io.Serializable {
     this.version = version;
   }
 
-  @Column(name = "name", nullable = false, length = 50)
+  @Column(name = "name", nullable = false, length = 65535)
   public String getName() {
     return this.name;
   }
@@ -102,7 +102,7 @@ public class Product implements java.io.Serializable {
     this.name = name;
   }
 
-  @Column(name = "company", nullable = false, length = 50)
+  @Column(name = "company", nullable = false, length = 65535)
   public String getCompany() {
     return this.company;
   }

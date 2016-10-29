@@ -25,25 +25,22 @@ public class Request implements java.io.Serializable {
   private String reply;
   private Date modifiedTimestamp;
   private Date createdTimestamp;
-  private boolean status;
 
   public Request() {}
 
-  public Request(User user, Product product, String reply, boolean status) {
+  public Request(User user, Product product, String reply) {
     this.user = user;
     this.product = product;
     this.reply = reply;
-    this.status = status;
   }
 
   public Request(Product product, User user, String reply, Date modifiedTimestamp,
-      Date createdTimestamp, boolean status) {
+      Date createdTimestamp) {
     this.product = product;
     this.user = user;
     this.reply = reply;
     this.modifiedTimestamp = modifiedTimestamp;
     this.createdTimestamp = createdTimestamp;
-    this.status = status;
   }
 
   @Id
@@ -77,7 +74,7 @@ public class Request implements java.io.Serializable {
     this.user = user;
   }
 
-  @Column(name = "reply", nullable = false, length = 20)
+  @Column(name = "reply", nullable = false, length = 65535)
   public String getReply() {
     return this.reply;
   }
@@ -106,20 +103,11 @@ public class Request implements java.io.Serializable {
     this.createdTimestamp = createdTimestamp;
   }
 
-  @Column(name = "status", nullable = false)
-  public boolean isStatus() {
-    return this.status;
-  }
-
-  public void setStatus(boolean status) {
-    this.status = status;
-  }
-
   @Override
   public String toString() {
     return "Request [id=" + id + ", product=" + product + ", user=" + user + ", reply=" + reply
         + ", modifiedTimestamp=" + modifiedTimestamp + ", createdTimestamp=" + createdTimestamp
-        + ", status=" + status + "]";
+        + "]";
   }
 
 }

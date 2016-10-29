@@ -15,8 +15,6 @@ public class UserModel {
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private String email;
   @JsonInclude(JsonInclude.Include.NON_NULL)
-  private String contact;
-  @JsonInclude(JsonInclude.Include.NON_NULL)
   private Set<UserRole> role;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -33,7 +31,6 @@ public class UserModel {
     this.id = user.getId();
     this.name = user.getName();
     this.email = user.getEmail();
-    this.contact = user.getContact();
     this.role = user.getUserRoles();
   }
 
@@ -41,7 +38,6 @@ public class UserModel {
     this.id = user.getId();
     this.name = user.getName();
     this.email = user.getEmail();
-    this.contact = user.getContact();
     this.role = user.getUserRoles();
     this.message = message;
   }
@@ -68,14 +64,6 @@ public class UserModel {
 
   public void setEmail(String email) {
     this.email = email;
-  }
-
-  public String getContact() {
-    return contact;
-  }
-
-  public void setContact(String contact) {
-    this.contact = contact;
   }
 
   public String getMessage() {

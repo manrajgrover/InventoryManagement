@@ -10,8 +10,6 @@ public class HistoryModel {
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private String email;
   @JsonInclude(JsonInclude.Include.NON_NULL)
-  private String contact;
-  @JsonInclude(JsonInclude.Include.NON_NULL)
   private String message;
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private Boolean availability;
@@ -45,14 +43,6 @@ public class HistoryModel {
 
   public void setEmail(String email) {
     this.email = email;
-  }
-
-  public String getContact() {
-    return contact;
-  }
-
-  public void setContact(String contact) {
-    this.contact = contact;
   }
 
   public String getMessage() {

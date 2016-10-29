@@ -22,9 +22,6 @@ public class RequestModel {
   private String version;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
-  private boolean status;
-
-  @JsonInclude(JsonInclude.Include.NON_NULL)
   private String reply;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -36,16 +33,7 @@ public class RequestModel {
     System.out.println(message);
     this.id = request.getId();
     this.reply = request.getReply();
-    this.status = request.isStatus();
     this.message = message;
-  }
-
-  public boolean isStatus() {
-    return status;
-  }
-
-  public void setStatus(boolean status) {
-    this.status = status;
   }
 
   public String getReply() {

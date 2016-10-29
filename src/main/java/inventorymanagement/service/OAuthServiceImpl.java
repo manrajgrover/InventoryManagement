@@ -20,12 +20,16 @@ import inventorymanagement.entities.UserRole;
 import inventorymanagement.model.IncomingUserModel;
 import inventorymanagement.model.LoginResponseModel;
 import inventorymanagement.model.UserModel;
+import inventorymanagement.utilities.UserServiceUtils;
 
 @Service
 public class OAuthServiceImpl implements OAuthServiceInterface {
 
   @Autowired
   private UserServiceInterface userService;
+  
+  @Autowired
+  private UserServiceUtils userServiceUtils;
   
   @Override
   @Transactional
@@ -55,10 +59,9 @@ public class OAuthServiceImpl implements OAuthServiceInterface {
 
       String email = details.get(Constants.EMAIL_KEY);
       String name = details.get(Constants.NAME_KEY);
-      String contact = "9898989898";
       String picture = details.get(Constants.PICTURE_KEY);
 
-      IncomingUserModel user = new IncomingUserModel(name, email, contact);
+      IncomingUserModel user = new IncomingUserModel(name, email);
 
       UserModel userModel = userService.addUserIfNotExist(user);
 
@@ -69,15 +72,8 @@ public class OAuthServiceImpl implements OAuthServiceInterface {
       session.setAttribute(Constants.SESSION_ID, id);
       session.setAttribute(Constants.SESSION_PICTURE, picture);
 
-      Set<UserRole> roles = userModel.getRole();
-      Boolean admin = false;
+      Boolean admin = userServiceUtils.checkIfAdmin(userModel);
 
-      for (UserRole userRole : roles) {
-        Role role = userRole.getRole();
-        if (role.getId() == 1) {
-          admin = true;
-        }
-      }
       session.setAttribute(Constants.SESSION_ADMIN, admin);
       LoginResponseModel loginResponse = new LoginResponseModel();
       loginResponse.setEmail(email);

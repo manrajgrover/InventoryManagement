@@ -96,7 +96,7 @@ public class History implements java.io.Serializable {
     this.user = user;
   }
 
-  @Column(name = "user_name", nullable = false, length = 50)
+  @Column(name = "user_name", nullable = false, length = 65535)
   public String getUserName() {
     return this.userName;
   }

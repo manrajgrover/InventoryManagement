@@ -92,7 +92,7 @@ public class Item implements java.io.Serializable {
     this.product = product;
   }
 
-  @Column(name = "tag", unique = true, nullable = false, length = 50)
+  @Column(name = "tag", unique = true, nullable = false, length = 30)
   public String getTag() {
     return this.tag;
   }
