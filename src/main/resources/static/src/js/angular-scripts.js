@@ -149,26 +149,7 @@ const initializeSelect = () => {
   });
 }
 
-const getProductInformation = /*@ngInject*/ function($http, $scope, id) {
-  if(id === "") {
-    return;
-  }
-
-  $http.get(`items/${id}/count`).success(function(data) {
-    $scope.metaInfo.visible = true;
-    $scope.metaInfo.count = data;
-    $scope.message = "";
-
-    if (data > 0) {
-      $scope.requestButton = true;
-      $scope.requestId = id;
-    }
-  }).error(function() {
-    self.authenticated = false;
-  });
-}
-
-app.controller("dashboardController", /*@ngInject*/ function($scope, $http, $location, $timeout, sessionService) {
+app.controller("dashboardController", /*@ngInject*/function($scope, $http, $location, $timeout, sessionService) {
 
   $http.get("products").success(function(data) {
     console.log(data);
@@ -187,7 +168,22 @@ app.controller("dashboardController", /*@ngInject*/ function($scope, $http, $loc
 
   jQuery("#product").on('change', function() {
     let id = jQuery("#product").val();
-    getProductInformation($http, $scope, id);
+    if(id === "") {
+      return;
+    }
+
+    $http.get(`items/${id}/count`).success(function(data) {
+      $scope.metaInfo.visible = true;
+      $scope.metaInfo.count = data;
+      $scope.message = "";
+
+      if (data > 0) {
+        $scope.requestButton = true;
+        $scope.requestId = id;
+      }
+    }).error(function() {
+      self.authenticated = false;
+    });
   });
 
   $scope.requestItem = (productId) => {
@@ -282,7 +278,7 @@ app.controller("adminController", /*@ngInject*/ function($scope, $http, $locatio
 
 });
 
-app.controller("returnsController", /*@ngInject*/ function($scope, $http, $location, $timeout, sessionService) {
+app.controller("returnsController", /*@ngInject*/function($scope, $http, $location, $timeout, sessionService) {
 
   $scope.returnItem = () => {
     let issueNumber = jQuery("#issueNumber").val();
@@ -317,7 +313,7 @@ app.controller("returnsController", /*@ngInject*/ function($scope, $http, $locat
 
 });
 
-app.controller("incomingRequestsController", /*@ngInject*/ function($http, $scope, $timeout, sessionService) {
+app.controller("incomingRequestsController", /*@ngInject*/function($http, $scope, $timeout, sessionService) {
 
   $http.get("requests").success(function(data) {
     $scope.data = data;
@@ -367,7 +363,7 @@ app.controller("incomingRequestsController", /*@ngInject*/ function($http, $scop
 
 });
 
-app.controller("productController", /*@ngInject*/ function($http, $scope, $timeout, $location, $route, sessionService) {
+app.controller("productController", /*@ngInject*/function($http, $scope, $timeout, $location, $route, sessionService) {
 
   $http.get("products").success(function(data) {
     console.log(data);
@@ -509,7 +505,7 @@ app.controller("productController", /*@ngInject*/ function($http, $scope, $timeo
 
 });
 
-app.controller("itemController", /*@ngInject*/ function($http, $scope, $timeout, $location, $route, sessionService) {
+app.controller("itemController", /*@ngInject*/function($http, $scope, $timeout, $location, $route, sessionService) {
 
   $http.get("items").success(function(data) {
     console.log(data);
@@ -539,7 +535,7 @@ app.controller("itemController", /*@ngInject*/ function($http, $scope, $timeout,
       $scope.products = data;
       $timeout(function(){
         console.log("Selecting");
-        jQuery("#product option[value="+productId+"]").attr("selected","selected");
+        jQuery("#editProduct option[value="+productId+"]").attr("selected","selected");
       }, 30);
     }).error(function() {
       console.log("Error");
