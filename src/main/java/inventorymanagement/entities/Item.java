@@ -102,7 +102,8 @@ public class Item implements java.io.Serializable {
   }
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "create_timestamp", nullable = false, length = 19)
+  @Column(name = "create_timestamp", nullable = false, insertable = false,
+      columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", length = 19)
   public Date getCreateTimestamp() {
     return this.createTimestamp;
   }
@@ -121,7 +122,9 @@ public class Item implements java.io.Serializable {
   }
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "modified_timestamp", nullable = false, updatable = false, length = 19)
+  @Column(name = "modified_timestamp", nullable = false, updatable = false, insertable = false,
+      columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
+      length = 19)
   public Date getModifiedTimestamp() {
     return this.modifiedTimestamp;
   }

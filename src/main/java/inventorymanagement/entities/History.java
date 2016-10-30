@@ -106,7 +106,8 @@ public class History implements java.io.Serializable {
   }
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "issue_timestamp", nullable = false, length = 19)
+  @Column(name = "issue_timestamp", nullable = false, insertable = false,
+      columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", length = 19)
   public Date getIssueTimestamp() {
     return this.issueTimestamp;
   }

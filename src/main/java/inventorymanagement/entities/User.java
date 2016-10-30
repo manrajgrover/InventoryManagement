@@ -84,7 +84,8 @@ public class User implements java.io.Serializable {
   }
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "created_timestamp", nullable = false, insertable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP",length = 19)
+  @Column(name = "created_timestamp", nullable = false, insertable = false,
+      columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", length = 19)
   public Date getCreatedTimestamp() {
     return this.createdTimestamp;
   }
