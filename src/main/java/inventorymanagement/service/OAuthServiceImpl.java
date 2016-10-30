@@ -2,7 +2,6 @@ package inventorymanagement.service;
 
 import java.security.Principal;
 import java.util.HashMap;
-import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
@@ -15,8 +14,6 @@ import inti.ws.spring.exception.client.BadRequestException;
 import inti.ws.spring.exception.client.ForbiddenException;
 import inti.ws.spring.exception.client.UnauthorizedException;
 import inventorymanagement.constants.Constants;
-import inventorymanagement.entities.Role;
-import inventorymanagement.entities.UserRole;
 import inventorymanagement.model.IncomingUserModel;
 import inventorymanagement.model.LoginResponseModel;
 import inventorymanagement.model.UserModel;

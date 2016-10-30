@@ -9,7 +9,9 @@ public class IncomingUserModel {
   private String name;
   private String email;
   private Set<UserRole> userRoles = new HashSet<UserRole>(0);
-
+  
+  public IncomingUserModel() {};
+  
   public IncomingUserModel(String name, String email) {
     this.name = name;
     this.email = email;
