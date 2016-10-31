@@ -124,7 +124,7 @@ public class Product implements java.io.Serializable {
 
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "modified_timestamp", nullable = false, updatable = false, insertable = false,
-      columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
+      columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
       length = 19)
   public Date getModifiedTimestamp() {
     return this.modifiedTimestamp;

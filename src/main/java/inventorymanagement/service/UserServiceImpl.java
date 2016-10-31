@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserServiceInterface {
     LOG.debug("Parameters are valid");
     String name = userModel.getName();
     String email = userModel.getEmail();
-    Role role = new Role(2);
+    Role role = new Role(2, "user");
     User user = new User(name, email);
     UserRole userRole = new UserRole(role, user);
     LOG.debug("Saving user");
