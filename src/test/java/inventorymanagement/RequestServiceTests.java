@@ -1,6 +1,7 @@
 package inventorymanagement;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -18,15 +19,15 @@ import inventorymanagement.service.RequestServiceInterface;
 @SpringBootTest
 @ContextConfiguration(classes = {TestDatabaseConfig.class})
 public class RequestServiceTests {
-  
+
   @Autowired
   private RequestServiceInterface requestService;
-  
+
   @Test
   public void getAllRequestsTests() {
     List<RequestModel> requests = requestService.getAllRequests();
     assertEquals(requests.size(), 2);
-    
+
     RequestModel request = requests.get(0);
     assertEquals(request.getUserName(), "Manraj Singh Grover");
     assertEquals(request.getId(), 1);
@@ -34,11 +35,11 @@ public class RequestServiceTests {
     assertEquals(request.getProductName(), "Three");
     assertEquals(request.getReply(), "YES");
   }
-  
+
   @Test
   public void getRequestsByIdTests() {
     RequestModel request = requestService.getRequestById(1);
-    
+
     assertEquals(request.getUserName(), "Manraj Singh Grover");
     assertEquals(request.getId(), 1);
     assertEquals(request.getProductCompany(), "OnePlus");

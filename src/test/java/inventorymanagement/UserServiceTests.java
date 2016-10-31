@@ -16,6 +16,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import inti.ws.spring.exception.client.BadRequestException;
+import inventorymanagement.dao.UserDaoInterface;
+import inventorymanagement.dao.UserRoleDaoInterface;
 import inventorymanagement.model.IncomingUserModel;
 import inventorymanagement.model.UserModel;
 import inventorymanagement.service.UserServiceInterface;
@@ -30,6 +32,12 @@ public class UserServiceTests {
 
   @Autowired
   UserServiceInterface userService;
+  
+  @Autowired
+  UserDaoInterface userDao;
+  
+  @Autowired
+  UserRoleDaoInterface userroleDao;
 
   @Autowired
   UserServiceUtils userServiceUtils;
@@ -41,27 +49,29 @@ public class UserServiceTests {
     incomingUserModel.setName("Manraj Singh Grover");
     incomingUserModel.setEmail("manraj.singh@practo.com");
     UserModel userModel = userService.addUserIfNotExist(incomingUserModel);
+
     List<UserModel> users = userService.getAllUsers();
     assertEquals(users.size(), 1);
   }
-  
+
   @Test
   @Rollback(true)
   public void addUserIfNotExistTests() throws BadRequestException {
+    
     IncomingUserModel incomingUserModel = new IncomingUserModel();
     incomingUserModel.setName("Ayush Aggarwal");
     incomingUserModel.setEmail("ayush.aggr@practo.com");
+    
     UserModel userModel = userService.addUserIfNotExist(incomingUserModel);
     List<UserModel> users = userService.getAllUsers();
-
     assertEquals(users.size(), 2);
   }
 
   @Test
   public void getAllUsersTests() {
     List<UserModel> users = userService.getAllUsers();
-    
-    for(UserModel user: users) {
+
+    for (UserModel user : users) {
       System.out.println(user.getEmail());
     }
 
@@ -74,5 +84,4 @@ public class UserServiceTests {
     assertEquals(name, "Manraj Singh Grover");
     assertEquals(email, "manraj.singh@practo.com");
   }
-
 }
