@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import inti.ws.spring.exception.client.BadRequestException;
+import inti.ws.spring.exception.client.NotFoundException;
 import inti.ws.spring.exception.client.UnauthorizedException;
 import inventorymanagement.constants.Constants;
 import inventorymanagement.model.IncomingRequestModel;
@@ -45,7 +46,7 @@ public class RequestController {
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
   public RequestModel update(@PathVariable int id, @RequestBody IncomingUpdateRequest request,
-      HttpSession session) throws BadRequestException, UnauthorizedException {
+      HttpSession session) throws BadRequestException, UnauthorizedException, NotFoundException {
     Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
     if (admin == false) {
       throw new UnauthorizedException("Unauthorized access");
@@ -69,7 +70,7 @@ public class RequestController {
   @RequestMapping(value = "/requests/{id}", method = RequestMethod.GET)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
-  public RequestModel getById(@PathVariable int id) {
+  public RequestModel getById(@PathVariable int id) throws BadRequestException, NotFoundException {
     LOG.info("Request received for getting a request by id");
     RequestModel request = requestService.getRequestById(id);
     LOG.info("Request for getting a request by id successful");

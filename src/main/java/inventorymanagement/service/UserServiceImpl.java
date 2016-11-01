@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import inti.ws.spring.exception.client.BadRequestException;
+import inti.ws.spring.exception.client.NotFoundException;
 import inventorymanagement.constants.Constants;
 import inventorymanagement.dao.UserDaoInterface;
 import inventorymanagement.dao.UserRoleDaoInterface;
@@ -28,42 +29,7 @@ public class UserServiceImpl implements UserServiceInterface {
   UserDaoInterface userDaoImpl;
 
   @Autowired
-  UserRoleDaoInterface userRoleDaoImpl;
-
-  @Autowired
   UserServiceUtils userUtils;
-
-  @Override
-  @Transactional
-  public UserModel addUser(IncomingUserModel userModel) throws BadRequestException {
-    if (userModel.getName() == null || userModel.getEmail() == null) {
-      throw new BadRequestException("Required parameters are invalid");
-    }
-    LOG.debug("Parameters are valid");
-    String name = userModel.getName();
-    String email = userModel.getEmail();
-    Role role = new Role(2, "user");
-    User user = new User(name, email);
-    UserRole userRole = new UserRole(role, user);
-    LOG.debug("Saving user");
-    userDaoImpl.save(user);
-    userRoleDaoImpl.save(userRole);
-    LOG.debug("Saved user and its role");
-    UserModel addUser = new UserModel(user, Constants.USER_CREATED_MESSAGE);
-    return addUser;
-  }
-
-  @Override
-  @Transactional
-  public UserModel addUserIfNotExist(IncomingUserModel userModel) throws BadRequestException {
-    User user = userDaoImpl.getUserByEmail(userModel.getEmail());
-    if (user == null) {
-      return addUser(userModel);
-    } else {
-      UserModel um = new UserModel(user);
-      return um;
-    }
-  }
 
   @Override
   @Transactional

@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import inti.ws.spring.exception.client.BadRequestException;
 import inti.ws.spring.exception.client.NotFoundException;
 import inventorymanagement.constants.Constants;
 import inventorymanagement.dao.HistoryDaoInterface;
@@ -39,7 +40,13 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
 
   @Override
   @Transactional
-  public HistoryModel issueItem(IncomingHistoryModel historyModel) {
+  public HistoryModel issueItem(IncomingHistoryModel historyModel) throws BadRequestException, NotFoundException {
+
+    if (historyModel.getProductTag().equals("") || historyModel.getProductId() <= 0
+        || historyModel.getUserId() <= 0) {
+      throw new BadRequestException("Required parameters are either missing or invalid");
+    }
+
     OutgoingHistoryModel avail = historyServiceUtils.checkAvailability(historyModel);
     HistoryModel hm = new HistoryModel();
     if (!avail.getAvailability()) {
@@ -71,8 +78,12 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
   @Override
   @Transactional
   public HistoryModel returnItem(int issueNumber, IncomingReturnModel historyModel)
-      throws NotFoundException {
-
+      throws NotFoundException, BadRequestException {
+    
+    if (issueNumber <=0 || historyModel.getProductTag().equals("")) {
+      throw new BadRequestException("Required parameters are either missing or invalid");
+    }
+    
     OutgoingHistoryModel avail = historyServiceUtils.checkIfExist(historyModel);
 
     HistoryModel hm = new HistoryModel();
@@ -82,25 +93,30 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
       hm.setMessage(Constants.ITEM_ALREADY_RETURNED);
       return hm;
     } else {
-      History history = historyDaoImpl.getById(issueNumber);
-      Item itemByIssueNumber = history.getItem();
+      
+      try {
+        History history = historyDaoImpl.getById(issueNumber);
+        Item itemByIssueNumber = history.getItem();
 
-      String itemTag = historyModel.getProductTag();
+        String itemTag = historyModel.getProductTag();
 
-      Item itemByTag = itemDaoImpl.getByItemTag(itemTag);
+        Item itemByTag = itemDaoImpl.getByItemTag(itemTag);
 
-      if (itemByIssueNumber.getId() == itemByTag.getId()) {
-        history.setReturnTimestamp(new Date());
-        historyDaoImpl.update(history);
-        itemByTag.setAvailable("Yes");
-        itemDaoImpl.update(itemByTag);
-        hm.setAvailability(true);
-        hm.setMessage(Constants.ITEM_RETURNED);
+        if (itemByIssueNumber.getId() == itemByTag.getId()) {
+          history.setReturnTimestamp(new Date());
+          historyDaoImpl.update(history);
+          itemByTag.setAvailable("Yes");
+          itemDaoImpl.update(itemByTag);
+          hm.setAvailability(true);
+          hm.setMessage(Constants.ITEM_RETURNED);
+        } else {
+          hm.setMessage(Constants.ITEM_MISMATCH);
+        }
         return hm;
-      } else {
-        hm.setMessage(Constants.ITEM_MISMATCH);
-        return hm;
+      } catch (Exception e) {
+        throw new NotFoundException("Issued Ticket does not reference to a record");
       }
+      
     }
   }
 }

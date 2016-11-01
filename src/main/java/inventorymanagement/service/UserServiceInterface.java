@@ -9,8 +9,4 @@ import inventorymanagement.model.UserModel;
 public interface UserServiceInterface {
   public List<UserModel> getAllUsers();
 
-  public UserModel addUserIfNotExist(IncomingUserModel userModel) throws BadRequestException;
-
-  UserModel addUser(IncomingUserModel userModel) throws BadRequestException;
-
 }

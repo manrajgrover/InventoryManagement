@@ -19,4 +19,8 @@ public interface ItemDaoInterface {
   int getCountByProductId(int id);
 
   Item getByItemTag(String tag);
+
+  void refresh(Item item);
+
+  void flush();
 }

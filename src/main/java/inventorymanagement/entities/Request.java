@@ -34,15 +34,6 @@ public class Request implements java.io.Serializable {
     this.reply = reply;
   }
 
-  public Request(Product product, User user, String reply, Date modifiedTimestamp,
-      Date createdTimestamp) {
-    this.product = product;
-    this.user = user;
-    this.reply = reply;
-    this.modifiedTimestamp = modifiedTimestamp;
-    this.createdTimestamp = createdTimestamp;
-  }
-
   @Id
   @GeneratedValue(strategy = IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
@@ -104,13 +95,6 @@ public class Request implements java.io.Serializable {
 
   public void setCreatedTimestamp(Date createdTimestamp) {
     this.createdTimestamp = createdTimestamp;
-  }
-
-  @Override
-  public String toString() {
-    return "Request [id=" + id + ", product=" + product + ", user=" + user + ", reply=" + reply
-        + ", modifiedTimestamp=" + modifiedTimestamp + ", createdTimestamp=" + createdTimestamp
-        + "]";
   }
 
 }

@@ -14,4 +14,6 @@ public interface RequestDaoInterface {
 
   public Request getById(int id);
 
+  public void refresh(Request request);
+
 }

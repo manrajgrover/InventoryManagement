@@ -31,14 +31,23 @@ public class ItemModel {
   }
 
   public ItemModel(Item item, String message) {
+    Product product = item.getProduct();
     this.itemId = item.getId();
+    this.tag = item.getTag();
     this.message = message;
+    this.name = product.getName();
+    this.company = product.getCompany();
+    this.version = product.getVersion();
   }
 
   public ItemModel(Item item, String tag, String message) {
+    Product product = item.getProduct();
     this.itemId = item.getId();
     this.tag = tag;
     this.message = message;
+    this.name = product.getName();
+    this.company = product.getCompany();
+    this.version = product.getVersion();
   }
 
   public int getProductId() {

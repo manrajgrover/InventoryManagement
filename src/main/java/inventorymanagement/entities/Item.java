@@ -47,26 +47,6 @@ public class Item implements java.io.Serializable {
     this.available = available;
   }
 
-  public Item(Product product, String tag, Date createTimestamp, String available,
-      Date modifiedTimestamp) {
-    this.product = product;
-    this.tag = tag;
-    this.createTimestamp = createTimestamp;
-    this.available = available;
-    this.modifiedTimestamp = modifiedTimestamp;
-  }
-
-  public Item(Product product, String tag, Date createTimestamp, String available,
-      Date modifiedTimestamp, Date removedTimestamp, Set<History> histories) {
-    this.product = product;
-    this.tag = tag;
-    this.createTimestamp = createTimestamp;
-    this.available = available;
-    this.modifiedTimestamp = modifiedTimestamp;
-    this.removedTimestamp = removedTimestamp;
-    this.histories = histories;
-  }
-
   public Item(int id) {
     this.id = id;
   }
@@ -150,13 +130,6 @@ public class Item implements java.io.Serializable {
 
   public void setHistories(Set<History> histories) {
     this.histories = histories;
-  }
-
-  @Override
-  public String toString() {
-    return "Item [id=" + id + ", product=" + product + ", tag=" + tag + ", createTimestamp="
-        + createTimestamp + ", available=" + available + ", modifiedTimestamp=" + modifiedTimestamp
-        + ", removedTimestamp=" + removedTimestamp + ", histories=" + histories + "]";
   }
 
 }

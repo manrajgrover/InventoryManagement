@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import inti.ws.spring.exception.client.BadRequestException;
+import inti.ws.spring.exception.client.NotFoundException;
 import inti.ws.spring.exception.client.UnauthorizedException;
 import inventorymanagement.constants.Constants;
 import inventorymanagement.model.IncomingItemModel;
@@ -33,7 +35,7 @@ public class ItemController {
   @ResponseBody
   @ResponseStatus(HttpStatus.CREATED)
   public ItemModel create(@RequestBody IncomingItemModel itemModel, HttpSession session)
-      throws UnauthorizedException {
+      throws UnauthorizedException, BadRequestException {
     Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
     if (admin == false) {
       throw new UnauthorizedException("Unauthorized access");
@@ -48,7 +50,7 @@ public class ItemController {
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
   public ItemModel update(@PathVariable int id, @RequestBody IncomingItemModel itemModel,
-      HttpSession session) throws UnauthorizedException {
+      HttpSession session) throws UnauthorizedException, BadRequestException, NotFoundException {
     Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
     if (admin == false) {
       throw new UnauthorizedException("Unauthorized access");
@@ -62,7 +64,7 @@ public class ItemController {
   @RequestMapping(value = "/items/{id}/count", method = RequestMethod.GET)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
-  public int getCount(@PathVariable int id) {
+  public int getCount(@PathVariable int id) throws BadRequestException {
     int count = itemService.getCountItem(id);
     return count;
   }
@@ -70,7 +72,7 @@ public class ItemController {
   @RequestMapping(value = "/items/{id}", method = RequestMethod.DELETE)
   @ResponseBody
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable int id, HttpSession session) throws UnauthorizedException {
+  public void delete(@PathVariable int id, HttpSession session) throws UnauthorizedException, BadRequestException {
     Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
     if (admin == false) {
       throw new UnauthorizedException("Unauthorized access");
@@ -93,7 +95,7 @@ public class ItemController {
   @RequestMapping(value = "/items/{id}", method = RequestMethod.GET)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
-  public ItemModel getById(@PathVariable int id) {
+  public ItemModel getById(@PathVariable int id) throws BadRequestException, NotFoundException {
     LOG.info("Request received to get an item by id");
     ItemModel item = itemService.getItemById(id);
     LOG.info("Request to get an item by id successful");

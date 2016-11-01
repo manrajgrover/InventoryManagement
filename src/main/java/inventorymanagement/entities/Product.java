@@ -54,25 +54,6 @@ public class Product implements java.io.Serializable {
     this.version = version;
   }
 
-  public Product(String name, String company, Date createTimestamp, Date modifiedTimestamp) {
-    this.name = name;
-    this.company = company;
-    this.createTimestamp = createTimestamp;
-    this.modifiedTimestamp = modifiedTimestamp;
-  }
-
-  public Product(String name, String company, Date createTimestamp, Date modifiedTimestamp,
-      Date removedTimestamp, Set<Item> items, Set<History> histories, Set<Request> requests) {
-    this.name = name;
-    this.company = company;
-    this.createTimestamp = createTimestamp;
-    this.modifiedTimestamp = modifiedTimestamp;
-    this.removedTimestamp = removedTimestamp;
-    this.items = items;
-    this.histories = histories;
-    this.requests = requests;
-  }
-
   @Id
   @GeneratedValue(strategy = IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
@@ -170,5 +151,5 @@ public class Product implements java.io.Serializable {
   public void setRequests(Set<Request> requests) {
     this.requests = requests;
   }
-
+  
 }

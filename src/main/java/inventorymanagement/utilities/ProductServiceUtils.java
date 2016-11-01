@@ -29,15 +29,19 @@ public class ProductServiceUtils {
     for (Product product : products) {
       productModels.add(mapProduct(product));
     }
+    
     return productModels;
   }
 
   public IncomingProductModel mapProduct(Product product) {
+    
     IncomingProductModel productModel = new IncomingProductModel();
+    
     productModel.setId(product.getId());
     productModel.setCompany(product.getCompany());
     productModel.setName(product.getName());
     productModel.setVersion(product.getVersion());
+    
     return productModel;
   }
 }

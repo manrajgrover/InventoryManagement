@@ -2,6 +2,7 @@ package inventorymanagement.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import inventorymanagement.entities.Product;
 import inventorymanagement.entities.Request;
 
 public class RequestModel {
@@ -30,10 +31,13 @@ public class RequestModel {
   public RequestModel() {}
 
   public RequestModel(Request request, String message) {
-    System.out.println(message);
     this.id = request.getId();
     this.reply = request.getReply();
     this.message = message;
+    Product product = request.getProduct();
+    this.productName = product.getName();
+    this.productCompany = product.getCompany();
+    this.version = product.getVersion();
   }
 
   public String getReply() {

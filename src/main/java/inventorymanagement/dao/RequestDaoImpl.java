@@ -40,4 +40,9 @@ public class RequestDaoImpl implements RequestDaoInterface {
     return (Request) getSession().get(Request.class, id);
   }
 
+  @Override
+  public void refresh(Request request) {
+    getSession().refresh(request);
+  }
+
 }

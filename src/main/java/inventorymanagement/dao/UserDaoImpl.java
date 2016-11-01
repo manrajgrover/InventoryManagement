@@ -47,4 +47,9 @@ public class UserDaoImpl implements UserDaoInterface {
   public User getById(int id) {
     return (User) getSession().get(User.class, id);
   }
+
+  @Override
+  public void refresh(User user) {
+    getSession().refresh(user);
+  }
 }

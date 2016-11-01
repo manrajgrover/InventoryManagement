@@ -1,7 +1,5 @@
 package inventorymanagement.dao;
 
-import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +20,10 @@ public class UserRoleDaoImpl implements UserRoleDaoInterface {
   @Override
   public void save(UserRole user) {
     getSession().save(user);
+  }
+
+  @Override
+  public void refresh(UserRole userRole) {
+    getSession().refresh(userRole);
   }
 }

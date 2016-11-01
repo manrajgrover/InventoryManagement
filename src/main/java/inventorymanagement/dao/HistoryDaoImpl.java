@@ -29,12 +29,6 @@ public class HistoryDaoImpl implements HistoryDaoInterface {
     getSession().update(history);
   }
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public List<History> getAll() {
-    return getSession().createCriteria(History.class).list();
-  }
-
   @Override
   public History getById(int id) {
     return (History) getSession().get(History.class, id);

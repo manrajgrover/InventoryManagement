@@ -37,24 +37,6 @@ public class History implements java.io.Serializable {
     this.userName = userName;
   }
 
-  public History(Item item, Product product, User user, String userName, Date issueTimestamp) {
-    this.item = item;
-    this.product = product;
-    this.user = user;
-    this.userName = userName;
-    this.issueTimestamp = issueTimestamp;
-  }
-
-  public History(Item item, Product product, User user, String userName, Date issueTimestamp,
-      Date returnTimestamp) {
-    this.item = item;
-    this.product = product;
-    this.user = user;
-    this.userName = userName;
-    this.issueTimestamp = issueTimestamp;
-    this.returnTimestamp = returnTimestamp;
-  }
-
   @Id
   @GeneratedValue(strategy = IDENTITY)
   @Column(name = "id", unique = true, nullable = false)

@@ -17,7 +17,7 @@ import inventorymanagement.constants.Constants;
 import inventorymanagement.model.IncomingUserModel;
 import inventorymanagement.model.LoginResponseModel;
 import inventorymanagement.model.UserModel;
-import inventorymanagement.utilities.UserServiceUtils;
+import inventorymanagement.utilities.OAuthServiceUtils;
 
 @Service
 public class OAuthServiceImpl implements OAuthServiceInterface {
@@ -26,7 +26,7 @@ public class OAuthServiceImpl implements OAuthServiceInterface {
   private UserServiceInterface userService;
 
   @Autowired
-  private UserServiceUtils userServiceUtils;
+  private OAuthServiceUtils oauthServiceUtils;
 
   @Override
   @Transactional
@@ -46,13 +46,9 @@ public class OAuthServiceImpl implements OAuthServiceInterface {
 
       String domain = details.get(Constants.DOMAIN_KEY);
 
-      System.out.println(domain);
-
       if (!(Constants.ALLOW_DOMAIN).equalsIgnoreCase(domain)) {
-        System.out.println("Hello here!");
         throw new UnauthorizedException("Unauthorized access");
       }
-      System.out.println(details);
 
       String email = details.get(Constants.EMAIL_KEY);
       String name = details.get(Constants.NAME_KEY);
@@ -60,7 +56,7 @@ public class OAuthServiceImpl implements OAuthServiceInterface {
 
       IncomingUserModel user = new IncomingUserModel(name, email);
 
-      UserModel userModel = userService.addUserIfNotExist(user);
+      UserModel userModel = oauthServiceUtils.addUserIfNotExist(user);
 
       String id = Integer.toString(userModel.getId());
 
@@ -69,7 +65,7 @@ public class OAuthServiceImpl implements OAuthServiceInterface {
       session.setAttribute(Constants.SESSION_ID, id);
       session.setAttribute(Constants.SESSION_PICTURE, picture);
 
-      Boolean admin = userServiceUtils.checkIfAdmin(userModel);
+      Boolean admin = oauthServiceUtils.checkIfAdmin(userModel);
 
       session.setAttribute(Constants.SESSION_ADMIN, admin);
       LoginResponseModel loginResponse = new LoginResponseModel();

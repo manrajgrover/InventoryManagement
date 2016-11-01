@@ -31,19 +31,4 @@ public class UserServiceUtils {
     return userModel;
   }
 
-  public Boolean checkIfAdmin(UserModel userModel) {
-
-    Set<UserRole> roles = userModel.getRole();
-    Boolean admin = false;
-
-    for (UserRole userRole : roles) {
-      Role role = userRole.getRole();
-      if (role.getId() == 1) {
-        admin = true;
-      }
-    }
-
-    return admin;
-  }
-
 }

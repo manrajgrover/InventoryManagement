@@ -39,11 +39,6 @@ public class Role implements java.io.Serializable {
     this.name = name;
   }
 
-  public Role(String name, Set<UserRole> userRoles) {
-    this.name = name;
-    this.userRoles = userRoles;
-  }
-
   @Id
   @GeneratedValue(strategy = IDENTITY)
   @Column(name = "id", unique = true, nullable = false)

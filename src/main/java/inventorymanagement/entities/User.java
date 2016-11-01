@@ -38,22 +38,6 @@ public class User implements java.io.Serializable {
     this.email = email;
   }
 
-  public User(String name, String email, String contact, Date createdTimestamp) {
-    this.name = name;
-    this.email = email;
-    this.createdTimestamp = createdTimestamp;
-  }
-
-  public User(String name, String email, Date createdTimestamp, Set<UserRole> userRoles,
-      Set<History> histories, Set<Request> requests) {
-    this.name = name;
-    this.email = email;
-    this.createdTimestamp = createdTimestamp;
-    this.userRoles = userRoles;
-    this.histories = histories;
-    this.requests = requests;
-  }
-
   @Id
   @GeneratedValue(strategy = IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
