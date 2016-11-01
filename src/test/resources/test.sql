@@ -16,6 +16,6 @@ INSERT INTO item (id, product_id, tag, create_timestamp, available, modified_tim
 INSERT INTO request (id, user_id, product_id, reply, modified_timestamp, created_timestamp) VALUES (1,1,2,'YES','2016-10-27 12:18:33','2016-10-19 22:39:49');
 INSERT INTO request (id, user_id, product_id, reply, modified_timestamp, created_timestamp) VALUES (2,1,3,'YES','2016-10-27 12:19:33','2016-10-19 22:40:49');
 
-INSERT INTO history (id, user_id, prod_id, item_id, user_name, issue_timestamp, return_timestamp) VALUES (10,1,1,8,'Manraj Singh Grover','2016-10-27 11:44:40',NULL);
-INSERT INTO history (id, user_id, prod_id, item_id, user_name, issue_timestamp, return_timestamp) VALUES (11,1,3,7,'Manraj Singh Grover','2016-10-27 11:58:03','2016-10-27 11:59:24');
-INSERT INTO history (id, user_id, prod_id, item_id, user_name, issue_timestamp, return_timestamp) VALUES (12,1,3,7,'Manraj Singh Grover','2016-10-27 12:38:51','2016-10-27 12:39:06');
+INSERT INTO history (id, user_id, prod_id, item_id, user_name, issue_timestamp, return_timestamp) VALUES (1,1,1,8,'Manraj Singh Grover','2016-10-27 11:44:40',NULL);
+INSERT INTO history (id, user_id, prod_id, item_id, user_name, issue_timestamp, return_timestamp) VALUES (2,1,3,7,'Manraj Singh Grover','2016-10-27 11:58:03','2016-10-27 11:59:24');
+INSERT INTO history (id, user_id, prod_id, item_id, user_name, issue_timestamp, return_timestamp) VALUES (3,1,3,7,'Manraj Singh Grover','2016-10-27 12:38:51','2016-10-27 12:39:06');
