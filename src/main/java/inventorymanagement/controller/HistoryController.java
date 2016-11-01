@@ -22,41 +22,76 @@ import inventorymanagement.model.IncomingHistoryModel;
 import inventorymanagement.model.IncomingReturnModel;
 import inventorymanagement.service.HistoryServiceInterface;
 
+/**
+ * Class HistoryController is a controller that handle requests for issuing and returning of items.
+ * 
+ * @author manrajsingh
+ *
+ */
 @RestController
 public class HistoryController {
-  
+
+  /**
+   * {@link Logger}
+   */
   private static final Logger LOG = Logger.getLogger(RequestController.class);
 
+  /**
+   * {@link HistoryServiceInterface}
+   */
   @Autowired
   HistoryServiceInterface historyService;
 
+  /**
+   * Controller method to issue an item to a user
+   * 
+   * @param historyModel {@link IncomingHistoryModel} contains product tag, user id and product id
+   *        required for issuing item to user
+   * @param session {@link HttpSession} for validating if user is admin or not
+   * @return {@link HistoryModel}
+   * @throws UnauthorizedException Thrown when user is not logged in or not an admin
+   * @throws BadRequestException Thrown when any of the field is empty
+   * @throws NotFoundException Thrown when no product or item with id or tag is found
+   */
   @RequestMapping(value = "/history", method = RequestMethod.POST)
   @ResponseBody
   @ResponseStatus(HttpStatus.CREATED)
   public HistoryModel create(@RequestBody IncomingHistoryModel historyModel, HttpSession session)
       throws UnauthorizedException, BadRequestException, NotFoundException {
     LOG.info("Request received to issue an item");
-    
+
     Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
-    
+
     if (admin == false) {
       throw new UnauthorizedException("Unauthorized access");
     }
-    
+
     return historyService.issueItem(historyModel);
   }
 
+  /**
+   * Controller method to take item returns from a user
+   * 
+   * @param id {@link Integer} Issue ticket number for the issued item
+   * @param historyModel {@link IncomingReturnModel} contains product tag id of the item being
+   *        returned
+   * @param session {@link HttpSession} for validating if user is admin or not
+   * @return {@link HistoryModel}
+   * @throws NotFoundException Thrown when no product or item with id or tag is found
+   * @throws UnauthorizedException Thrown when user is not logged in or not an admin
+   * @throws BadRequestException Thrown when any of the field is empty
+   */
   @RequestMapping(value = "/history/{id}", method = RequestMethod.PATCH)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
   public HistoryModel update(@PathVariable int id, @RequestBody IncomingReturnModel historyModel,
       HttpSession session) throws NotFoundException, UnauthorizedException, BadRequestException {
     Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
-    
+
     if (admin == false) {
       throw new UnauthorizedException("Unauthorized access");
     }
-    
+
     return historyService.returnItem(id, historyModel);
   }
 }

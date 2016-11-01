@@ -1,5 +1,13 @@
 package inventorymanagement.constants;
 
+
+/**
+ * Class Constants provides constants used throughout the application.
+ * This includes keys, messages and restrictions.
+ * 
+ * @author manrajsingh
+ *
+ */
 public class Constants {
 
   public static final String USER_CREATED_MESSAGE = "User has been created";

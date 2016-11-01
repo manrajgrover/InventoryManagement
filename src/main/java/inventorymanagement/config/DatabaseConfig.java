@@ -12,6 +12,12 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * Hibernate Configuration
+ * 
+ * @author manrajsingh
+ *
+ */
 @Configuration
 @EnableTransactionManagement
 public class DatabaseConfig {
@@ -39,7 +45,12 @@ public class DatabaseConfig {
 
   @Value("${entitymanager.packagesToScan}")
   private String ENTITYMANAGER_PACKAGES_TO_SCAN;
-
+  
+  /**
+   * DataSource configuration
+   * 
+   * @return {@link DataSource}
+   */
   @Bean
   public DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -51,7 +62,12 @@ public class DatabaseConfig {
 
     return dataSource;
   }
-
+  
+  /**
+   * Session Factory Configuration
+   * 
+   * @return {@link LocalSessionFactoryBean}
+   */
   @Bean
   public LocalSessionFactoryBean sessionFactory() {
     LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
@@ -66,7 +82,12 @@ public class DatabaseConfig {
 
     return sessionFactoryBean;
   }
-
+  
+  /**
+   * Hibernate Transaction Manager configuration
+   * 
+   * @return {@link HibernateTransactionManager}
+   */
   @Bean
   public HibernateTransactionManager transactionManager() {
     HibernateTransactionManager transactionManager = new HibernateTransactionManager();

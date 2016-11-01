@@ -23,14 +23,37 @@ import inventorymanagement.model.IncomingItemModel;
 import inventorymanagement.model.ItemModel;
 import inventorymanagement.service.ItemServiceInterface;
 
+/**
+ * Class ItemController is a controller that handles requests for adding, updating, deleting as well
+ * as getting information of particular item as well as for all items. It also handles requests for
+ * getting count of particular item type.
+ * 
+ * @author manrajsingh
+ *
+ */
 @RestController
 public class ItemController {
 
+  /**
+   * {@link Logger}
+   */
   private static final Logger LOG = Logger.getLogger(ItemController.class);
-
+  
+  /**
+   * {@link ItemServiceInterfae}
+   */
   @Autowired
   ItemServiceInterface itemService;
-
+  
+  /**
+   * Create
+   * 
+   * @param itemModel
+   * @param session
+   * @return
+   * @throws UnauthorizedException
+   * @throws BadRequestException
+   */
   @RequestMapping(value = "/items", method = RequestMethod.POST)
   @ResponseBody
   @ResponseStatus(HttpStatus.CREATED)
@@ -72,7 +95,8 @@ public class ItemController {
   @RequestMapping(value = "/items/{id}", method = RequestMethod.DELETE)
   @ResponseBody
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable int id, HttpSession session) throws UnauthorizedException, BadRequestException {
+  public void delete(@PathVariable int id, HttpSession session)
+      throws UnauthorizedException, BadRequestException {
     Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
     if (admin == false) {
       throw new UnauthorizedException("Unauthorized access");

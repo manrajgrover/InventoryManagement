@@ -5,6 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
+/**
+ * Application run class
+ * 
+ * @author manrajsingh
+ * 
+ */
 @SpringBootApplication
 public class InventoryManagement extends SpringBootServletInitializer {
 
