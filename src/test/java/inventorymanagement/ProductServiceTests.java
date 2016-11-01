@@ -11,11 +11,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestComponent;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import inti.ws.spring.exception.client.BadRequestException;
+import inti.ws.spring.exception.client.NotFoundException;
 import inventorymanagement.constants.Constants;
 import inventorymanagement.dao.ProductDaoInterface;
 import inventorymanagement.entities.Product;
@@ -26,7 +26,6 @@ import inventorymanagement.utilities.ProductServiceUtils;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@TestComponent
 @Transactional
 @ContextConfiguration(classes = {TestDatabaseConfig.class})
 public class ProductServiceTests {
@@ -41,8 +40,7 @@ public class ProductServiceTests {
   ProductServiceUtils productServiceUtils;
   
   @Test
-  @Rollback(true)
-  public void addProductTests() {
+  public void addProductTests() throws BadRequestException {
     IncomingProductModel productModel = new IncomingProductModel();
     productModel.setCompany("OnePlus");
     productModel.setName("One");
@@ -57,8 +55,7 @@ public class ProductServiceTests {
   }
   
   @Test
-  @Rollback(true)
-  public void updateProductTests() {
+  public void updateProductTests() throws BadRequestException, NotFoundException {
     IncomingProductModel productModel = new IncomingProductModel();
     productModel.setCompany("OnePlus");
     productModel.setName("One");
@@ -74,8 +71,7 @@ public class ProductServiceTests {
   }
   
   @Test
-  @Rollback(true)
-  public void deleteProductTests() {
+  public void deleteProductTests() throws BadRequestException {
     productService.deleteProduct(2);
     Product product = productDao.getById(2);
     assertEquals(product, null);
@@ -94,7 +90,7 @@ public class ProductServiceTests {
   }
 
   @Test
-  public void getProductByIdTests() {
+  public void getProductByIdTests() throws BadRequestException, NotFoundException {
     IncomingProductModel productModel = productService.getProductById(1);
 
     assertEquals(productModel.getId(), 1);

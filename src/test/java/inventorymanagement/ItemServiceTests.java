@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +14,69 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import inti.ws.spring.exception.client.BadRequestException;
+import inti.ws.spring.exception.client.NotFoundException;
+import inventorymanagement.constants.Constants;
+import inventorymanagement.dao.ItemDaoInterface;
+import inventorymanagement.entities.Item;
+import inventorymanagement.model.IncomingItemModel;
 import inventorymanagement.model.ItemModel;
 import inventorymanagement.service.ItemServiceInterface;
+import inventorymanagement.utilities.ItemServiceUtils;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 @ContextConfiguration(classes = {TestDatabaseConfig.class})
 public class ItemServiceTests {
 
   @Autowired
   ItemServiceInterface itemService;
+  
+  @Autowired
+  ItemDaoInterface itemDao;
+
+  @Autowired
+  ItemServiceUtils itemServiceUtils;
+  
+  @Test
+  public void addItemTests() throws BadRequestException {
+    IncomingItemModel itemModel = new IncomingItemModel();
+    itemModel.setProductId(2);
+    itemModel.setProductTag("RST");
+    
+    ItemModel im = itemService.addItem(itemModel);
+    
+    assertTrue(im.getItemId() > 0);
+    assertEquals(im.getTag(), "RST");
+    assertEquals(im.getMessage(), Constants.ITEM_CREATED_MESSAGE);
+    assertEquals(im.getCompany(), "OnePlus");
+    assertEquals(im.getName(), "Three");
+    assertEquals(im.getVersion(), "2016");
+  }
+  
+  @Test
+  public void updateItemTests() throws BadRequestException, NotFoundException {
+    IncomingItemModel itemModel = new IncomingItemModel();
+    itemModel.setProductId(1);
+    itemModel.setProductTag("RST");
+    
+    ItemModel im = itemService.updateItem(7, itemModel);
+
+    assertTrue(im.getItemId() > 0);
+    assertEquals(im.getMessage(), Constants.ITEM_UPDATED_MESSAGE);
+    assertEquals(im.getCompany(), "Apple");
+    assertEquals(im.getName(), "MacBook");
+    assertEquals(im.getVersion(), "2017");
+    assertEquals(im.getTag(), "RST");
+  }
+  
+  @Test
+  public void deleteItemTests() throws BadRequestException {
+    itemService.deleteItem(7);
+    Item item = itemDao.getById(7);
+    assertEquals(item, null);
+  }
 
   @Test
   public void getAllItemsTests() {
@@ -34,7 +89,7 @@ public class ItemServiceTests {
   }
 
   @Test
-  public void getItemsByIdTests() {
+  public void getItemsByIdTests() throws BadRequestException, NotFoundException {
     ItemModel item = itemService.getItemById(7);
     assertEquals(item.getItemId(), 7);
     assertEquals(item.getName(), "iPhone");
@@ -44,7 +99,7 @@ public class ItemServiceTests {
   }
 
   @Test
-  public void getCountItemTests() {
+  public void getCountItemTests() throws BadRequestException {
     int count = itemService.getCountItem(1);
     assertEquals(count, 0);
     count = itemService.getCountItem(3);
