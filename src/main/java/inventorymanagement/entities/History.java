@@ -24,17 +24,15 @@ public class History implements java.io.Serializable {
   private Item item;
   private Product product;
   private User user;
-  private String userName;
   private Date issueTimestamp;
   private Date returnTimestamp;
 
   public History() {}
 
-  public History(User user, Product product, Item item, String userName) {
+  public History(User user, Product product, Item item) {
     this.item = item;
     this.product = product;
     this.user = user;
-    this.userName = userName;
   }
 
   @Id
@@ -76,15 +74,6 @@ public class History implements java.io.Serializable {
 
   public void setUser(User user) {
     this.user = user;
-  }
-
-  @Column(name = "user_name", nullable = false, length = 65535)
-  public String getUserName() {
-    return this.userName;
-  }
-
-  public void setUserName(String userName) {
-    this.userName = userName;
   }
 
   @Temporal(TemporalType.TIMESTAMP)

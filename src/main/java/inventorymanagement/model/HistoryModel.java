@@ -6,8 +6,6 @@ public class HistoryModel {
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private int id;
   @JsonInclude(JsonInclude.Include.NON_NULL)
-  private String name;
-  @JsonInclude(JsonInclude.Include.NON_NULL)
   private String email;
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private String message;
@@ -27,14 +25,6 @@ public class HistoryModel {
 
   public void setId(int id) {
     this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public String getEmail() {

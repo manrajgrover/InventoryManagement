@@ -57,7 +57,6 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
       int userId = historyModel.getUserId();
       User user = userDaoImpl.getById(userId);
 
-      String name = user.getName();
       int productId = historyModel.getProductId();
       Product product = new Product(productId);
 
@@ -66,7 +65,7 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
       item.setAvailable("No");
       itemDaoImpl.update(item);
 
-      History history = new History(user, product, item, name);
+      History history = new History(user, product, item);
       historyDaoImpl.save(history);
       hm.setId(history.getId());
       hm.setAvailability(true);
