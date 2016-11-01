@@ -313,7 +313,7 @@ app.controller("returnsController", /*@ngInject*/function($scope, $http, $locati
 
 });
 
-app.controller("incomingRequestsController", /*@ngInject*/function($http, $scope, $timeout, sessionService) {
+app.controller("incomingRequestsController", /*@ngInject*/function($http, $scope, $route, $timeout, sessionService) {
 
   $http.get("requests").success(function(data) {
     $scope.data = data;
@@ -345,6 +345,7 @@ app.controller("incomingRequestsController", /*@ngInject*/function($http, $scope
         $scope.requestMessage = "Reply sent";
         $timeout(function(){
           $scope.requestMessageShow = false;
+          $route.reload();
         }, 5000);
       }).error(function() {
         jQuery('#httpMessage').removeClass('alert-success');
@@ -354,6 +355,7 @@ app.controller("incomingRequestsController", /*@ngInject*/function($http, $scope
         $scope.requestMessage = "An error occured";
         $timeout(function(){
           $scope.requestMessageShow = false;
+          $route.reload();
         }, 5000);
         console.log("Error");
       });
