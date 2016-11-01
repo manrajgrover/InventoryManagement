@@ -23,4 +23,8 @@ public interface ItemDaoInterface {
   void refresh(Item item);
 
   void flush();
+
+  List<Item> getItemsByProductId(int id);
+
+  public void clear();
 }

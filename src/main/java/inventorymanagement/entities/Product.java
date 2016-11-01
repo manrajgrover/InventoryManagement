@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -105,8 +106,7 @@ public class Product implements java.io.Serializable {
 
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "modified_timestamp", nullable = false, updatable = false, insertable = false,
-      columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
-      length = 19)
+      columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", length = 19)
   public Date getModifiedTimestamp() {
     return this.modifiedTimestamp;
   }
@@ -151,5 +151,5 @@ public class Product implements java.io.Serializable {
   public void setRequests(Set<Request> requests) {
     this.requests = requests;
   }
-  
+
 }

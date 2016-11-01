@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import inti.ws.spring.exception.client.BadRequestException;
 import inti.ws.spring.exception.client.NotFoundException;
 import inventorymanagement.constants.Constants;
+import inventorymanagement.dao.ItemDaoInterface;
 import inventorymanagement.dao.ProductDaoInterface;
+import inventorymanagement.entities.Item;
 import inventorymanagement.entities.Product;
 import inventorymanagement.model.IncomingProductModel;
 import inventorymanagement.model.ProductModel;
@@ -24,6 +26,9 @@ public class ProductServiceImpl implements ProductServiceInterface {
 
   @Autowired
   ProductServiceUtils productServiceUtils;
+  
+  @Autowired
+  ItemDaoInterface itemDaoImpl;
 
   @Override
   @Transactional
@@ -79,8 +84,19 @@ public class ProductServiceImpl implements ProductServiceInterface {
       throw new BadRequestException("Required parameters are either missing or invalid");
     }
     
+    List<Item> items = itemDaoImpl.getItemsByProductId(id);
+    itemDaoImpl.flush();
+    
+    for(Item item: items) {
+      itemDaoImpl.delete(item);
+      itemDaoImpl.flush();
+    }
+    
+    itemDaoImpl.flush();
+    itemDaoImpl.clear();
     Product product = new Product(id);
     productDaoImpl.delete(product);
+    productDaoImpl.flush();
   }
 
   @Override

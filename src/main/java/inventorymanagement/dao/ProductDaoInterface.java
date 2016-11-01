@@ -16,4 +16,6 @@ public interface ProductDaoInterface {
 
   public Product getById(int id);
 
+  void flush();
+
 }

@@ -75,9 +75,27 @@ public class ItemDaoImpl implements ItemDaoInterface {
     int count = items.size();
     return count;
   }
+  
+  @Override
+  public List<Item> getItemsByProductId(int id) {
+    DetachedCriteria criteria = DetachedCriteria.forClass(Item.class);
+    DetachedCriteria productCriteria = criteria.createCriteria("product");
+    productCriteria.add(Restrictions.eq("id", id));
+    @SuppressWarnings("unchecked")
+    List<Item> items = (List<Item>) productCriteria.getExecutableCriteria(getSession()).list();
+    for (Item item : items) {
+      System.out.println(item.getTag());
+    }
+    return items;
+  }
 
   @Override
   public Item getById(int id) {
     return getSession().get(Item.class, id);
+  }
+
+  @Override
+  public void clear() {
+    getSession().clear();
   }
 }

@@ -33,6 +33,11 @@ public class ProductDaoImpl implements ProductDaoInterface {
   public void update(Product product) {
     getSession().update(product);
   }
+  
+  @Override
+  public void flush() {
+    getSession().flush();
+  }
 
   @SuppressWarnings("unchecked")
   @Override
