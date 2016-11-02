@@ -88,7 +88,6 @@ app.controller("navController", /*@ngInject*/function($scope, $http, $location, 
   });
 
   $http.get("userLogin").success(function(data) {
-    console.log(data);
 
     let session = {
       name: data.name,
@@ -100,7 +99,7 @@ app.controller("navController", /*@ngInject*/function($scope, $http, $location, 
     };
 
     sessionService.setSession(session);
-    console.log(session);
+
     $scope.session = session;
     if (data.admin) {
       $location.path("/admin");
@@ -135,7 +134,6 @@ const initializeSelect = () => {
 app.controller("dashboardController", /*@ngInject*/function($scope, $http, $location, $timeout, sessionService) {
 
   $http.get("products").success(function(data) {
-    console.log(data);
     $scope.products = data;
     $scope.metaInfo = {
       visible: false,
@@ -190,7 +188,7 @@ app.controller("dashboardController", /*@ngInject*/function($scope, $http, $loca
 app.controller("adminController", /*@ngInject*/ function($scope, $http, $location, $timeout, sessionService) {
 
   $http.get("products").success(function(data) {
-    console.log(data);
+
     $scope.products = data;
     $scope.metaInfo = {
       visible: false,
@@ -210,7 +208,7 @@ app.controller("adminController", /*@ngInject*/ function($scope, $http, $locatio
   });
 
   $http.get("users").success(function(data) {
-    console.log(data);
+
     $scope.users = data;
 
     $timeout(() => {
@@ -242,7 +240,7 @@ app.controller("adminController", /*@ngInject*/ function($scope, $http, $locatio
         jQuery('#httpMessage').removeClass('alert-success');
         jQuery('#httpMessage').addClass('alert-danger');
       }
-      console.log(data);
+
       $scope.requestMessageShow = true;
       $scope.id = data.id;
       $scope.requestMessage = `${data.message}!`;
@@ -255,7 +253,7 @@ app.controller("adminController", /*@ngInject*/ function($scope, $http, $locatio
     }).error(function(data) {
       jQuery('#httpMessage').removeClass('alert-success');
       jQuery('#httpMessage').addClass('alert-danger');
-      console.log(data);
+
       $scope.requestMessageShow = true;
       $scope.requestMessage = data.message;
       $timeout(function(){
@@ -280,7 +278,7 @@ app.controller("returnsController", /*@ngInject*/function($scope, $http, $locati
     $http.patch(`history/${issueNumber}`, {
       productTag: productTag
     }).success(function(data) {
-      console.log(data);
+
       if(data.availability) {
         jQuery('#httpMessage').removeClass('alert-danger');
         jQuery('#httpMessage').addClass('alert-success');
@@ -298,7 +296,7 @@ app.controller("returnsController", /*@ngInject*/function($scope, $http, $locati
       jQuery('#httpMessage').addClass('alert-danger');
       $scope.requestMessageShow = true;
       $scope.requestMessage = data.message;
-      console.log(data);
+
       $timeout(function(){
         $scope.requestMessageShow = false;
       }, 4000);
@@ -328,32 +326,42 @@ app.controller("incomingRequestsController", /*@ngInject*/function($http, $scope
   jQuery('#reply').on('shown.bs.modal', function (e) {
 
     $scope.updateRequest = (id) => {
-      let reply = jQuery(e.currentTarget).find('textarea[name="reply"]').val();
 
-      $http.patch(`requests/${id}`, {
-        reply: reply
-      }).success(function(data) {
-        jQuery('#httpMessage').removeClass('alert-danger');
-        jQuery('#httpMessage').addClass('alert-success');
-        jQuery('#reply').modal('hide');
-        $scope.requestMessageShow = true;
-        $scope.requestMessage = "Reply sent";
+      let reply = jQuery(e.currentTarget).find('textarea[name="replyRequest"]').val();
+
+      if (reply == null || reply == "") {
+        jQuery('#errorRequestMessage').removeClass('alert-success');
+        jQuery('#errorRequestMessage').addClass('alert-danger');
+        $scope.editErrorMessage = "Please fill a reply";
+        $scope.editErrorMessageShow = true;
         $timeout(function(){
-          $scope.requestMessageShow = false;
-          $route.reload();
-        }, 5000);
-      }).error(function() {
-        jQuery('#httpMessage').removeClass('alert-success');
-        jQuery('#httpMessage').addClass('alert-danger');
-        jQuery('#reply').modal('hide');
-        $scope.requestMessageShow = true;
-        $scope.requestMessage = "An error occured";
-        $timeout(function(){
-          $scope.requestMessageShow = false;
-          $route.reload();
-        }, 5000);
-        console.log("Error");
-      });
+          $scope.editErrorMessageShow = false;
+        }, 3000);
+      } else {
+        $http.patch(`requests/${id}`, {
+          reply: reply
+        }).success(function(data) {
+          jQuery('#httpMessage').removeClass('alert-danger');
+          jQuery('#httpMessage').addClass('alert-success');
+          jQuery('#reply').modal('hide');
+          $scope.requestMessageShow = true;
+          $scope.requestMessage = "Reply sent";
+          $timeout(function(){
+            $scope.requestMessageShow = false;
+            $route.reload();
+          }, 5000);
+        }).error(function() {
+          jQuery('#httpMessage').removeClass('alert-success');
+          jQuery('#httpMessage').addClass('alert-danger');
+          jQuery('#reply').modal('hide');
+          $scope.requestMessageShow = true;
+          $scope.requestMessage = "An error occured";
+          $timeout(function(){
+            $scope.requestMessageShow = false;
+            $route.reload();
+          }, 5000);
+        });
+      }
     }
 
   });
@@ -365,7 +373,6 @@ app.controller("userRequestsController", /*@ngInject*/function($http, $scope, $r
   const session = sessionService.getSession();
   $http.get(`requests/user/${session.id}`).success(function(data) {
     $scope.data = data;
-    
   }).error(function() {
     console.log("Error");
   });
@@ -375,7 +382,6 @@ app.controller("userRequestsController", /*@ngInject*/function($http, $scope, $r
 app.controller("productController", /*@ngInject*/function($http, $scope, $timeout, $location, $route, sessionService) {
 
   $http.get("products").success(function(data) {
-    console.log(data);
     $scope.data = data;
   }).error(function() {
     console.log("Error");
@@ -393,9 +399,7 @@ app.controller("productController", /*@ngInject*/function($http, $scope, $timeou
   }
 
   $scope.populateDelete = (id) => {
-    console.log(id);
     $http.get(`products/${id}`).success(function(data) { 
-      console.log(data); 
       $scope.delete = data;
     }).error(function() {
       console.log("Error");
@@ -408,8 +412,6 @@ app.controller("productController", /*@ngInject*/function($http, $scope, $timeou
       let company = jQuery(e.currentTarget).find('input[name="addProductCompany"]').val();
       let name = jQuery(e.currentTarget).find('input[name="addProductName"]').val();
       let version = jQuery(e.currentTarget).find('input[name="addProductVersion"]').val();
-
-      console.log(company + " "+ name + " " + version);
 
       $http.post(`products`, {
         name: name,
@@ -453,12 +455,9 @@ app.controller("productController", /*@ngInject*/function($http, $scope, $timeou
       }
 
       if (!hasErrors) {
-        console.log(id);
         let company = jQuery(e.currentTarget).find('input[name="editProductCompany"]').val();
         let name = jQuery(e.currentTarget).find('input[name="editProductName"]').val();
         let version = jQuery(e.currentTarget).find('input[name="editProductVersion"]').val();
-
-        console.log(company + " "+ name + " " + version);
 
         $http.patch(`products/${id}`, {
           name: name,
@@ -484,7 +483,6 @@ app.controller("productController", /*@ngInject*/function($http, $scope, $timeou
           $timeout(function(){
             $scope.productMessageShow = false;
           }, 3000);
-          console.log("Error");
         });
       } else {
         jQuery('#errorProductMessage').removeClass('alert-success');
@@ -502,7 +500,6 @@ app.controller("productController", /*@ngInject*/function($http, $scope, $timeou
   jQuery('#delete').on('shown.bs.modal', function (e) {
 
     $scope.deleteProduct = (id) => {
-      console.log(id);
 
       $http.delete(`products/${id}`).success(function(data) {
         jQuery('#httpMessage').removeClass('alert-danger');
@@ -524,7 +521,6 @@ app.controller("productController", /*@ngInject*/function($http, $scope, $timeou
         $timeout(function(){
           $scope.productMessageShow = false;
         }, 3000);
-        console.log("Error");
       });
     }
 
@@ -535,7 +531,6 @@ app.controller("productController", /*@ngInject*/function($http, $scope, $timeou
 app.controller("itemController", /*@ngInject*/function($http, $scope, $timeout, $location, $route, sessionService) {
 
   $http.get("items").success(function(data) {
-    console.log(data);
     $scope.data = data;
   }).error(function() {
     console.log("Error");
@@ -543,7 +538,6 @@ app.controller("itemController", /*@ngInject*/function($http, $scope, $timeout, 
 
   $scope.populateAdd = () => {
     $http.get(`products`).success(function(data) {
-      console.log(data);
       $scope.products = data;
     }).error(function() {
       console.log("Error");
@@ -561,7 +555,6 @@ app.controller("itemController", /*@ngInject*/function($http, $scope, $timeout, 
     $http.get(`products`).success(function(data) {  
       $scope.products = data;
       $timeout(function(){
-        console.log("Selecting");
         jQuery("#editProduct option[value="+productId+"]").attr("selected","selected");
       }, 30);
     }).error(function() {
@@ -570,9 +563,7 @@ app.controller("itemController", /*@ngInject*/function($http, $scope, $timeout, 
   }
 
   $scope.populateDelete = (id) => {
-    console.log(id);
     $http.get(`items/${id}`).success(function(data) { 
-      console.log(data); 
       $scope.delete = data;
     }).error(function() {
       console.log("Error");
@@ -584,8 +575,6 @@ app.controller("itemController", /*@ngInject*/function($http, $scope, $timeout, 
     $scope.addItem = () => {
       let company = jQuery(e.currentTarget).find('select[name="addProductSelect"]').val();
       let tag = jQuery(e.currentTarget).find('input[name="addItemTag"]').val();
-
-      console.log(company + " " + tag);
 
       $http.post(`items`, {
         productId: company,
@@ -610,7 +599,6 @@ app.controller("itemController", /*@ngInject*/function($http, $scope, $timeout, 
         $timeout(function(){
           $scope.itemMessageShow = false;
         }, 3000);
-        console.log("Error");
       });
     }
   });
@@ -626,10 +614,9 @@ app.controller("itemController", /*@ngInject*/function($http, $scope, $timeout, 
       }
 
       if (!hasErrors) {
-        console.log(id);
         let company = jQuery(e.currentTarget).find('select[name="editProductSelect"]').val();
         let tag = jQuery(e.currentTarget).find('input[name="editItemTag"]').val();
-        console.log(company + " " + tag);
+
         $http.patch(`items/${id}`, {
           productId: company,
           productTag: tag
@@ -653,7 +640,6 @@ app.controller("itemController", /*@ngInject*/function($http, $scope, $timeout, 
           $timeout(function(){
             $scope.itemMessageShow = false;
           }, 3000);
-          console.log("Error");
         });
       } else {
         jQuery('#errorItemMessage').removeClass('alert-success');
@@ -671,7 +657,6 @@ app.controller("itemController", /*@ngInject*/function($http, $scope, $timeout, 
   jQuery('#delete').on('shown.bs.modal', function (e) {
 
     $scope.deleteProduct = (id) => {
-      console.log(id);
 
       $http.delete(`items/${id}`).success(function(data) {
         jQuery('#httpMessage').removeClass('alert-danger');
@@ -693,7 +678,6 @@ app.controller("itemController", /*@ngInject*/function($http, $scope, $timeout, 
         $timeout(function(){
           $scope.itemMessageShow = false;
         }, 3000);
-        console.log("Error");
       });
     }
 
@@ -702,6 +686,5 @@ app.controller("itemController", /*@ngInject*/function($http, $scope, $timeout, 
 });
 
 app.controller("profileController", /*@ngInject*/function($scope, $location, sessionService) {
-  console.log("profile called");
   $scope.session = sessionService.getSession();
 });

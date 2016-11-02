@@ -34,6 +34,9 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">Request #{{modalData.id}}</h4>
         </div>
+        <div class="alert text-center" id="errorRequestMessage" ng-show="editErrorMessageShow">
+          {{editErrorMessage}}
+        </div>
         <form name="incomingRequests">
           <div class="modal-body">
             <div class="row">
@@ -57,15 +60,14 @@
                 Reply:
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                <textarea ng-model="reply" name="reply" class="form-control" rows="5" id="reply" required>{{modalData.reply}}</textarea>
-                <span ng-show="incomingRequests.reply.$touched && incomingRequests.reply.$invalid">Reply is required.</span>
+                <textarea name="replyRequest" class="form-control" rows="5" id="replyRequest" required>{{modalData.reply}}</textarea>
               </div>
             </div>
           </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button ng-disabled="incomingRequests.$invalid" ng-click="updateRequest(modalData.id)" type="button" class="btn btn-primary">Save</button>
+            <button ng-click="updateRequest(modalData.id)" type="button" class="btn btn-primary">Save</button>
           </div>
         </form>
       </div>
