@@ -69,9 +69,6 @@ public class ItemDaoImpl implements ItemDaoInterface {
     productCriteria.add(Restrictions.eq("id", id));
     @SuppressWarnings("unchecked")
     List<Item> items = (List<Item>) productCriteria.getExecutableCriteria(getSession()).list();
-    for (Item item : items) {
-      System.out.println(item.toString());
-    }
     int count = items.size();
     return count;
   }
@@ -83,9 +80,6 @@ public class ItemDaoImpl implements ItemDaoInterface {
     productCriteria.add(Restrictions.eq("id", id));
     @SuppressWarnings("unchecked")
     List<Item> items = (List<Item>) productCriteria.getExecutableCriteria(getSession()).list();
-    for (Item item : items) {
-      System.out.println(item.getTag());
-    }
     return items;
   }
 

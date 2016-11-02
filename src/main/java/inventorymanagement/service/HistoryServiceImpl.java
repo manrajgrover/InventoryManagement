@@ -23,21 +23,42 @@ import inventorymanagement.model.IncomingReturnModel;
 import inventorymanagement.model.OutgoingHistoryModel;
 import inventorymanagement.utilities.HistoryServiceUtils;
 
+/**
+ * @see HistoryServiceInterface
+ * @author manrajsingh
+ *
+ */
 @Service
 public class HistoryServiceImpl implements HistoryServiceInterface {
-
+  
+  /**
+   * {@link HistoryDaoInterface}
+   */
   @Autowired
   HistoryDaoInterface historyDaoImpl;
 
+  /**
+   * {@link UserDaoInterface}
+   */
   @Autowired
   UserDaoInterface userDaoImpl;
-
+  
+  /**
+   * {@link ItemDaoInterface}
+   */
   @Autowired
   ItemDaoInterface itemDaoImpl;
-
+  
+  /**
+   * {@link HistoryServiceUtils}
+   */
   @Autowired
   HistoryServiceUtils historyServiceUtils;
 
+  /*
+   * (non-Javadoc)
+   * @see inventorymanagement.service.HistoryServiceInterface#issueItem(inventorymanagement.model.IncomingHistoryModel)
+   */
   @Override
   @Transactional
   public HistoryModel issueItem(IncomingHistoryModel historyModel) throws BadRequestException, NotFoundException {
@@ -74,6 +95,10 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
     }
   }
 
+  /*
+   * (non-Javadoc)
+   * @see inventorymanagement.service.HistoryServiceInterface#returnItem(int, inventorymanagement.model.IncomingReturnModel)
+   */
   @Override
   @Transactional
   public HistoryModel returnItem(int issueNumber, IncomingReturnModel historyModel)

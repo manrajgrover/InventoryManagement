@@ -17,15 +17,30 @@ import inventorymanagement.model.IncomingItemModel;
 import inventorymanagement.model.ItemModel;
 import inventorymanagement.utilities.ItemServiceUtils;
 
+/**
+ * @see ItemServiceInterface
+ * @author manrajsingh
+ *
+ */
 @Service
 public class ItemServiceImpl implements ItemServiceInterface {
-
+  
+  /**
+   * {@link ItemDaoInterface}
+   */
   @Autowired
   ItemDaoInterface itemDaoImpl;
 
+  /**
+   * {@link ItemServiceUtils}
+   */
   @Autowired
   ItemServiceUtils itemServiceUtils;
 
+  /*
+   * (non-Javadoc)
+   * @see inventorymanagement.service.ItemServiceInterface#addItem(inventorymanagement.model.IncomingItemModel)
+   */
   @Override
   @Transactional
   public ItemModel addItem(IncomingItemModel itemModel) throws BadRequestException {
@@ -45,7 +60,11 @@ public class ItemServiceImpl implements ItemServiceInterface {
     ItemModel im = new ItemModel(item, tag, Constants.ITEM_CREATED_MESSAGE);
     return im;
   }
-
+  
+  /*
+   * (non-Javadoc)
+   * @see inventorymanagement.service.ItemServiceInterface#updateItem(int, inventorymanagement.model.IncomingItemModel)
+   */
   @Override
   @Transactional
   public ItemModel updateItem(int id, IncomingItemModel itemModel) throws BadRequestException, NotFoundException {
@@ -67,7 +86,11 @@ public class ItemServiceImpl implements ItemServiceInterface {
       throw new NotFoundException("Item with given ID does not exist");
     }
   }
-
+  
+  /*
+   * (non-Javadoc)
+   * @see inventorymanagement.service.ItemServiceInterface#deleteItem(int)
+   */
   @Override
   @Transactional
   public void deleteItem(int id) throws BadRequestException {
@@ -77,7 +100,11 @@ public class ItemServiceImpl implements ItemServiceInterface {
     Item item = new Item(id);
     itemDaoImpl.delete(item);
   }
-
+  
+  /*
+   * (non-Javadoc)
+   * @see inventorymanagement.service.ItemServiceInterface#getAllItems()
+   */
   @Override
   @Transactional
   public List<ItemModel> getAllItems() {
@@ -85,6 +112,10 @@ public class ItemServiceImpl implements ItemServiceInterface {
     return itemServiceUtils.mapItemsToModel(itemsList);
   }
 
+  /*
+   * (non-Javadoc)
+   * @see inventorymanagement.service.ItemServiceInterface#getItemById(int)
+   */
   @Override
   @Transactional
   public ItemModel getItemById(int id) throws BadRequestException, NotFoundException {
@@ -100,6 +131,10 @@ public class ItemServiceImpl implements ItemServiceInterface {
     }
   }
 
+  /*
+   * (non-Javadoc)
+   * @see inventorymanagement.service.ItemServiceInterface#getCountItem(int)
+   */
   @Override
   @Transactional
   public int getCountItem(int id) throws BadRequestException {

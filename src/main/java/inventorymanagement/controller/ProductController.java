@@ -26,11 +26,26 @@ import inventorymanagement.service.ProductServiceInterface;
 @RestController
 public class ProductController {
 
+  /**
+   * {@link Logger}
+   */
   private static final Logger LOG = Logger.getLogger(ProductController.class);
-
+  
+  /**
+   * {@link ProductServiceInterface}
+   */
   @Autowired
   ProductServiceInterface productService;
-
+  
+  /**
+   * Controller method to add new products to the database
+   * 
+   * @param productModel {@link IncomingProductModel} contains Product Company, Product Name and its version
+   * @param session {@link HttpSession}
+   * @return {@link ProductModel}
+   * @throws UnauthorizedException Thrown when user is not logged in or not an admin
+   * @throws BadRequestException Thrown when any of the field is empty
+   */
   @RequestMapping(value = "/products", method = RequestMethod.POST)
   @ResponseBody
   @ResponseStatus(HttpStatus.CREATED)
@@ -45,7 +60,18 @@ public class ProductController {
     LOG.info("Request for adding a product successful");
     return product;
   }
-
+  
+  /**
+   * Controller method to update details of a product
+   * 
+   * @param id {@link Integer} Id of product
+   * @param productModel {@link IncomingProductModel} contains Product Company, Product Name and its version
+   * @param session {@link HttpSession}
+   * @return {@link ProductModel}
+   * @throws UnauthorizedException Thrown when user is not logged in or not an admin
+   * @throws BadRequestException Thrown when any of the field is empty
+   * @throws NotFoundException Thrown when no product with given id is found
+   */
   @RequestMapping(value = "/products/{id}", method = RequestMethod.PATCH)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
@@ -60,7 +86,15 @@ public class ProductController {
     LOG.info("Request for updating a product successful");
     return product;
   }
-
+  
+  /**
+   * Controller method to delete a product from the database
+   * 
+   * @param id {@link Integer} Id of product
+   * @param session {@link HttpSession}
+   * @throws UnauthorizedException Thrown when user is not logged in or not an admin
+   * @throws BadRequestException Thrown when any of the field is empty
+   */
   @RequestMapping(value = "/products/{id}", method = RequestMethod.DELETE)
   @ResponseBody
   @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -78,7 +112,12 @@ public class ProductController {
     
     LOG.info("Request for deleting a product successful");
   }
-
+  
+  /**
+   * Controller method to get all products from the database
+   * 
+   * @return {@link IncomingProductModel} List of all Products mapped to IncomingProductModel
+   */
   @RequestMapping(value = "/products", method = RequestMethod.GET)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
@@ -92,7 +131,15 @@ public class ProductController {
     
     return products;
   }
-
+  
+  /**
+   * Controller method to get details of particular product
+   * 
+   * @param id {@link Integer} Id of Product
+   * @return {@link IncomingProductModel}
+   * @throws BadRequestException Thrown when any of the field is empty
+   * @throws NotFoundException Thrown when no product with given id is found
+   */
   @RequestMapping(value = "/products/{id}", method = RequestMethod.GET)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)

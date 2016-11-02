@@ -18,18 +18,36 @@ import inventorymanagement.model.IncomingProductModel;
 import inventorymanagement.model.ProductModel;
 import inventorymanagement.utilities.ProductServiceUtils;
 
+/**
+ * @see ProductServiceInterface
+ * @author manrajsingh
+ *
+ */
 @Service
 public class ProductServiceImpl implements ProductServiceInterface {
-
+  
+  /**
+   * {@link ProductDaoInterface}
+   */
   @Autowired
   ProductDaoInterface productDaoImpl;
 
+  /**
+   * {@link ProductServiceUtils}
+   */
   @Autowired
   ProductServiceUtils productServiceUtils;
   
+  /**
+   * {@link ItemDaoInterface}
+   */
   @Autowired
   ItemDaoInterface itemDaoImpl;
 
+  /*
+   * (non-Javadoc)
+   * @see inventorymanagement.service.ProductServiceInterface#addProduct(inventorymanagement.model.IncomingProductModel)
+   */
   @Override
   @Transactional
   public ProductModel addProduct(IncomingProductModel productModel) throws BadRequestException {
@@ -52,6 +70,10 @@ public class ProductServiceImpl implements ProductServiceInterface {
     return pm;
   }
 
+  /*
+   * (non-Javadoc)
+   * @see inventorymanagement.service.ProductServiceInterface#updateProduct(int, inventorymanagement.model.IncomingProductModel)
+   */
   @Override
   @Transactional
   public ProductModel updateProduct(int id, IncomingProductModel productModel)
@@ -77,6 +99,10 @@ public class ProductServiceImpl implements ProductServiceInterface {
     }
   }
 
+  /*
+   * (non-Javadoc)
+   * @see inventorymanagement.service.ProductServiceInterface#deleteProduct(int)
+   */
   @Override
   @Transactional
   public void deleteProduct(int id) throws BadRequestException {
@@ -99,6 +125,10 @@ public class ProductServiceImpl implements ProductServiceInterface {
     productDaoImpl.flush();
   }
 
+  /*
+   * (non-Javadoc)
+   * @see inventorymanagement.service.ProductServiceInterface#getAllProducts()
+   */
   @Override
   @Transactional
   public List<IncomingProductModel> getAllProducts() {
@@ -109,6 +139,10 @@ public class ProductServiceImpl implements ProductServiceInterface {
     return productsModel;
   }
 
+  /*
+   * (non-Javadoc)
+   * @see inventorymanagement.service.ProductServiceInterface#getProductById(int)
+   */
   @Override
   @Transactional
   public IncomingProductModel getProductById(int id) throws BadRequestException, NotFoundException {

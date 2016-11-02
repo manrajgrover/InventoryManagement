@@ -46,13 +46,14 @@ public class ItemController {
   ItemServiceInterface itemService;
   
   /**
-   * Create
+   * Controller method to add new items
    * 
-   * @param itemModel
-   * @param session
-   * @return
-   * @throws UnauthorizedException
-   * @throws BadRequestException
+   * @param itemModel {@link IncomingItemModel} contains Product Id and Product Tag required for
+   *                  creating a new item
+   * @param session {@link HttpSession} for validating if user is admin or not
+   * @return {@link ItemModel}
+   * @throws UnauthorizedException Thrown when user is not logged in or not an admin
+   * @throws BadRequestException Thrown when any of the field is empty
    */
   @RequestMapping(value = "/items", method = RequestMethod.POST)
   @ResponseBody
@@ -68,7 +69,18 @@ public class ItemController {
     LOG.info("Request to add an item successful");
     return item;
   }
-
+  
+  /**
+   * Controller method to update details of an item
+   * 
+   * @param id {@link Integer} Item Id of the item that needs to be updated
+   * @param itemModel {@link IncomingItemModel} contains Product Id and Product Tag required for updating an item
+   * @param session {@link HttpSession} for validating if user is admin or not
+   * @return {@link ItemModel}
+   * @throws UnauthorizedException Thrown when user is not logged in or not an admin
+   * @throws BadRequestException Thrown when any of the field is empty
+   * @throws NotFoundException Thrown when no product or item with id or tag is found
+   */
   @RequestMapping(value = "/items/{id}", method = RequestMethod.PATCH)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
@@ -83,7 +95,14 @@ public class ItemController {
     LOG.info("Request to update an item successful");
     return item;
   }
-
+  
+  /**
+   * Controller method to get count of items in the database that are available
+   * 
+   * @param id {@link Integer} Product ID whose count is needed
+   * @return {@link Integer} Number of items with given Product ID and are available
+   * @throws BadRequestException Thrown when any of the field is empty
+   */
   @RequestMapping(value = "/items/{id}/count", method = RequestMethod.GET)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
@@ -91,7 +110,15 @@ public class ItemController {
     int count = itemService.getCountItem(id);
     return count;
   }
-
+  
+  /**
+   * Controller method to delete an item from the database
+   * 
+   * @param id {@link Integer} Item Id required for deletion
+   * @param session {@link HttpSession} for validating if user is admin or not
+   * @throws UnauthorizedException Thrown when user is not logged in or not an admin
+   * @throws BadRequestException Thrown when any of the field is empty
+   */
   @RequestMapping(value = "/items/{id}", method = RequestMethod.DELETE)
   @ResponseBody
   @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -106,6 +133,11 @@ public class ItemController {
     LOG.info("Request to delete an item successful");
   }
 
+  /**
+   * Controller method to get all items from the database
+   * 
+   * @return {@link ItemModel} List of all Items mapped to ItemModel
+   */
   @RequestMapping(value = "/items", method = RequestMethod.GET)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
@@ -115,7 +147,15 @@ public class ItemController {
     LOG.info("Request to get all items successful");
     return itemModels;
   }
-
+  
+  /**
+   * Controller method to get details of particular item
+   * 
+   * @param id {@link Integer} Item Id required for getting details
+   * @return {@link ItemModel} 
+   * @throws BadRequestException Thrown when any of the field is empty
+   * @throws NotFoundException Thrown when no item with id is found
+   */
   @RequestMapping(value = "/items/{id}", method = RequestMethod.GET)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)

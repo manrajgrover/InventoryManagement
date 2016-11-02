@@ -4,33 +4,38 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import inti.ws.spring.exception.client.BadRequestException;
-import inti.ws.spring.exception.client.NotFoundException;
-import inventorymanagement.constants.Constants;
 import inventorymanagement.dao.UserDaoInterface;
-import inventorymanagement.dao.UserRoleDaoInterface;
-import inventorymanagement.entities.Role;
 import inventorymanagement.entities.User;
-import inventorymanagement.entities.UserRole;
-import inventorymanagement.model.IncomingUserModel;
 import inventorymanagement.model.UserModel;
 import inventorymanagement.utilities.UserServiceUtils;
 
+/**
+ * @see UserServiceInterface
+ * @author manrajsingh
+ *
+ */
 @Service
 public class UserServiceImpl implements UserServiceInterface {
 
-  private static final Logger LOG = Logger.getLogger(UserServiceImpl.class);
-
+  /**
+   * {@link UserDaoInterface}
+   */
   @Autowired
   UserDaoInterface userDaoImpl;
 
+  /**
+   * {@link UserServiceUtils}
+   */
   @Autowired
   UserServiceUtils userUtils;
 
+  /*
+   * (non-Javadoc)
+   * @see inventorymanagement.service.UserServiceInterface#getAllUsers()
+   */
   @Override
   @Transactional
   public List<UserModel> getAllUsers() {

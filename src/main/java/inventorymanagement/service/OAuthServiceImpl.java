@@ -19,15 +19,24 @@ import inventorymanagement.model.LoginResponseModel;
 import inventorymanagement.model.UserModel;
 import inventorymanagement.utilities.OAuthServiceUtils;
 
+/**
+ * @see OAuthServiceInterface
+ * @author manrajsingh
+ *
+ */
 @Service
 public class OAuthServiceImpl implements OAuthServiceInterface {
-
-  @Autowired
-  private UserServiceInterface userService;
-
+  
+  /**
+   * {@link OAuthServiceUtils}
+   */
   @Autowired
   private OAuthServiceUtils oauthServiceUtils;
-
+  
+  /*
+   * (non-Javadoc)
+   * @see inventorymanagement.service.OAuthServiceInterface#authenticate(java.security.Principal, javax.servlet.http.HttpSession)
+   */
   @Override
   @Transactional
   public LoginResponseModel authenticate(Principal principal, HttpSession session)
