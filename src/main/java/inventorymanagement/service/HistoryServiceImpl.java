@@ -63,7 +63,7 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
   @Transactional
   public HistoryModel issueItem(IncomingHistoryModel historyModel) throws BadRequestException, NotFoundException {
 
-    if (historyModel.getProductTag().equals("") || historyModel.getProductId() <= 0
+    if (historyModel.getProductTag() == null || historyModel.getProductTag().equals("") || historyModel.getProductId() <= 0
         || historyModel.getUserId() <= 0) {
       throw new BadRequestException("Required parameters are either missing or invalid");
     }
@@ -104,7 +104,7 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
   public HistoryModel returnItem(int issueNumber, IncomingReturnModel historyModel)
       throws NotFoundException, BadRequestException {
     
-    if (issueNumber <=0 || historyModel.getProductTag().equals("")) {
+    if (issueNumber <=0 || historyModel.getProductTag() == null || historyModel.getProductTag().equals("")) {
       throw new BadRequestException("Required parameters are either missing or invalid");
     }
     

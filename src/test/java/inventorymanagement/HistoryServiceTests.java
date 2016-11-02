@@ -44,6 +44,28 @@ public class HistoryServiceTests {
   }
   
   @Test
+  public void issueItemNotAvailableTests() throws BadRequestException, NotFoundException {
+    IncomingHistoryModel historyModel = new IncomingHistoryModel();
+    historyModel.setProductId(1);
+    historyModel.setUserId(1);
+    historyModel.setProductTag("PQR");
+    
+    HistoryModel hm = historyService.issueItem(historyModel);
+
+    assertEquals(hm.getAvailability(), false);
+    assertEquals(hm.getMessage(), Constants.ITEM_NOT_AVAILABLE);
+  }
+  
+  @Test(expected = BadRequestException.class)
+  public void issueItemNotTagTests() throws BadRequestException, NotFoundException {
+    IncomingHistoryModel historyModel = new IncomingHistoryModel();
+    historyModel.setProductId(1);
+    historyModel.setUserId(1);
+    
+    HistoryModel hm = historyService.issueItem(historyModel);
+  }
+  
+  @Test
   public void returnItemTests() throws NotFoundException, BadRequestException {
     IncomingReturnModel returnModel = new IncomingReturnModel();
     int issueId = 1;
@@ -53,5 +75,41 @@ public class HistoryServiceTests {
 
     assertEquals(hm.getAvailability(), true);
     assertEquals(hm.getMessage(), Constants.ITEM_RETURNED);
+  }
+  
+  @Test(expected = BadRequestException.class)
+  public void returnItemNoProductTagTests() throws NotFoundException, BadRequestException {
+    IncomingReturnModel returnModel = new IncomingReturnModel();
+    int issueId = 1;
+
+    HistoryModel hm = historyService.returnItem(issueId, returnModel);
+  }
+  
+  @Test
+  public void returnItemMismatchTests() throws NotFoundException, BadRequestException {
+    IncomingReturnModel returnModel = new IncomingReturnModel();
+    int issueId = 2;
+    returnModel.setProductTag("PQR");
+    HistoryModel hm = historyService.returnItem(issueId, returnModel);
+    assertEquals(hm.getMessage(), Constants.ITEM_MISMATCH);
+  }
+  
+  @Test(expected = NotFoundException.class)
+  public void returnItemNotFoundTests() throws NotFoundException, BadRequestException {
+    IncomingReturnModel returnModel = new IncomingReturnModel();
+    int issueId = 200;
+    returnModel.setProductTag("PQR");
+    HistoryModel hm = historyService.returnItem(issueId, returnModel);
+  }
+  
+  @Test
+  public void returnItemNotAvailableTests() throws NotFoundException, BadRequestException {
+    IncomingReturnModel returnModel = new IncomingReturnModel();
+    int issueId = 3;
+    returnModel.setProductTag("XYZ");
+    HistoryModel hm = historyService.returnItem(issueId, returnModel);
+    
+    assertEquals(hm.getAvailability(), true);
+    assertEquals(hm.getMessage(), Constants.ITEM_ALREADY_RETURNED);
   }
 }

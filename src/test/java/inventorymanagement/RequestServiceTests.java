@@ -46,6 +46,14 @@ public class RequestServiceTests {
     assertEquals(rm.getReply(), "");
   }
   
+  @Test(expected = BadRequestException.class)
+  public void addRequestNoIdTests() throws BadRequestException {
+    IncomingRequestModel requestModel = new IncomingRequestModel();
+    requestModel.setProductId(-3);
+    requestModel.setUserId(-1);
+    RequestModel rm = requestService.addRequest(requestModel);
+  }
+  
   @Test
   public void updateRequestTests() throws BadRequestException, NotFoundException {
     IncomingUpdateRequest requestModel = new IncomingUpdateRequest();
@@ -59,6 +67,21 @@ public class RequestServiceTests {
     assertEquals(rm.getProductName(), "iPhone");
     assertEquals(rm.getVersion(), "7");
     assertEquals(rm.getReply(), "Approved");
+  }
+  
+  @Test(expected = BadRequestException.class)
+  public void updateRequestNoReplyTests() throws BadRequestException, NotFoundException {
+    IncomingUpdateRequest requestModel = new IncomingUpdateRequest();
+    
+    RequestModel rm = requestService.updateRequest(2, requestModel);
+  }
+  
+  @Test(expected = NotFoundException.class)
+  public void updateRequestNoExistingIdTests() throws BadRequestException, NotFoundException {
+    IncomingUpdateRequest requestModel = new IncomingUpdateRequest();
+    requestModel.setReply("Approved");
+    
+    RequestModel rm = requestService.updateRequest(200, requestModel);
   }
 
   @Test
@@ -83,5 +106,32 @@ public class RequestServiceTests {
     assertEquals(request.getProductCompany(), "OnePlus");
     assertEquals(request.getProductName(), "Three");
     assertEquals(request.getReply(), "YES");
+  }
+  
+  @Test(expected = BadRequestException.class)
+  public void getRequestsByIdNoIdTests() throws BadRequestException, NotFoundException {
+    RequestModel request = requestService.getRequestById(-1);
+  }
+  
+  @Test(expected = NotFoundException.class)
+  public void getRequestsByIdNoExistingIdTests() throws BadRequestException, NotFoundException {
+    RequestModel request = requestService.getRequestById(200);
+  }
+  
+  @Test
+  public void getRequestsByUserIdTests() throws BadRequestException {
+    List<RequestModel> requests = requestService.getRequestByUserId(1);
+    RequestModel request = requests.get(0);
+    assertEquals(requests.size(), 2);
+    assertEquals(request.getProductCompany(), "OnePlus");
+    assertEquals(request.getProductName(), "Three");
+    assertEquals(request.getVersion(), "2016");
+    assertEquals(request.getReply(), "YES");
+    assertEquals(request.getId(), 1);
+  }
+  
+  @Test(expected = BadRequestException.class)
+  public void getRequestsByUserIdNoIdTests() throws BadRequestException {
+    List<RequestModel> requests = requestService.getRequestByUserId(-1);
   }
 }

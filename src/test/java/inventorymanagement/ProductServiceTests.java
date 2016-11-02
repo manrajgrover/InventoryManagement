@@ -54,6 +54,15 @@ public class ProductServiceTests {
     assertEquals(pm.getMessage(), Constants.PRODUCT_CREATED_MESSAGE);
   }
   
+  @Test(expected = BadRequestException.class)
+  public void addProductNoCompanyTests() throws BadRequestException {
+    IncomingProductModel productModel = new IncomingProductModel();
+    productModel.setName("One");
+    productModel.setVersion("2013");
+    
+    ProductModel pm = productService.addProduct(productModel);
+  }
+  
   @Test
   public void updateProductTests() throws BadRequestException, NotFoundException {
     IncomingProductModel productModel = new IncomingProductModel();
@@ -70,11 +79,35 @@ public class ProductServiceTests {
     assertEquals(pm.getMessage(), Constants.PRODUCT_UPDATED_MESSAGE);
   }
   
+  @Test(expected = BadRequestException.class)
+  public void updateProductNoCompanyTests() throws BadRequestException, NotFoundException {
+    IncomingProductModel productModel = new IncomingProductModel();
+    productModel.setName("One");
+    productModel.setVersion("2014");
+    
+    ProductModel pm = productService.updateProduct(2, productModel);
+  }
+  
+  @Test(expected = NotFoundException.class)
+  public void updateProductNotFoundTests() throws BadRequestException, NotFoundException {
+    IncomingProductModel productModel = new IncomingProductModel();
+    productModel.setCompany("OnePlus");
+    productModel.setName("One");
+    productModel.setVersion("2014");
+    
+    ProductModel pm = productService.updateProduct(200, productModel);
+  }
+  
   @Test
   public void deleteProductTests() throws BadRequestException {
-    productService.deleteProduct(2);
-    Product product = productDao.getById(2);
+    productService.deleteProduct(1);
+    Product product = productDao.getById(1);
     assertEquals(product, null);
+  }
+  
+  @Test(expected = BadRequestException.class)
+  public void deleteProductNoIdTests() throws BadRequestException {
+    productService.deleteProduct(-1);
   }
 
   @Test
@@ -97,5 +130,15 @@ public class ProductServiceTests {
     assertEquals(productModel.getCompany(), "Apple");
     assertEquals(productModel.getName(), "MacBook");
     assertEquals(productModel.getVersion(), "2017");
+  }
+  
+  @Test(expected = BadRequestException.class)
+  public void getProductByIdNoIdTests() throws BadRequestException, NotFoundException {
+    IncomingProductModel productModel = productService.getProductById(-1);
+  }
+  
+  @Test(expected = NotFoundException.class)
+  public void getProductByIdNoExistingIdTests() throws BadRequestException, NotFoundException {
+    IncomingProductModel productModel = productService.getProductById(200);
   }
 }
