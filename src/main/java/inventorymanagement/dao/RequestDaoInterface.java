@@ -16,4 +16,6 @@ public interface RequestDaoInterface {
 
   public void refresh(Request request);
 
+  List<Request> getByUserId(int id);
+
 }

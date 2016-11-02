@@ -76,5 +76,15 @@ public class RequestController {
     LOG.info("Request for getting a request by id successful");
     return request;
   }
+  
+  @RequestMapping(value = "/requests/user/{id}", method = RequestMethod.GET)
+  @ResponseBody
+  @ResponseStatus(HttpStatus.OK)
+  public List<RequestModel> getByUserId(@PathVariable int id) throws BadRequestException {
+    LOG.info("Request received for getting a request by id");
+    List<RequestModel> request = requestService.getRequestByUserId(id);
+    LOG.info("Request for getting a request by id successful");
+    return request;
+  }
 
 }

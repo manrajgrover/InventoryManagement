@@ -43,10 +43,6 @@ public class ProductDaoImpl implements ProductDaoInterface {
   @Override
   public List<Product> getAll() {
     List<Product> products = getSession().createCriteria(Product.class).list();
-    for (Product product : products) {
-      System.out
-          .println(product.getName() + " " + product.getCompany() + " " + product.getVersion());
-    }
     return products;
   }
 

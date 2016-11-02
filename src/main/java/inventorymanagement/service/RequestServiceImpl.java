@@ -92,4 +92,16 @@ public class RequestServiceImpl implements RequestServiceInterface {
     }
   }
 
+  @Override
+  @Transactional
+  public List<RequestModel> getRequestByUserId(int id) throws BadRequestException {
+    if (id <=0) {
+      throw new BadRequestException("Required parameters are either missing or invalid");
+    }
+    
+    List<Request> request = requestDaoImpl.getByUserId(id);
+    List<RequestModel> requestModel = requestUtils.mapRequestsToModel(request);
+    return requestModel;
+  }
+
 }

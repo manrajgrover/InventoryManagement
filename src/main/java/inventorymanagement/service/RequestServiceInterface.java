@@ -16,4 +16,6 @@ public interface RequestServiceInterface {
   RequestModel getRequestById(int id) throws BadRequestException, NotFoundException;
 
   public RequestModel updateRequest(int id, IncomingUpdateRequest request) throws BadRequestException, NotFoundException;
+
+  public List<RequestModel> getRequestByUserId(int id) throws BadRequestException;
 }
