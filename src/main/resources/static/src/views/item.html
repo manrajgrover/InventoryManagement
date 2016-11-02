@@ -4,6 +4,9 @@
 <div class="row alert text-center" id="httpMessage" ng-show="itemMessageShow">
   {{itemMessage}}
 </div>
+<div class="row info">
+  <input type="text" class="form-control" id="filterTable" name="filterTable" ng-model="search.$" placeholder="Type to filter table"> 
+</div>
 <div class="row">
   <table id="itemTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
     <thead>
@@ -17,7 +20,7 @@
         <th><button ng-click="populateAdd()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add">Add</button></th>
       </tr>
     </thead>
-    <tr ng-repeat="item in data">
+    <tr ng-repeat="item in data | filter:search:strict">
       <td>{{item.itemId}}</td>
       <td>{{item.company}}</td>
       <td>{{item.name}}</td>

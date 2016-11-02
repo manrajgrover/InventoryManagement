@@ -12,6 +12,10 @@
   margin: 0px 10px 20px;
 }
 
+.full-margin {
+  margin: 10px;
+}
+
 .img-reduced {
   width: 150px;
 }

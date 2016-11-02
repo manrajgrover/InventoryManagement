@@ -2,7 +2,7 @@
 
 const angular = require('angular');
 
-const app = angular.module("app", [require('angular-utils-pagination'), require('angular-route')]);
+const app = angular.module("app", [require('angular-route')]);
 
 app.config(function($httpProvider) {
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -73,7 +73,6 @@ app.run(/*@ngInject*/function($rootScope, $timeout, $location, sessionService){
   });
 
   $rootScope.$on('$routeChangeSuccess', function() {
-    console.log("Here");
     $timeout(function() {
       $rootScope.stateIsLoading = false;
     }, 2000);
