@@ -35,32 +35,35 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">Add Item</h4>
         </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Select Product</div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-              <div class="form-group">
-                <select name="addProductSelect" class="form-control" id="product">
-                  <option ng-repeat="product in products" value="{{product.id}}">
-                    {{product.company}} {{product.name}} ({{product.version}})
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Item Tag</div>
+        <form name="addItemsForm">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Select Product</div>
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <div class="form-group">
-                  <input type="text" class="form-control" id="addItemTag" name="addItemTag"/>
+                  <select name="addProductSelect" class="form-control" id="product">
+                    <option ng-repeat="product in products" value="{{product.id}}">
+                      {{product.company}} {{product.name}} ({{product.version}})
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Item Tag</div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                  <input ng-model="addItemTag" type="text" class="form-control" id="addItemTag" name="addItemTag" required/>
+                  <span ng-show="addItemsForm.addItemTag.$touched && addItemsForm.addItemTag.$invalid">Item tag is required.</span>
                 </div>
               </div>
             </div>
           </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button ng-click="addItem()" type="button" class="btn btn-primary">Add</button>
-        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button ng-disabled="addItemsForm.$invalid" ng-click="addItem()" type="button" class="btn btn-primary">Add</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -72,32 +75,37 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">Item #{{edit.itemId}}</h4>
         </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Select Product</div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-              <div class="form-group">
-                <select name="editProductSelect" class="form-control" id="editProduct">
-                  <option ng-repeat="product in products" value="{{product.id}}">
-                    {{product.company}} {{product.name}} ({{product.version}})
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Item Tag</div>
+        <div class="alert text-center" id="errorItemMessage" ng-show="editErrorMessageShow">
+          {{editErrorMessage}}
+        </div>
+        <form name="editItemForm">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Select Product</div>
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <div class="form-group">
-                  <input type="text" class="form-control" id="editItemTag" name="editItemTag"/>
+                  <select name="editProductSelect" class="form-control" id="editProduct">
+                    <option ng-repeat="product in products" value="{{product.id}}">
+                      {{product.company}} {{product.name}} ({{product.version}})
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Item Tag</div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                  <input ng-model="editItemTag" type="text" class="form-control" id="editItemTag" name="editItemTag" required/>
                 </div>
               </div>
             </div>
           </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button ng-click="updateItem(edit.itemId)" type="button" class="btn btn-primary">Save</button>
-        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button ng-click="updateItem(edit.itemId)" type="button" class="btn btn-primary">Save</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

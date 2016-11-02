@@ -32,36 +32,41 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">Add Product</h4>
         </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Product Company</div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-              <div class="form-group">
-                  <input type="text" class="form-control" id="addProductCompany" name="addProductCompany">
+        <form name="addProductForm">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Product Company</div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <input ng-model="addProductCompany" type="text" class="form-control" id="addProductCompany" name="addProductCompany" required>
+                    <span ng-show="addProductForm.addProductCompany.$touched && addProductForm.addProductCompany.$invalid">Product Company is required.</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Product Name:</div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                  <input ng-model="addProductName" type="text" class="form-control" id="addProductName" name="addProductName" required />
+                  <span ng-show="addProductForm.addProductName.$touched && addProductForm.addProductName.$invalid">Product Name is required.</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Product Version</div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <input ng-model="addProductVersion" type="text" class="form-control" id="addProductVersion" name="addProductVersion" required />
+                    <span ng-show="addProductForm.addProductVersion.$touched && addProductForm.addProductVersion.$invalid">Product Version is required.</span>
+                </div>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Product Name:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-              <div class="form-group">
-                <input type="text" class="form-control" id="addProductName" name="addProductName"/>
-              </div>
-            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button ng-disabled="addProductForm.$invalid" ng-click="addProduct()" type="button" class="btn btn-primary">Add</button>
           </div>
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Product Version</div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-              <div class="form-group">
-                  <input type="text" class="form-control" id="addProductVersion" name="addProductVersion"/>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button ng-click="addProduct()" type="button" class="btn btn-primary">Add</button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -72,36 +77,41 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">Product #{{edit.id}}</h4>
         </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Product Company</div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-              <div class="form-group">
-                  <input type="text" class="form-control" id="editProductCompany" name="editProductCompany">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Product Name:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-              <div class="form-group">
-                <input type="text" class="form-control" id="editProductName" name="editProductName"/>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Product Version</div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-              <div class="form-group">
-                  <input type="text" class="form-control" id="editProductVersion" name="editProductVersion"/>
-              </div>
-            </div>
-          </div>
+        <div class="alert text-center" id="errorProductMessage" ng-show="editErrorMessageShow">
+          {{editErrorMessage}}
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button ng-click="updateProduct(edit.id)" type="button" class="btn btn-primary">Save</button>
-        </div>
+        <form name="editProductForm">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Product Company</div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <input ng-model="editProductCompany" type="text" class="form-control" id="editProductCompany" name="editProductCompany" required>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Product Name:</div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                  <input ng-model="editProductName" type="text" class="form-control" id="editProductName" name="editProductName" required/>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Product Version</div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <input ng-model="editProductVersion" type="text" class="form-control" id="editProductVersion" name="editProductVersion" required/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button ng-click="updateProduct(edit.id)" type="button" class="btn btn-primary">Save</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

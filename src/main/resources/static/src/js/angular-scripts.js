@@ -21,9 +21,6 @@ app.config(/*@ngInject*/function($routeProvider) {
   }).when('/admin', {
     controller: 'adminController',
     templateUrl: 'dist/views/admin.html'
-  }).when('/selectRole', {
-    controller: 'selectRoleController',
-    templateUrl: 'dist/views/selectRole.html'
   }).when('/incoming/requests', {
     controller: 'incomingRequestsController',
     templateUrl: 'dist/views/incomingRequests.html'
@@ -36,6 +33,9 @@ app.config(/*@ngInject*/function($routeProvider) {
   }).when('/returns', {
     controller: 'returnsController',
     templateUrl: 'dist/views/returns.html'
+  }).when('/userRequests', {
+    controller: 'userRequestsController',
+    templateUrl: 'dist/views/userRequests.html'
   }).otherwise({
     redirectTo: '/'
   });
@@ -65,7 +65,7 @@ app.run(/*@ngInject*/function($rootScope, $location, sessionService){
       if ( next.templateUrl !== "dist/views/home.html" ) {
         $location.path( "/" );
       }
-    } else if ((!session.hasOwnProperty('admin') || session.admin === false) && (next.templateUrl === "dist/views/admin.html" || next.templateUrl === "dist/views/selectRole.html")) {
+    } else if ((!session.hasOwnProperty('admin') || session.admin === false) && (next.templateUrl === "dist/views/admin.html")) {
       $location.path( "/dashboard" );
     }
   });
@@ -77,22 +77,6 @@ app.controller("homeController", /*@ngInject*/function($scope) {
 
   $scope.login = () => {
     window.location.replace("login");
-  }
-
-});
-
-app.controller("selectRoleController", /*@ngInject*/function($scope, $location, sessionService) {
-  
-  $scope.roleSelected = (role) => {
-    if(role === "admin") {
-      $location.path("/admin");
-    }
-    else {
-      let session = sessionService.getSession();
-      session.admin = false;
-      sessionService.setSession(session);
-      $location.path("/dashboard");
-    }
   }
 
 });
@@ -119,12 +103,11 @@ app.controller("navController", /*@ngInject*/function($scope, $http, $location, 
     console.log(session);
     $scope.session = session;
     if (data.admin) {
-      $location.path("/selectRole");
+      $location.path("/admin");
     } else {
       $location.path("/dashboard");
     }
     
-
   }).error(function() {
     self.authenticated = false;
   });
@@ -270,8 +253,14 @@ app.controller("adminController", /*@ngInject*/ function($scope, $http, $locatio
         $scope.requestMessageShow = false;
       }, 15000);
     }).error(function(data) {
-      console.log("Error");
-      $scope.message = "Error requesting the item";
+      jQuery('#httpMessage').removeClass('alert-success');
+      jQuery('#httpMessage').addClass('alert-danger');
+      console.log(data);
+      $scope.requestMessageShow = true;
+      $scope.requestMessage = data.message;
+      $timeout(function(){
+        $scope.requestMessageShow = false;
+      }, 4000);
     });
 
   }
@@ -305,8 +294,14 @@ app.controller("returnsController", /*@ngInject*/function($scope, $http, $locati
         $scope.requestMessageShow = false;
       }, 5000);
     }).error(function(data) {
-      console.log("Error");
-      $scope.message = "Error requesting the item";
+      jQuery('#httpMessage').removeClass('alert-success');
+      jQuery('#httpMessage').addClass('alert-danger');
+      $scope.requestMessageShow = true;
+      $scope.requestMessage = data.message;
+      console.log(data);
+      $timeout(function(){
+        $scope.requestMessageShow = false;
+      }, 4000);
     });
 
   }
@@ -361,6 +356,18 @@ app.controller("incomingRequestsController", /*@ngInject*/function($http, $scope
       });
     }
 
+  });
+
+});
+
+app.controller("userRequestsController", /*@ngInject*/function($http, $scope, $route, $timeout, sessionService) {
+
+  const session = sessionService.getSession();
+  $http.get(`requests/user/${session.id}`).success(function(data) {
+    $scope.data = data;
+    
+  }).error(function() {
+    console.log("Error");
   });
 
 });
@@ -437,39 +444,57 @@ app.controller("productController", /*@ngInject*/function($http, $scope, $timeou
   jQuery('#edit').on('shown.bs.modal', function (e) {
 
     $scope.updateProduct = (id) => {
-      console.log(id);
-      let company = jQuery(e.currentTarget).find('input[name="editProductCompany"]').val();
-      let name = jQuery(e.currentTarget).find('input[name="editProductName"]').val();
-      let version = jQuery(e.currentTarget).find('input[name="editProductVersion"]').val();
+      let obj = $scope.editProductForm.$error, hasErrors = false, key;
 
-      console.log(company + " "+ name + " " + version);
+      for(let key in obj) {
+        if(obj.hasOwnProperty(key)) {
+          hasErrors = true;
+        }
+      }
 
-      $http.patch(`products/${id}`, {
-        name: name,
-        company: company,
-        version: version
-      }).success(function(data) {
-        jQuery('#httpMessage').removeClass('alert-danger');
-        jQuery('#httpMessage').addClass('alert-success');
-        jQuery('#edit').modal('hide');
-        $scope.productMessageShow = true;
-        $scope.productMessage = "Product updated! Refreshing..";
+      if (!hasErrors) {
+        console.log(id);
+        let company = jQuery(e.currentTarget).find('input[name="editProductCompany"]').val();
+        let name = jQuery(e.currentTarget).find('input[name="editProductName"]').val();
+        let version = jQuery(e.currentTarget).find('input[name="editProductVersion"]').val();
+
+        console.log(company + " "+ name + " " + version);
+
+        $http.patch(`products/${id}`, {
+          name: name,
+          company: company,
+          version: version
+        }).success(function(data) {
+          jQuery('#httpMessage').removeClass('alert-danger');
+          jQuery('#httpMessage').addClass('alert-success');
+          jQuery('#edit').modal('hide');
+          $scope.productMessageShow = true;
+          $scope.productMessage = "Product updated! Refreshing..";
+          $timeout(function(){
+            $scope.productMessageShow = false;
+            $route.reload();
+          }, 3000);
+
+        }).error(function() {
+          jQuery('#httpMessage').removeClass('alert-success');
+          jQuery('#httpMessage').addClass('alert-danger');
+          jQuery('#edit').modal('hide');
+          $scope.productMessageShow = true;
+          $scope.productMessage = "An error occured";
+          $timeout(function(){
+            $scope.productMessageShow = false;
+          }, 3000);
+          console.log("Error");
+        });
+      } else {
+        jQuery('#errorProductMessage').removeClass('alert-success');
+        jQuery('#errorProductMessage').addClass('alert-danger');
+        $scope.editErrorMessage = "Please fill all fields";
+        $scope.editErrorMessageShow = true;
         $timeout(function(){
-          $scope.productMessageShow = false;
-          $route.reload();
+          $scope.editErrorMessageShow = false;
         }, 3000);
-
-      }).error(function() {
-        jQuery('#httpMessage').removeClass('alert-success');
-        jQuery('#httpMessage').addClass('alert-danger');
-        jQuery('#edit').modal('hide');
-        $scope.productMessageShow = true;
-        $scope.productMessage = "An error occured";
-        $timeout(function(){
-          $scope.productMessageShow = false;
-        }, 3000);
-        console.log("Error");
-      });
+      }
     }
 
   });
@@ -593,35 +618,52 @@ app.controller("itemController", /*@ngInject*/function($http, $scope, $timeout, 
   jQuery('#edit').on('shown.bs.modal', function (e) {
 
     $scope.updateItem = (id) => {
-      console.log(id);
-      let company = jQuery(e.currentTarget).find('select[name="editProductSelect"]').val();
-      let tag = jQuery(e.currentTarget).find('input[name="editItemTag"]').val();
-      console.log(company + " " + tag);
-      $http.patch(`items/${id}`, {
-        productId: company,
-        productTag: tag
-      }).success(function(data) {
-        jQuery('#httpMessage').removeClass('alert-danger');
-        jQuery('#httpMessage').addClass('alert-success');
-        jQuery('#edit').modal('hide');
-        $scope.itemMessageShow = true;
-        $scope.itemMessage = "Item updated! Refreshing..";
-        $timeout(function(){
-          $scope.itemMessageShow = false;
-          $route.reload();
-        }, 3000);
+      let obj = $scope.editItemForm.$error, hasErrors = false, key;
+      for(let key in obj) {
+        if(obj.hasOwnProperty(key)) {
+          hasErrors = true;
+        }
+      }
 
-      }).error(function() {
-        jQuery('#httpMessage').removeClass('alert-success');
-        jQuery('#httpMessage').addClass('alert-danger');
-        jQuery('#edit').modal('hide');
-        $scope.itemMessageShow = true;
-        $scope.itemMessage = "An error occured";
+      if (!hasErrors) {
+        console.log(id);
+        let company = jQuery(e.currentTarget).find('select[name="editProductSelect"]').val();
+        let tag = jQuery(e.currentTarget).find('input[name="editItemTag"]').val();
+        console.log(company + " " + tag);
+        $http.patch(`items/${id}`, {
+          productId: company,
+          productTag: tag
+        }).success(function(data) {
+          jQuery('#httpMessage').removeClass('alert-danger');
+          jQuery('#httpMessage').addClass('alert-success');
+          jQuery('#edit').modal('hide');
+          $scope.itemMessageShow = true;
+          $scope.itemMessage = "Item updated! Refreshing..";
+          $timeout(function(){
+            $scope.itemMessageShow = false;
+            $route.reload();
+          }, 3000);
+
+        }).error(function() {
+          jQuery('#httpMessage').removeClass('alert-success');
+          jQuery('#httpMessage').addClass('alert-danger');
+          jQuery('#edit').modal('hide');
+          $scope.itemMessageShow = true;
+          $scope.itemMessage = "An error occured";
+          $timeout(function(){
+            $scope.itemMessageShow = false;
+          }, 3000);
+          console.log("Error");
+        });
+      } else {
+        jQuery('#errorItemMessage').removeClass('alert-success');
+        jQuery('#errorItemMessage').addClass('alert-danger');
+        $scope.editErrorMessage = "Please fill all fields";
+        $scope.editErrorMessageShow = true;
         $timeout(function(){
-          $scope.itemMessageShow = false;
+          $scope.editErrorMessageShow = false;
         }, 3000);
-        console.log("Error");
-      });
+      }
     }
 
   });
