@@ -26,21 +26,23 @@ import inventorymanagement.service.RequestServiceInterface;
 
 @RestController
 public class RequestController {
-  
+
   /**
    * {@link Logger}
    */
   private static final Logger LOG = Logger.getLogger(RequestController.class);
-  
+
   /**
    * {@link RequestServiceInterface}
    */
   @Autowired
   RequestServiceInterface requestService;
-  
+
   /**
    * Controller method to raise a new request
-   * @param request {@link IncomingRequestModel} contains User Id and Product Id required for raising the request
+   * 
+   * @param request {@link IncomingRequestModel} contains User Id and Product Id required for
+   *        raising the request
    * @return {@link RequestModel}
    * @throws BadRequestException Thrown when any of the field is empty
    */
@@ -53,7 +55,7 @@ public class RequestController {
     LOG.info("Request for raising a request successful");
     return requestModel;
   }
-  
+
   /**
    * Controller method to update a request with a reply
    * 
@@ -79,7 +81,7 @@ public class RequestController {
     LOG.info("Request for updating a request successful");
     return requestModel;
   }
-  
+
   /**
    * Controller method to get all requests from the database
    * 
@@ -94,7 +96,7 @@ public class RequestController {
     LOG.info("Request for getting all requests successful");
     return requests;
   }
-  
+
   /**
    * Controller method to get Request details by id
    * 
@@ -112,7 +114,7 @@ public class RequestController {
     LOG.info("Request for getting a request by id successful");
     return request;
   }
-  
+
   /**
    * Controller method to get Request details by user id
    * 

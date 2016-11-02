@@ -30,17 +30,18 @@ public class ProductController {
    * {@link Logger}
    */
   private static final Logger LOG = Logger.getLogger(ProductController.class);
-  
+
   /**
    * {@link ProductServiceInterface}
    */
   @Autowired
   ProductServiceInterface productService;
-  
+
   /**
    * Controller method to add new products to the database
    * 
-   * @param productModel {@link IncomingProductModel} contains Product Company, Product Name and its version
+   * @param productModel {@link IncomingProductModel} contains Product Company, Product Name and its
+   *        version
    * @param session {@link HttpSession}
    * @return {@link ProductModel}
    * @throws UnauthorizedException Thrown when user is not logged in or not an admin
@@ -60,12 +61,13 @@ public class ProductController {
     LOG.info("Request for adding a product successful");
     return product;
   }
-  
+
   /**
    * Controller method to update details of a product
    * 
    * @param id {@link Integer} Id of product
-   * @param productModel {@link IncomingProductModel} contains Product Company, Product Name and its version
+   * @param productModel {@link IncomingProductModel} contains Product Company, Product Name and its
+   *        version
    * @param session {@link HttpSession}
    * @return {@link ProductModel}
    * @throws UnauthorizedException Thrown when user is not logged in or not an admin
@@ -86,7 +88,7 @@ public class ProductController {
     LOG.info("Request for updating a product successful");
     return product;
   }
-  
+
   /**
    * Controller method to delete a product from the database
    * 
@@ -98,21 +100,22 @@ public class ProductController {
   @RequestMapping(value = "/products/{id}", method = RequestMethod.DELETE)
   @ResponseBody
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable int id, HttpSession session) throws UnauthorizedException, BadRequestException {
-    
+  public void delete(@PathVariable int id, HttpSession session)
+      throws UnauthorizedException, BadRequestException {
+
     Boolean admin = (Boolean) session.getAttribute(Constants.SESSION_ADMIN);
-    
+
     if (admin == false) {
       throw new UnauthorizedException("Unauthorized access");
     }
-    
+
     LOG.info("Request received for deleting a product");
-    
+
     productService.deleteProduct(id);
-    
+
     LOG.info("Request for deleting a product successful");
   }
-  
+
   /**
    * Controller method to get all products from the database
    * 
@@ -122,16 +125,16 @@ public class ProductController {
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
   public List<IncomingProductModel> getAll() {
-    
+
     LOG.info("Request received for getting all products");
-    
+
     List<IncomingProductModel> products = productService.getAllProducts();
-    
+
     LOG.info("Request for getting all products successful");
-    
+
     return products;
   }
-  
+
   /**
    * Controller method to get details of particular product
    * 
@@ -143,14 +146,15 @@ public class ProductController {
   @RequestMapping(value = "/products/{id}", method = RequestMethod.GET)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
-  public IncomingProductModel getById(@PathVariable int id) throws BadRequestException, NotFoundException {
-    
+  public IncomingProductModel getById(@PathVariable int id)
+      throws BadRequestException, NotFoundException {
+
     LOG.info("Request received for getting product by id");
-    
+
     IncomingProductModel product = productService.getProductById(id);
-    
+
     LOG.info("Request for getting product by id successful");
-    
+
     return product;
   }
 }

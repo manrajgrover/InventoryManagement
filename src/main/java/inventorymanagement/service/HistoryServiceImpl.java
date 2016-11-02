@@ -30,7 +30,7 @@ import inventorymanagement.utilities.HistoryServiceUtils;
  */
 @Service
 public class HistoryServiceImpl implements HistoryServiceInterface {
-  
+
   /**
    * {@link HistoryDaoInterface}
    */
@@ -42,13 +42,13 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
    */
   @Autowired
   UserDaoInterface userDaoImpl;
-  
+
   /**
    * {@link ItemDaoInterface}
    */
   @Autowired
   ItemDaoInterface itemDaoImpl;
-  
+
   /**
    * {@link HistoryServiceUtils}
    */
@@ -57,14 +57,17 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
 
   /*
    * (non-Javadoc)
-   * @see inventorymanagement.service.HistoryServiceInterface#issueItem(inventorymanagement.model.IncomingHistoryModel)
+   * 
+   * @see inventorymanagement.service.HistoryServiceInterface#issueItem(inventorymanagement.model.
+   * IncomingHistoryModel)
    */
   @Override
   @Transactional
-  public HistoryModel issueItem(IncomingHistoryModel historyModel) throws BadRequestException, NotFoundException {
+  public HistoryModel issueItem(IncomingHistoryModel historyModel)
+      throws BadRequestException, NotFoundException {
 
-    if (historyModel.getProductTag() == null || historyModel.getProductTag().equals("") || historyModel.getProductId() <= 0
-        || historyModel.getUserId() <= 0) {
+    if (historyModel.getProductTag() == null || historyModel.getProductTag().equals("")
+        || historyModel.getProductId() <= 0 || historyModel.getUserId() <= 0) {
       throw new BadRequestException("Required parameters are either missing or invalid");
     }
 
@@ -97,17 +100,20 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
 
   /*
    * (non-Javadoc)
-   * @see inventorymanagement.service.HistoryServiceInterface#returnItem(int, inventorymanagement.model.IncomingReturnModel)
+   * 
+   * @see inventorymanagement.service.HistoryServiceInterface#returnItem(int,
+   * inventorymanagement.model.IncomingReturnModel)
    */
   @Override
   @Transactional
   public HistoryModel returnItem(int issueNumber, IncomingReturnModel historyModel)
       throws NotFoundException, BadRequestException {
-    
-    if (issueNumber <=0 || historyModel.getProductTag() == null || historyModel.getProductTag().equals("")) {
+
+    if (issueNumber <= 0 || historyModel.getProductTag() == null
+        || historyModel.getProductTag().equals("")) {
       throw new BadRequestException("Required parameters are either missing or invalid");
     }
-    
+
     OutgoingHistoryModel avail = historyServiceUtils.checkIfExist(historyModel);
 
     HistoryModel hm = new HistoryModel();
@@ -117,7 +123,7 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
       hm.setMessage(Constants.ITEM_ALREADY_RETURNED);
       return hm;
     } else {
-      
+
       try {
         History history = historyDaoImpl.getById(issueNumber);
         Item itemByIssueNumber = history.getItem();
@@ -140,7 +146,7 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
       } catch (Exception e) {
         throw new NotFoundException("Issued Ticket does not reference to a record");
       }
-      
+
     }
   }
 }

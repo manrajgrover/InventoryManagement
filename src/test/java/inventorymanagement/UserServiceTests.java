@@ -27,10 +27,10 @@ public class UserServiceTests {
 
   @Autowired
   UserServiceInterface userService;
-  
+
   @Autowired
   UserDaoInterface userDao;
-  
+
   @Autowired
   UserRoleDaoInterface userroleDao;
 

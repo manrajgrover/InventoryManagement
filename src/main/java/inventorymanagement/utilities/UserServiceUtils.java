@@ -2,13 +2,10 @@ package inventorymanagement.utilities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
-import inventorymanagement.entities.Role;
 import inventorymanagement.entities.User;
-import inventorymanagement.entities.UserRole;
 import inventorymanagement.model.UserModel;
 
 @Service

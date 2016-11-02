@@ -2,8 +2,8 @@ package inventorymanagement.constants;
 
 
 /**
- * Class Constants provides constants used throughout the application.
- * This includes keys, messages and restrictions.
+ * Class Constants provides constants used throughout the application. This includes keys, messages
+ * and restrictions.
  * 
  * @author manrajsingh
  *

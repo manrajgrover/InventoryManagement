@@ -17,7 +17,7 @@ public class ItemDaoImpl implements ItemDaoInterface {
 
   @Autowired
   private SessionFactory sessionFactory;
-  
+
   private Session getSession() {
     return sessionFactory.getCurrentSession();
   }
@@ -36,12 +36,12 @@ public class ItemDaoImpl implements ItemDaoInterface {
   public void update(Item item) {
     getSession().update(item);
   }
-  
+
   @Override
   public void refresh(Item item) {
     getSession().refresh(item);
   }
-  
+
   @Override
   public void flush() {
     getSession().flush();
@@ -72,7 +72,7 @@ public class ItemDaoImpl implements ItemDaoInterface {
     int count = items.size();
     return count;
   }
-  
+
   @Override
   public List<Item> getItemsByProductId(int id) {
     DetachedCriteria criteria = DetachedCriteria.forClass(Item.class);

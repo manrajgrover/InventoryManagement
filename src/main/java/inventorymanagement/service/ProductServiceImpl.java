@@ -25,7 +25,7 @@ import inventorymanagement.utilities.ProductServiceUtils;
  */
 @Service
 public class ProductServiceImpl implements ProductServiceInterface {
-  
+
   /**
    * {@link ProductDaoInterface}
    */
@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductServiceInterface {
    */
   @Autowired
   ProductServiceUtils productServiceUtils;
-  
+
   /**
    * {@link ItemDaoInterface}
    */
@@ -46,7 +46,9 @@ public class ProductServiceImpl implements ProductServiceInterface {
 
   /*
    * (non-Javadoc)
-   * @see inventorymanagement.service.ProductServiceInterface#addProduct(inventorymanagement.model.IncomingProductModel)
+   * 
+   * @see inventorymanagement.service.ProductServiceInterface#addProduct(inventorymanagement.model.
+   * IncomingProductModel)
    */
   @Override
   @Transactional
@@ -55,9 +57,9 @@ public class ProductServiceImpl implements ProductServiceInterface {
     if (productModel.getCompany() == null || productModel.getName() == null
         || productModel.getVersion() == null || productModel.getCompany().equals("")
         || productModel.getName().equals("") || productModel.getVersion().equals("")) {
-      
+
       throw new BadRequestException("Required parameters are either missing or invalid");
-      
+
     }
 
     String name = productModel.getName();
@@ -72,20 +74,22 @@ public class ProductServiceImpl implements ProductServiceInterface {
 
   /*
    * (non-Javadoc)
-   * @see inventorymanagement.service.ProductServiceInterface#updateProduct(int, inventorymanagement.model.IncomingProductModel)
+   * 
+   * @see inventorymanagement.service.ProductServiceInterface#updateProduct(int,
+   * inventorymanagement.model.IncomingProductModel)
    */
   @Override
   @Transactional
   public ProductModel updateProduct(int id, IncomingProductModel productModel)
       throws BadRequestException, NotFoundException {
-    
+
     if (productModel.getCompany() == null || productModel.getName() == null
         || productModel.getVersion() == null || productModel.getCompany().equals("")
         || productModel.getName().equals("") || productModel.getVersion().equals("")) {
-      
+
       throw new BadRequestException("Required parameters are either missing or invalid");
     }
-    
+
     try {
       Product product = productDaoImpl.getById(id);
 
@@ -101,23 +105,24 @@ public class ProductServiceImpl implements ProductServiceInterface {
 
   /*
    * (non-Javadoc)
+   * 
    * @see inventorymanagement.service.ProductServiceInterface#deleteProduct(int)
    */
   @Override
   @Transactional
   public void deleteProduct(int id) throws BadRequestException {
-    if (id <=0) {
+    if (id <= 0) {
       throw new BadRequestException("Required parameters are either missing or invalid");
     }
-    
+
     List<Item> items = itemDaoImpl.getItemsByProductId(id);
     itemDaoImpl.flush();
-    
-    for(Item item: items) {
+
+    for (Item item : items) {
       itemDaoImpl.delete(item);
       itemDaoImpl.flush();
     }
-    
+
     itemDaoImpl.flush();
     itemDaoImpl.clear();
     Product product = new Product(id);
@@ -127,35 +132,37 @@ public class ProductServiceImpl implements ProductServiceInterface {
 
   /*
    * (non-Javadoc)
+   * 
    * @see inventorymanagement.service.ProductServiceInterface#getAllProducts()
    */
   @Override
   @Transactional
   public List<IncomingProductModel> getAllProducts() {
-    
+
     List<Product> products = productDaoImpl.getAll();
     List<IncomingProductModel> productsModel = productServiceUtils.mapProductsToModel(products);
-    
+
     return productsModel;
   }
 
   /*
    * (non-Javadoc)
+   * 
    * @see inventorymanagement.service.ProductServiceInterface#getProductById(int)
    */
   @Override
   @Transactional
   public IncomingProductModel getProductById(int id) throws BadRequestException, NotFoundException {
-    if (id <=0) {
+    if (id <= 0) {
       throw new BadRequestException("Required parameters are either missing or invalid");
     }
     try {
-      
+
       Product product = productDaoImpl.getById(id);
       IncomingProductModel productModel = productServiceUtils.mapProduct(product);
       return productModel;
-      
-    } catch(Exception e) {
+
+    } catch (Exception e) {
       throw new NotFoundException("Product with given ID does not exist");
     }
   }

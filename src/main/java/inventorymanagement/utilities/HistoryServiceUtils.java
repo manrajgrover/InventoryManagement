@@ -15,32 +15,33 @@ import inventorymanagement.model.OutgoingHistoryModel;
 
 @Service
 public class HistoryServiceUtils {
-  
+
   private static final Logger LOG = Logger.getLogger(RequestController.class);
 
   @Autowired
   ItemDaoInterface itemDaoImpl;
 
-  public OutgoingHistoryModel checkAvailability(IncomingHistoryModel historyModel) throws NotFoundException {
+  public OutgoingHistoryModel checkAvailability(IncomingHistoryModel historyModel)
+      throws NotFoundException {
     try {
       LOG.info("Checking if item exists");
       Item item = itemDaoImpl.getByItemTag(historyModel.getProductTag());
-      
+
       OutgoingHistoryModel outgoingModel = new OutgoingHistoryModel();
-      
+
       Product productOfItem = item.getProduct();
       int idOfProductOfItem = productOfItem.getId();
 
       if (item == null || item.getAvailable().equals("No")
           || historyModel.getProductId() != idOfProductOfItem) {
-        
+
         outgoingModel.setAvailability(false);
         return outgoingModel;
       }
-      
+
       outgoingModel.setAvailability(true);
       outgoingModel.setId(item.getId());
-      
+
       return outgoingModel;
     } catch (Exception e) {
       throw new NotFoundException("Item not found");
@@ -59,7 +60,7 @@ public class HistoryServiceUtils {
         outgoingModel.setAvailability(false);
       }
       return outgoingModel;
-    } catch(Exception e) {
+    } catch (Exception e) {
       throw new NotFoundException("Item not found");
     }
   }

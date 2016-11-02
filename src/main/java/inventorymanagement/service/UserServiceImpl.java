@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserServiceInterface {
 
   /*
    * (non-Javadoc)
+   * 
    * @see inventorymanagement.service.UserServiceInterface#getAllUsers()
    */
   @Override

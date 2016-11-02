@@ -24,7 +24,7 @@ import inventorymanagement.utilities.ItemServiceUtils;
  */
 @Service
 public class ItemServiceImpl implements ItemServiceInterface {
-  
+
   /**
    * {@link ItemDaoInterface}
    */
@@ -39,13 +39,16 @@ public class ItemServiceImpl implements ItemServiceInterface {
 
   /*
    * (non-Javadoc)
-   * @see inventorymanagement.service.ItemServiceInterface#addItem(inventorymanagement.model.IncomingItemModel)
+   * 
+   * @see inventorymanagement.service.ItemServiceInterface#addItem(inventorymanagement.model.
+   * IncomingItemModel)
    */
   @Override
   @Transactional
   public ItemModel addItem(IncomingItemModel itemModel) throws BadRequestException {
-    
-    if (itemModel.getProductTag() == null || itemModel.getProductTag().equals("") || itemModel.getProductId() <= 0) {
+
+    if (itemModel.getProductTag() == null || itemModel.getProductTag().equals("")
+        || itemModel.getProductId() <= 0) {
       throw new BadRequestException("Required parameters are either missing or invalid");
     }
 
@@ -60,19 +63,23 @@ public class ItemServiceImpl implements ItemServiceInterface {
     ItemModel im = new ItemModel(item, tag, Constants.ITEM_CREATED_MESSAGE);
     return im;
   }
-  
+
   /*
    * (non-Javadoc)
-   * @see inventorymanagement.service.ItemServiceInterface#updateItem(int, inventorymanagement.model.IncomingItemModel)
+   * 
+   * @see inventorymanagement.service.ItemServiceInterface#updateItem(int,
+   * inventorymanagement.model.IncomingItemModel)
    */
   @Override
   @Transactional
-  public ItemModel updateItem(int id, IncomingItemModel itemModel) throws BadRequestException, NotFoundException {
-    
-    if (itemModel.getProductTag() == null || itemModel.getProductTag().equals("") || itemModel.getProductId() <= 0) {
+  public ItemModel updateItem(int id, IncomingItemModel itemModel)
+      throws BadRequestException, NotFoundException {
+
+    if (itemModel.getProductTag() == null || itemModel.getProductTag().equals("")
+        || itemModel.getProductId() <= 0) {
       throw new BadRequestException("Required parameters are either missing or invalid");
     }
-    
+
     try {
       Item item = itemDaoImpl.getById(id);
 
@@ -82,27 +89,29 @@ public class ItemServiceImpl implements ItemServiceInterface {
       itemDaoImpl.refresh(item);
       ItemModel im = new ItemModel(item, Constants.ITEM_UPDATED_MESSAGE);
       return im;
-    } catch(Exception e) {
+    } catch (Exception e) {
       throw new NotFoundException("Item with given ID does not exist");
     }
   }
-  
+
   /*
    * (non-Javadoc)
+   * 
    * @see inventorymanagement.service.ItemServiceInterface#deleteItem(int)
    */
   @Override
   @Transactional
   public void deleteItem(int id) throws BadRequestException {
-    if (id <=0) {
+    if (id <= 0) {
       throw new BadRequestException("Required parameters are either missing or invalid");
     }
     Item item = new Item(id);
     itemDaoImpl.delete(item);
   }
-  
+
   /*
    * (non-Javadoc)
+   * 
    * @see inventorymanagement.service.ItemServiceInterface#getAllItems()
    */
   @Override
@@ -114,35 +123,36 @@ public class ItemServiceImpl implements ItemServiceInterface {
 
   /*
    * (non-Javadoc)
+   * 
    * @see inventorymanagement.service.ItemServiceInterface#getItemById(int)
    */
   @Override
   @Transactional
   public ItemModel getItemById(int id) throws BadRequestException, NotFoundException {
-    if (id <=0) {
+    if (id <= 0) {
       throw new BadRequestException("Required parameters are either missing or invalid");
     }
     try {
       Item item = itemDaoImpl.getById(id);
       return itemServiceUtils.mapItemToModel(item);
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       throw new NotFoundException("Item with given ID does not exist");
     }
   }
 
   /*
    * (non-Javadoc)
+   * 
    * @see inventorymanagement.service.ItemServiceInterface#getCountItem(int)
    */
   @Override
   @Transactional
   public int getCountItem(int id) throws BadRequestException {
-    if (id <=0) {
+    if (id <= 0) {
       throw new BadRequestException("Required parameters are either missing or invalid");
     }
     return itemDaoImpl.getCountByProductId(id);
   }
-  
-  
+
+
 }

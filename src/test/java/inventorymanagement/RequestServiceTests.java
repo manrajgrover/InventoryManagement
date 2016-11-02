@@ -30,14 +30,14 @@ public class RequestServiceTests {
 
   @Autowired
   private RequestServiceInterface requestService;
-  
+
   @Test
   public void addRequestTests() throws BadRequestException {
     IncomingRequestModel requestModel = new IncomingRequestModel();
     requestModel.setProductId(3);
     requestModel.setUserId(1);
     RequestModel rm = requestService.addRequest(requestModel);
-    
+
     assertTrue(rm.getId() > 0);
     assertEquals(rm.getMessage(), Constants.REQUEST_CREATED_MESSAGE);
     assertEquals(rm.getProductCompany(), "Apple");
@@ -45,7 +45,7 @@ public class RequestServiceTests {
     assertEquals(rm.getVersion(), "7");
     assertEquals(rm.getReply(), "");
   }
-  
+
   @Test(expected = BadRequestException.class)
   public void addRequestNoIdTests() throws BadRequestException {
     IncomingRequestModel requestModel = new IncomingRequestModel();
@@ -53,14 +53,14 @@ public class RequestServiceTests {
     requestModel.setUserId(-1);
     RequestModel rm = requestService.addRequest(requestModel);
   }
-  
+
   @Test
   public void updateRequestTests() throws BadRequestException, NotFoundException {
     IncomingUpdateRequest requestModel = new IncomingUpdateRequest();
     requestModel.setReply("Approved");
-    
+
     RequestModel rm = requestService.updateRequest(2, requestModel);
-    
+
     assertTrue(rm.getId() > 0);
     assertEquals(rm.getMessage(), Constants.REQUEST_UPDATED_MESSAGE);
     assertEquals(rm.getProductCompany(), "Apple");
@@ -68,19 +68,19 @@ public class RequestServiceTests {
     assertEquals(rm.getVersion(), "7");
     assertEquals(rm.getReply(), "Approved");
   }
-  
+
   @Test(expected = BadRequestException.class)
   public void updateRequestNoReplyTests() throws BadRequestException, NotFoundException {
     IncomingUpdateRequest requestModel = new IncomingUpdateRequest();
-    
+
     RequestModel rm = requestService.updateRequest(2, requestModel);
   }
-  
+
   @Test(expected = NotFoundException.class)
   public void updateRequestNoExistingIdTests() throws BadRequestException, NotFoundException {
     IncomingUpdateRequest requestModel = new IncomingUpdateRequest();
     requestModel.setReply("Approved");
-    
+
     RequestModel rm = requestService.updateRequest(200, requestModel);
   }
 
@@ -107,17 +107,17 @@ public class RequestServiceTests {
     assertEquals(request.getProductName(), "Three");
     assertEquals(request.getReply(), "YES");
   }
-  
+
   @Test(expected = BadRequestException.class)
   public void getRequestsByIdNoIdTests() throws BadRequestException, NotFoundException {
     RequestModel request = requestService.getRequestById(-1);
   }
-  
+
   @Test(expected = NotFoundException.class)
   public void getRequestsByIdNoExistingIdTests() throws BadRequestException, NotFoundException {
     RequestModel request = requestService.getRequestById(200);
   }
-  
+
   @Test
   public void getRequestsByUserIdTests() throws BadRequestException {
     List<RequestModel> requests = requestService.getRequestByUserId(1);
@@ -129,7 +129,7 @@ public class RequestServiceTests {
     assertEquals(request.getReply(), "YES");
     assertEquals(request.getId(), 1);
   }
-  
+
   @Test(expected = BadRequestException.class)
   public void getRequestsByUserIdNoIdTests() throws BadRequestException {
     List<RequestModel> requests = requestService.getRequestByUserId(-1);

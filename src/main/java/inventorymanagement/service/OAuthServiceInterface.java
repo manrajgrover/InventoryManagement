@@ -16,10 +16,10 @@ import inventorymanagement.model.LoginResponseModel;
  *
  */
 public interface OAuthServiceInterface {
-  
+
   /**
-   * Method that validates if user is authenticated. If yes, it checks if user is new and adds
-   * to database if not already done. 
+   * Method that validates if user is authenticated. If yes, it checks if user is new and adds to
+   * database if not already done.
    * 
    * @param principal {@link Principal} Object that contains OAuth response from the OAuth provider
    * @param session {@link HttpSession} Session to set attributes with user details

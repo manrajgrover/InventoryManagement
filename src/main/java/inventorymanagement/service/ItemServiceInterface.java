@@ -8,7 +8,8 @@ import inventorymanagement.model.IncomingItemModel;
 import inventorymanagement.model.ItemModel;
 
 /**
- * Service that handles requests related to items, including adding, updating, deleting and getting details
+ * Service that handles requests related to items, including adding, updating, deleting and getting
+ * details
  * 
  * @author manrajsingh
  *
@@ -33,8 +34,9 @@ public interface ItemServiceInterface {
    * @throws BadRequestException Thrown when any of the field required is empty
    * @throws NotFoundException Thrown when item with given id does not exist in database
    */
-  public ItemModel updateItem(int id, IncomingItemModel productModel) throws BadRequestException, NotFoundException;
-  
+  public ItemModel updateItem(int id, IncomingItemModel productModel)
+      throws BadRequestException, NotFoundException;
+
   /**
    * Method to delete an item from the database
    * 
@@ -49,7 +51,7 @@ public interface ItemServiceInterface {
    * @return {@link ItemModel} List of items mapped to ItemModel
    */
   public List<ItemModel> getAllItems();
-  
+
   /**
    * Method to get item by id from the database
    * 

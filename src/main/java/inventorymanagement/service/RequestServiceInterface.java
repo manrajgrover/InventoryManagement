@@ -10,16 +10,18 @@ import inventorymanagement.model.RequestModel;
 
 /**
  * Service to raise requests, update replies, and get details of the same
+ * 
  * @author manrajsingh
  *
  */
 public interface RequestServiceInterface {
-  
+
   /**
    * Method to add a request to database
    * 
-   * @param requestModel {@link IncomingRequestModel} contains details required for raising a request
-   * @return {@link RequestModel} 
+   * @param requestModel {@link IncomingRequestModel} contains details required for raising a
+   *        request
+   * @return {@link RequestModel}
    * @throws BadRequestException Thrown when any of the field is empty
    */
   public RequestModel addRequest(IncomingRequestModel requestModel) throws BadRequestException;
@@ -50,7 +52,8 @@ public interface RequestServiceInterface {
    * @throws BadRequestException Thrown when any of the field is empty
    * @throws NotFoundException Thrown when request with given id does not exist in database
    */
-  public RequestModel updateRequest(int id, IncomingUpdateRequest request) throws BadRequestException, NotFoundException;
+  public RequestModel updateRequest(int id, IncomingUpdateRequest request)
+      throws BadRequestException, NotFoundException;
 
   /**
    * Method to get all requests made by a user

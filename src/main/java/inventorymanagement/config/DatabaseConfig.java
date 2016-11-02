@@ -45,7 +45,7 @@ public class DatabaseConfig {
 
   @Value("${entitymanager.packagesToScan}")
   private String ENTITYMANAGER_PACKAGES_TO_SCAN;
-  
+
   /**
    * DataSource configuration
    * 
@@ -62,7 +62,7 @@ public class DatabaseConfig {
 
     return dataSource;
   }
-  
+
   /**
    * Session Factory Configuration
    * 
@@ -82,7 +82,7 @@ public class DatabaseConfig {
 
     return sessionFactoryBean;
   }
-  
+
   /**
    * Hibernate Transaction Manager configuration
    * 

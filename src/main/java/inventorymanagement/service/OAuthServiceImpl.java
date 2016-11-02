@@ -26,16 +26,18 @@ import inventorymanagement.utilities.OAuthServiceUtils;
  */
 @Service
 public class OAuthServiceImpl implements OAuthServiceInterface {
-  
+
   /**
    * {@link OAuthServiceUtils}
    */
   @Autowired
   private OAuthServiceUtils oauthServiceUtils;
-  
+
   /*
    * (non-Javadoc)
-   * @see inventorymanagement.service.OAuthServiceInterface#authenticate(java.security.Principal, javax.servlet.http.HttpSession)
+   * 
+   * @see inventorymanagement.service.OAuthServiceInterface#authenticate(java.security.Principal,
+   * javax.servlet.http.HttpSession)
    */
   @Override
   @Transactional

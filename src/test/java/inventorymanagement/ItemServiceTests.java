@@ -32,21 +32,21 @@ public class ItemServiceTests {
 
   @Autowired
   ItemServiceInterface itemService;
-  
+
   @Autowired
   ItemDaoInterface itemDao;
 
   @Autowired
   ItemServiceUtils itemServiceUtils;
-  
+
   @Test
   public void addItemTests() throws BadRequestException {
     IncomingItemModel itemModel = new IncomingItemModel();
     itemModel.setProductId(2);
     itemModel.setProductTag("RST");
-    
+
     ItemModel im = itemService.addItem(itemModel);
-    
+
     assertTrue(im.getItemId() > 0);
     assertEquals(im.getTag(), "RST");
     assertEquals(im.getMessage(), Constants.ITEM_CREATED_MESSAGE);
@@ -54,21 +54,21 @@ public class ItemServiceTests {
     assertEquals(im.getName(), "Three");
     assertEquals(im.getVersion(), "2016");
   }
-  
+
   @Test(expected = BadRequestException.class)
   public void addItemNoProductTagTests() throws BadRequestException {
     IncomingItemModel itemModel = new IncomingItemModel();
     itemModel.setProductId(2);
-    
+
     ItemModel im = itemService.addItem(itemModel);
   }
-  
+
   @Test
   public void updateItemTests() throws BadRequestException, NotFoundException {
     IncomingItemModel itemModel = new IncomingItemModel();
     itemModel.setProductId(1);
     itemModel.setProductTag("RST");
-    
+
     ItemModel im = itemService.updateItem(7, itemModel);
 
     assertTrue(im.getItemId() > 0);
@@ -78,31 +78,31 @@ public class ItemServiceTests {
     assertEquals(im.getVersion(), "2017");
     assertEquals(im.getTag(), "RST");
   }
-  
+
   @Test(expected = BadRequestException.class)
   public void updateItemNoProductTagTests() throws BadRequestException, NotFoundException {
     IncomingItemModel itemModel = new IncomingItemModel();
     itemModel.setProductId(1);
-    
+
     ItemModel im = itemService.updateItem(7, itemModel);
   }
-  
+
   @Test(expected = NotFoundException.class)
   public void updateItemNoExistingIdTests() throws BadRequestException, NotFoundException {
     IncomingItemModel itemModel = new IncomingItemModel();
     itemModel.setProductId(1000);
     itemModel.setProductTag("RST");
-    
+
     ItemModel im = itemService.updateItem(7, itemModel);
   }
-  
+
   @Test
   public void deleteItemTests() throws BadRequestException {
     itemService.deleteItem(7);
     Item item = itemDao.getById(7);
     assertEquals(item, null);
   }
-  
+
   @Test(expected = BadRequestException.class)
   public void deleteItemNoExistingIdTests() throws BadRequestException {
     itemService.deleteItem(-1);
@@ -127,12 +127,12 @@ public class ItemServiceTests {
     assertEquals(item.getVersion(), "7");
     assertEquals(item.getTag(), "XYZ");
   }
-  
+
   @Test(expected = BadRequestException.class)
   public void getItemsByIdNoIdTests() throws BadRequestException, NotFoundException {
     ItemModel item = itemService.getItemById(-1);
   }
-  
+
   @Test(expected = NotFoundException.class)
   public void getItemsByIdNoExistingIdTests() throws BadRequestException, NotFoundException {
     ItemModel item = itemService.getItemById(700);
@@ -147,7 +147,7 @@ public class ItemServiceTests {
     count = itemService.getCountItem(2);
     assertEquals(count, 0);
   }
-  
+
   @Test(expected = BadRequestException.class)
   public void getCountItemNoIdTests() throws BadRequestException {
     int count = itemService.getCountItem(-1);

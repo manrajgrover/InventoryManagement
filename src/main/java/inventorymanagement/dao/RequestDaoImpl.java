@@ -9,7 +9,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import inventorymanagement.entities.Item;
 import inventorymanagement.entities.Request;
 
 @Repository
@@ -54,7 +53,8 @@ public class RequestDaoImpl implements RequestDaoInterface {
     DetachedCriteria userCriteria = criteria.createCriteria("user");
     userCriteria.add(Restrictions.eq("id", id));
     @SuppressWarnings("unchecked")
-    List<Request> requests = (List<Request>) userCriteria.getExecutableCriteria(getSession()).list();
+    List<Request> requests =
+        (List<Request>) userCriteria.getExecutableCriteria(getSession()).list();
     return requests;
   }
 

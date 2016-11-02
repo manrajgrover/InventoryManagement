@@ -27,19 +27,19 @@ import inventorymanagement.utilities.OAuthServiceUtils;
 @Transactional
 @ContextConfiguration(classes = {TestDatabaseConfig.class})
 public class OAuthServiceTests {
-  
+
   @Autowired
   UserServiceInterface userService;
-  
+
   @Autowired
   UserDaoInterface userDao;
-  
+
   @Autowired
   UserRoleDaoInterface userroleDao;
 
   @Autowired
   OAuthServiceUtils oauthServiceUtils;
-  
+
   @Test
   public void addUserIfExistTests() throws BadRequestException {
     IncomingUserModel incomingUserModel = new IncomingUserModel();
@@ -54,51 +54,51 @@ public class OAuthServiceTests {
 
   @Test
   public void addUserIfNotExistTests() throws BadRequestException {
-    
+
     IncomingUserModel incomingUserModel = new IncomingUserModel();
     incomingUserModel.setName("Ayush Aggarwal");
     incomingUserModel.setEmail("ayush.aggr@practo.com");
-    
+
     UserModel userModel = oauthServiceUtils.addUserIfNotExist(incomingUserModel);
     List<UserModel> users = userService.getAllUsers();
     assertEquals(users.size(), 2);
   }
-  
+
   @Test(expected = BadRequestException.class)
   public void addUserIfNotExistNoNameTests() throws BadRequestException {
-    
+
     IncomingUserModel incomingUserModel = new IncomingUserModel();
     incomingUserModel.setEmail("ayush.aggr@practo.com");
-    
+
     UserModel userModel = oauthServiceUtils.addUserIfNotExist(incomingUserModel);
   }
-  
+
   @Test(expected = BadRequestException.class)
   public void addUserIfNotExistInvalidNameTests() throws BadRequestException {
-    
+
     IncomingUserModel incomingUserModel = new IncomingUserModel();
     incomingUserModel.setName("");
     incomingUserModel.setEmail("ayush.aggr@practo.com");
-    
+
     UserModel userModel = oauthServiceUtils.addUserIfNotExist(incomingUserModel);
   }
-  
+
   @Test(expected = BadRequestException.class)
   public void addUserIfNotExistNoEmailTests() throws BadRequestException {
-    
+
     IncomingUserModel incomingUserModel = new IncomingUserModel();
     incomingUserModel.setName("Ayush Aggarwal");
-    
+
     UserModel userModel = oauthServiceUtils.addUserIfNotExist(incomingUserModel);
   }
-  
+
   @Test(expected = BadRequestException.class)
   public void addUserIfNotExistInvalidEmailTests() throws BadRequestException {
-    
+
     IncomingUserModel incomingUserModel = new IncomingUserModel();
     incomingUserModel.setName("Ayush Aggarwal");
     incomingUserModel.setEmail("");
-    
+
     UserModel userModel = oauthServiceUtils.addUserIfNotExist(incomingUserModel);
   }
 }

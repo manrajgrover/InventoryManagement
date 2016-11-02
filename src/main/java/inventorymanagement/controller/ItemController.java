@@ -38,18 +38,18 @@ public class ItemController {
    * {@link Logger}
    */
   private static final Logger LOG = Logger.getLogger(ItemController.class);
-  
+
   /**
    * {@link ItemServiceInterfae}
    */
   @Autowired
   ItemServiceInterface itemService;
-  
+
   /**
    * Controller method to add new items
    * 
    * @param itemModel {@link IncomingItemModel} contains Product Id and Product Tag required for
-   *                  creating a new item
+   *        creating a new item
    * @param session {@link HttpSession} for validating if user is admin or not
    * @return {@link ItemModel}
    * @throws UnauthorizedException Thrown when user is not logged in or not an admin
@@ -69,12 +69,13 @@ public class ItemController {
     LOG.info("Request to add an item successful");
     return item;
   }
-  
+
   /**
    * Controller method to update details of an item
    * 
    * @param id {@link Integer} Item Id of the item that needs to be updated
-   * @param itemModel {@link IncomingItemModel} contains Product Id and Product Tag required for updating an item
+   * @param itemModel {@link IncomingItemModel} contains Product Id and Product Tag required for
+   *        updating an item
    * @param session {@link HttpSession} for validating if user is admin or not
    * @return {@link ItemModel}
    * @throws UnauthorizedException Thrown when user is not logged in or not an admin
@@ -95,7 +96,7 @@ public class ItemController {
     LOG.info("Request to update an item successful");
     return item;
   }
-  
+
   /**
    * Controller method to get count of items in the database that are available
    * 
@@ -110,7 +111,7 @@ public class ItemController {
     int count = itemService.getCountItem(id);
     return count;
   }
-  
+
   /**
    * Controller method to delete an item from the database
    * 
@@ -147,12 +148,12 @@ public class ItemController {
     LOG.info("Request to get all items successful");
     return itemModels;
   }
-  
+
   /**
    * Controller method to get details of particular item
    * 
    * @param id {@link Integer} Item Id required for getting details
-   * @return {@link ItemModel} 
+   * @return {@link ItemModel}
    * @throws BadRequestException Thrown when any of the field is empty
    * @throws NotFoundException Thrown when no item with id is found
    */
