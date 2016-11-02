@@ -73,7 +73,10 @@ app.run(/*@ngInject*/function($rootScope, $timeout, $location, sessionService){
   });
 
   $rootScope.$on('$routeChangeSuccess', function() {
-    $rootScope.stateIsLoading = false;
+    console.log("Here");
+    $timeout(function() {
+      $rootScope.stateIsLoading = false;
+    }, 2000);
   });
   $rootScope.$on('$routeChangeError', function() {
     console.log("Error");
