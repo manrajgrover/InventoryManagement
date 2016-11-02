@@ -12,7 +12,7 @@ app.config(/*@ngInject*/function($routeProvider) {
   $routeProvider.when('/', {
     controller: 'homeController',
     templateUrl: 'dist/views/home.html'
-  }).when('/dashboard', {
+  }).when('/raiseRequests', {
     controller: 'dashboardController',
     templateUrl: 'dist/views/dashboard.html'
   }).when('/profile', {
@@ -57,17 +57,26 @@ app.service('sessionService', function() {
   }
 });
 
-app.run(/*@ngInject*/function($rootScope, $location, sessionService){
+app.run(/*@ngInject*/function($rootScope, $timeout, $location, sessionService){
 
+  $rootScope.stateIsLoading = false;
   $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+    $rootScope.stateIsLoading = true;
     let session = sessionService.getSession();
     if (!session.hasOwnProperty('authenticated') || session.authenticated === false) {
       if ( next.templateUrl !== "dist/views/home.html" ) {
         $location.path( "/" );
       }
     } else if ((!session.hasOwnProperty('admin') || session.admin === false) && (next.templateUrl === "dist/views/admin.html")) {
-      $location.path( "/dashboard" );
+      $location.path( "/userRequests" );
     }
+  });
+
+  $rootScope.$on('$routeChangeSuccess', function() {
+    $rootScope.stateIsLoading = false;
+  });
+  $rootScope.$on('$routeChangeError', function() {
+    console.log("Error");
   });
 
 });
@@ -102,9 +111,9 @@ app.controller("navController", /*@ngInject*/function($scope, $http, $location, 
 
     $scope.session = session;
     if (data.admin) {
-      $location.path("/admin");
+      $location.path("/incoming/requests");
     } else {
-      $location.path("/dashboard");
+      $location.path("/userRequests");
     }
     
   }).error(function() {

@@ -14,7 +14,14 @@
   <body ng-app="app" ng-cloak>
     <div class="container">
       <div ng-include="'dist/views/navbar.html'"></div>
-      <div ng-view></div>
+      <div ng-if="stateIsLoading">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+            <img class="loader" src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif"/>
+          </div>
+        </div>
+      </div>
+      <div ng-if="!stateIsLoading" ng-view></div>
     </div>
     <link href="dist/css/style.min.css" rel="stylesheet" />
     <script src="dist/js/angular-scripts.js"></script>

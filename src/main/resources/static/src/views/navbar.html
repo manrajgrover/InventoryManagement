@@ -13,21 +13,21 @@
         </a>
 
         <ul class="dropdown-menu" ng-if="!session.admin">
-          <li><a href="#/dashboard">Request an item</a></li>
+          <li><a href="#/raiseRequests">Request an item</a></li>
           <li><a href="#/userRequests">Request Status</a></li>
           <li><a href="#/profile">Profile</a></li>
           <li role="separator" class="divider"></li>
           <li><a href="#" ng-click="logout()">Logout</a></li>
         </ul>
         <ul class="dropdown-menu" ng-if="session.admin">
+          <li><a href="#/incoming/requests">Incoming Requests</a></li>
           <li><a href="#/admin">Issue an item</a></li>
           <li><a href="#/returns">Return an item</a></li>
-          <li><a href="#/incoming/requests">Incoming Requests</a></li>
           <li><a href="#/products">Products</a></li>
           <li><a href="#/items">Items</a></li>
           <li><a href="#/profile">Profile</a></li>
           <li role="separator" class="divider"></li>
-          <li><a href="#/dashboard">Request an item</a></li>
+          <li><a href="#/raiseRequests">Request an item</a></li>
           <li><a href="#/userRequests">Request Status</a></li>
           <li role="separator" class="divider"></li>
           <li><a href="#" ng-click="logout()">Logout</a></li>

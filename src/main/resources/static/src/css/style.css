@@ -3,6 +3,11 @@
   margin: 0 auto;
 }
 
+.loader {
+  width: 100px;
+  transition: 2s;
+}
+
 .small-margin {
   margin: 0px 10px 20px;
 }
