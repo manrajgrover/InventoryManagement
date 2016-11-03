@@ -19,8 +19,11 @@ Inventory Management System provide easy and efficient management of technical i
 * WS Spring Exceptions v1.6
 * Log4j v1.2.17
 * Maven
+* Git
 * MySQL v5.6
 * HSQL DB (Testing) v2.2.9
+* Node Package Manager
+* Eclipse
 * JavaScript (ES6)
   * AngularJS v1.5.8
   * Angular Route v1.5.8
@@ -53,3 +56,49 @@ PageSpeed evaluation can be checked [here](https://developers.google.com/speed/p
 ## Demo
 
 Project has been hosted on Amazon EC2. You may find the link [here](http://ec2-54-201-109-161.us-west-2.compute.amazonaws.com:8080/demo-0.0.1-SNAPSHOT/).
+
+## Development
+
+To build the project:
+
+* Clone the project using git
+
+```
+$ git clone https://github.com/ManrajGrover/InventoryManagement.git
+```
+
+* Change directory to the folder created
+
+```
+$ cd InventoryManagement
+```
+
+* Run clean install
+
+```
+$ mvn clean install
+```
+
+To run tests:
+
+```
+$ mvn test
+```
+
+To generate test coverage:
+
+```
+$ mvn verify
+```
+
+Project uses Gulp for Front End Workflow Management. To run Gulp, change directory to to `src/main/resources/static` and run following command to install Web App dependencies.
+
+```
+$ npm install
+```
+
+Then run
+
+```
+$ gulp
+```
