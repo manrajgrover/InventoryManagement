@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: http://localhost:8080/
+HOST: ec2-54-201-109-161.us-west-2.compute.amazonaws.com:8080/demo-0.0.1-SNAPSHOT/
 
 # Tech Inventory Management System
 
@@ -8,84 +8,7 @@ Tech Inventory Management System is a management software that helps IT Team at 
 # Group User
 Defines those who have access to the dashboard
 
-## User details [/user/{id}]
-
-+ Parameters
-    + id - User ID
-
-### Get User details by ID [GET]
-
-+ Response 200 (application/json)
-
-    + Attributes (object)
-        + id: 1 (number, required)
-            ID of user
-        + name: Pradesh Khanna (string, required)
-            Name of user
-        + email: pradeshkhanna@gmail.com (string, required)
-            Email id of user
-        + contact: 7654321098 (string, required)
-            Contact number of user
-    
-            + Body
-                {
-                  "id": 1,
-                  "name": "Pradesh Khanna",
-                  "email": "pradeshkhanna@gmail.com",
-                  "contact": "7654321098"
-                }
-
-### Deletes a user [DELETE]
-
-+ Response 200 (application/json)
-
-    + Attributes (object)
-        + id: 1 (number, required)
-            ID of user
-        + name: Manraj Singh (string, required)
-            Name of user
-        + email: manrajsingh@gmail.com (string, required)
-            Email of user
-        + contact: 9898989898 (string, required)
-            Contact number of user
-        + message: User has been updated (string, required)
-            Message related to request made
-    
-            + Body
-                {
-                  "id": 3,
-                  "name": "Bhuvnesh Khanna",
-                  "email": "bhuvneshkhanna@gmail.com",
-                  "contact": "7654321098",
-                  "message": "User has been deleted"
-                }
-
-### Updates a user [PATCH]
-
-+ Response 200 (application/json)
-
-    + Attributes (object)
-        + id: 1 (number, required)
-            ID of user
-        + name: Manraj Singh (string, required)
-            Name of user
-        + email: manrajsingh@gmail.com (string, required)
-            Email of user
-        + contact: 9898989898 (string, required)
-            Contact number of user
-        + message: User has been updated (string, required)
-            Message related to request made
-    
-            + Body
-                {
-                  "id": 3,
-                  "name": "Bhuvnesh Khanna",
-                  "email": "bhuvneshkhanna@gmail.com",
-                  "contact": "7654321098",
-                  "message": "User has been created"
-                }
-
-## All user's details and their creation [/users]
+## All user's details [/users]
 
 ### Get all users [GET]
 
@@ -96,88 +19,31 @@ Defines those who have access to the dashboard
             ID of user
         + name: Pradesh Khanna (string, required)
             Name of user
-        + email: pradeshkhanna@gmail.com (string, required)
+        + email: pradeshkhanna@practo.com (string, required)
             Email id of user
-        + contact: 7654321098 (string, required)
-            Contact number of user
     
-            + Body
-                [
-                  {
-                    "id": 1,
-                    "name": "Pradesh Khanna",
-                    "email": "pradeshkhanna@gmail.com",
-                    "contact": "7654321098"
-                  },
-                  {
-                    "id": 2,
-                    "name": "Swadesh Khanna",
-                    "email": "swadeshkhanna@gmail.com",
-                    "contact": "9879879870"
-                  }
-                ]
-
-### Creates a new user [POST]
-
-+ Request (application/json)
-
-+ Response 201 (application/json)
-
-    + Attributes (object)
-        + id: 1 (number, required)
-            ID of user
-        + name: Manraj Singh (string, required)
-            Name of user
-        + email: manrajsingh@gmail.com (string, required)
-            Email of user
-        + contact: 9898989898 (string, required)
-            Contact number of user
-        + message: User has been updated (string, required)
-            Message related to request made
-    
-            + Body
-                {
-                  "id": 3,
-                  "name": "Bhuvnesh Khanna",
-                  "email": "bhuvneshkhanna@gmail.com",
-                  "contact": "7654321098",
-                  "message": "User has been created"
-                }
-
-# Group Roles
-Defines roles a user can have
-
-## List All Roles [/roles]
-
-### Get all of the Roles a User can have [GET]
-
-+ Response 200 (application/json)
-
-    + Attributes (object)
-        + id: 2 (number, required)
-            ID of role
-        + name: admin (string, required)
-            Role name
-    
-            + Body
-                [
-                  {
-                    "id": 2,
-                    "name": "admin"
-                  },
-                  {
-                    "id": 3,
-                    "name": "user"
-                  }
-                ]
+    + Body
+        [
+          {
+            "id": 1,
+            "name": "Pradesh Khanna",
+            "email": "pradeshkhanna@practo.com"
+          },
+          {
+            "id": 2,
+            "name": "Swadesh Khanna",
+            "email": "swadeshkhanna@practo.com"
+          }
+        ]
 
 # Group Requests
 Defines requests a user can make
 
-## Request Details [/request/{id}]
+## Request by ID [/request/{id}]
 
 + Parameters
     + id - Request ID
+    
 
 ### Get Request Details by ID [GET]
 
@@ -186,199 +52,202 @@ Defines requests a user can make
     + Attributes (object)
         + id: 1 (number, required)
             ID of request
-        + user_id: 5 (number, required)
-            User ID linked to request
-        + user_name: Manraj Singh (string, required)
+        + userName: Manraj Singh (string, required)
             User's name linked to request
-        + product_id: 2 (number, required)
-            Product ID linked to request
-        + product_name: Apple MacBook (string, required)
+        + productName: MacBook (string, required)
             Product name associated with the request
-        + product_version: 2016 (string, required)
+        + productCompany: Apple (string, required)
+            Product company associated with the request
+        + Version: 2016 (string, required)
             Version of product associated with the request
         + reply: Approved (string, required)
             Reply associated with request
     
-            + Body
-                {
-                  "id": 1,
-                  "user_id": 2,
-                  "user_name": "Pradesh Khanna",
-                  "product_id": 3,
-                  "product_name": "Apple MacBook",
-                  "product_version": "2016",
-                  "reply": "Approved"
-                }
+    + Body
+        {
+            id: 1,
+            userName: "Manraj Singh Grover",
+            productName: "MacBook",
+            productCompany: "Apple",
+            version: "2014",
+            reply: "Yes"
+        }
 
 ### Update a request [PATCH]
 
 + Request (application/json)
 
-+ Response 200 (application/json)
-
     + Attributes (object)
-        + id: 1 (number, required)
-            ID of request
-        + user_id: 5 (number, required)
-            User ID linked to request
-        + user_name: Manraj Singh (string, required)
-            User's name linked to request
-        + product_id: 2 (number, required)
-            Product ID linked to request
-        + product_name: Apple MacBook (string, required)
-            Product name associated with the request
-        + product_version: 2016 (string, required)
-            Version of product associated with the request
         + reply: Approved (string, required)
             Reply associated with request
+
++ Response 200 (application/json)
     
-            + Body
-                {
-                  "id": 1,
-                  "user_id": 2,
-                  "user_name": "Pradesh Khanna",
-                  "product_id": 3,
-                  "product_name": "Apple MacBook",
-                  "product_version": "2016",
-                  "reply": "Approved"
-                }
+    + Body
+        {
+          id:1,
+          message:"Request has been updated",
+          productCompany: "Apple",
+          productName: "MacBook",
+          reply: "NO",
+          version: "2014"
+        }
 
+## Request by User Id [/requests/user/{id}]
 
-## All request's details and their creation [/requests{?filter}]
+### Gets requests made by a User [GET]
 
-+ Parameters
-    + filter (string, optional) - approved or pending
++ Response 200 (application/json)
+    
+    + Body
+        [
+            {
+                id: 1,
+                userName: "Manraj Singh Grover",
+                productName: "MacBook",
+                productCompany: "Apple",
+                version: "2014",
+                reply: "Yes"
+            },
+            {
+                id: 2,
+                userName: "Manraj Singh Grover",
+                productName: "iPhone",
+                productCompany: "Apple",
+                version: "6",
+                reply: ""
+            }
+        ]
+
+## All requests' details and their creation [/requests]
 
 ### Gets all requests [GET]
 
 + Response 200 (application/json)
-
-    + Attributes (object)
-        + id: 2 (number, required)
-            ID of role
-        + name: admin (string, required)
-            Role name
     
-            + Body
-                [
-                  {
-                    "id": 2,
-                    "name": "admin"
-                  },
-                  {
-                    "id": 3,
-                    "name": "user"
-                  }
-                ]
+    + Body
+        [
+            {
+                id: 1,
+                userName: "Manraj Singh Grover",
+                productName: "MacBook",
+                productCompany: "Apple",
+                version: "2014",
+                reply: "Yes"
+            },
+            {
+                id: 2,
+                userName: "Manraj Singh Grover",
+                productName: "iPhone",
+                productCompany: "Apple",
+                version: "6",
+                reply: ""
+            }
+        ]
 
-### Create a request [POST]
+### Raise a request [POST]
 
 + Request (application/json)
 
-+ Response 200 (application/json)
-
     + Attributes (object)
-        + id: 2 (number, required)
-            ID of role
-        + name: admin (string, required)
-            Role name
+        + userId: 2 (number, required)
+            ID of user
+        + productId: 1 (string, required)
+            ID of product
+
++ Response 200 (application/json)
     
-            + Body
-                [
-                  {
-                    "id": 2,
-                    "name": "admin"
-                  },
-                  {
-                    "id": 3,
-                    "name": "user"
-                  }
-                ]
+    + Body
+          {
+            id: 3,
+            message: "Request has been raised",
+            productCompany: "Apple",
+            productName: "iPhone",
+            reply: "",
+            version: "6",
+          }
 
 # Group User issues and returns
 Provides user's issues and returns
 
-## All of user's issues, returns and creation of same [/history/{user_id}{?filter}]
-
-+ Parameters
-    + user_id - History ID
-    + filter (string, optional) - returned or issued or current
-
-### Get History of User by User ID [GET]
-
-+ Response 200 (application/json)
-
-    + Attributes (object)
-        + user_id: 5 (number, required)
-            User ID
-        + user_name: Manraj Singh (string, required)
-            User's name linked to history
-        + issued: item1, item2 (array[object], required)
-            Items issued by user
-        + issued_returned: item1, item2 (array[object], required)
-            Items issued and returned by user
-        + current_inventory: item1, item2 (array[object], required)
-            Items currently in use
-    
-            + Body
-                {
-                  "user_id": 2,
-                  "user_name": "Pradesh Khanna",
-                  "issued": [{"item1"}, {"item2"}],
-                  "issued_returned": [{"item1"}, {"item2"}],
-                  "current_inventory": [{"item1"}, {"item2"}]
-                }
+## All of user's issues [/history]
 
 ### Issue an item [POST]
 
-+ Response 201 (application/json)
++ Request (application/json)
 
     + Attributes (object)
-        + user_id: 5 (number, required)
+        + userId: 5 (number, required)
             User ID
-        + user_name: Manraj Singh (string, required)
-            User's name linked to history
-        + item_tag: XYZ (string, required)
+        + productId: 5 (number, required)
+            Product ID
+        + producTag: XYZ (string, required)
             Tag of item issued
-        + issued_timestamp: time (string, required)
-            Timestamp of issue
+
++ Response 201 (application/json)
     
-            + Body
-                {
-                  "user_id": 2,
-                  "user_name": "Pradesh Khanna",
-                  "item_tag": "XYZ",
-                  "issued_timestamp": "12345678"
-                }
+    + Body
+        {
+          availability: true, 
+          id: 2,
+          message: "Item available and issued"
+        }
+
+## All of user's returns [/history/{id}]
+
++ Parameters
+    + id - Issue Number
 
 ### Return an item [PATCH]
+
++ Request (application/json)
+
+    + Attributes (object)
+        + productTag: XYZ (string, required)
+            Tag of item issued
+
++ Response 200 (application/json)
+
+    + Body
+        {
+          availability: true,
+          id: 0,
+          message: "Item returned"
+        }
+
+## User's history [/history/user/{id}]
+
+### Get History of User by User ID [GET]
+
++ Parameters
+    + id - ID of user
 
 + Response 200 (application/json)
 
     + Attributes (object)
-        + user_id: 5 (number, required)
-            User ID
-        + user_name: Manraj Singh (string, required)
-            User's name linked to history
-        + item_tag: XYZ (string, required)
-            Tag of item issued
-        + issued_timestamp: time (string, required)
-            Timestamp of issue
-        + returned_timestamp: time (string, required)
-            Timestamp of return
-            + Body
-                {
-                  "user_id": 2,
-                  "user_name": "Pradesh Khanna",
-                  "item_tag": "XYZ",
-                  "issued_timestamp": "12345678",
-                  "returned_timestamp": "87654321"
-                }
+        + id: 5 (number, required)
+            Issue ID
+        + productName: MacVook (string, required)
+            Product name linked to issue
+        + productCompany: Apple (string, required)
+            Product Company linked to issue
+        + productVersion: 2014 (string, required)
+            Product Version linked to issue
+    
+    + Body
+        [
+            {
+                id: 1,
+                productCompany: "Apple",
+                productName: "MacBook",
+                productVersion: "2014"
+            }
+        ]
 
 # Group Item Details
 Details of an item
 
-## Item Details [/items/{item_id}]
+## Getting, updating and deleting an item [/items/{item_id}]
 
 + Parameters
     + item_id - ID of item
@@ -388,112 +257,234 @@ Details of an item
 + Response 200 (application/json)
 
     + Attributes (object)
-        + item_id: 5 (number, required)
+        + itemId: 5 (number, required)
             Item ID
-        + product_name: Apple (string, required)
+        + productId: 1 (number, required)
+            Product ID
+        + name: MacBook (string, required)
             Product's name
+        + company: Apple (string, required)
+            Product's company
         + version: 2016 (string, required)
             Product's version
-        + events: event1, event2 (array[object], required)
-            Events including issues, returns etc.
+        + tag: PQR (string, required)
+            Product's tag
+        + available: No (string, required)
+            Availability
     
-            + Body
-                {
-                  "item_id": 2,
-                  "product_name": "Apple MacBook",
-                  "product_version": "2016",
-                  "events": [{"event1"}, {"event2"}],
-                }
-
-### Add a new item [POST]
-
-+ Response 201 (application/json)
-
-    + Attributes (object)
-        + item_id: 5 (number, required)
-            Item ID
-        + product_name: Apple (string, required)
-            Product's name
-        + version: 2016 (string, required)
-            Product's version
-        + item_tag: XYZ (string, required)
-            Item's tag
-    
-            + Body
-                {
-                  "item_id": 2,
-                  "product_name": "Apple MacBook",
-                  "product_version": "2016",
-                  "item_tag": "XYZ",
-                }
+    + Body
+        {
+            itemId: 1,
+            productId: 1,
+            name: "MacBook",
+            company: "Apple",
+            version: "2014",
+            tag: "PQR",
+            available: "No"
+        }
 
 ### Update an item [PATCH]
 
-+ Response 200 (application/json)
++ Request (application/json)
 
     + Attributes (object)
-        + item_id: 5 (number, required)
-            Item ID
-        + product_name: Apple (string, required)
-            Product's name
-        + version: 2016 (string, required)
-            Product's version
-        + item_tag: XYZ (string, required)
-            Item's tag
+        + productId: 1 (number, required)
+            Product ID
+        + productTag: XYZ (string, required)
+            Tag of item issued
+
++ Response 200 (application/json)
     
-            + Body
-                {
-                  "item_id": 2,
-                  "product_name": "Apple MacBook",
-                  "product_version": "2016",
-                  "item_tag": "XYZ",
-                }
+    + Body
+        {
+          company: "Apple",
+          itemId: 1,
+          message: "Item has been updated",
+          name: "MacBook",
+          productId: 0,
+          tag: "RSTUV"version:"2014"
+        }
 
 ### Delete an item [DELETE]
 
-+ Response 200 (application/json)
++ Response 204 (application/json)
+
+## Item creation and getting list of the same [/items]
+
+### Add an item [PATCH]
+
++ Request (application/json)
 
     + Attributes (object)
-        + item_id: 5 (number, required)
-            Item ID
-        + product_name: Apple (string, required)
-            Product's name
-        + version: 2016 (string, required)
-            Product's version
-        + item_tag: XYZ (string, required)
-            Item's tag
-    
-            + Body
-                {
-                  "item_id": 2,
-                  "product_name": "Apple MacBook",
-                  "product_version": "2016",
-                  "item_tag": "XYZ",
-                }
+        + productId: 1 (number, required)
+            Product ID
+        + productTag: XYZ (string, required)
+            Tag of item issued
 
-# Group Timeline
-Timeline of a user
 
-## Timeline Details [/timeline/{user_id}]
++ Response 200 (application/json)
+
+    + Body
+        {
+          company: "Apple",
+          itemId: 6,
+          message: "Item has been added",
+          name: "iPhone",
+          productId: 0,
+          tag: "RTY",
+          version: "6"
+        }
+### Get all items [GET]
+
+
++ Response 200 (application/json)
+
+    + Body
+        [
+            {
+                itemId: 1,
+                productId: 1,
+                name: "MacBook",
+                company: "Apple",
+                version: "2014",
+                tag: "RSTUV",
+                available: "No"
+            },
+            {
+                itemId: 2,
+                productId: 2,
+                name: "iPhone",
+                company: "Apple",
+                version: "6",
+                tag: "XYZ",
+                available: "Yes"
+            },
+            {
+                itemId: 6,
+                productId: 2,
+                name: "iPhone",
+                company: "Apple",
+                version: "6",
+                tag: "RTY",
+                available: "Yes"
+            }
+        ]
+
+## Item count [/items/{item_id}/count]
 
 + Parameters
-    + user_id - user id
+    + item_id - ID of item
 
-### Get Timeline of User by User ID [GET]
+### Get count of particular product [GET]
+
 
 + Response 200 (application/json)
 
-    + Attributes (object)
-        + user_id: 5 (number, required)
-            User ID
-        + user_name: Manraj Singh (string, required)
-            User's name linked to history
-        +events: event1, event2 (array[object], required)
-            Events including requests, issues, returns etc.
+    + Body
+        4
+
+# Group Product
+Details of a product
+
+## Getting, updating and deleting an product [/products/{product_id}]
+
++ Parameters
+    + product_id - ID of product
+
+### Get product details [GET]
+
++ Response 200 (application/json)
     
-            + Body
-                {
-                  "user_id": 2,
-                  "user_name": "Pradesh Khanna",
-                  "events": [{"event1"}, {"event2"}],
-                }
+    + Body
+        {
+            id: 1,
+            name: "MacBook",
+            company: "Apple",
+            version: "2014"
+        }
+
+### Update a product [PATCH]
+
++ Request (application/json)
+
+    + Attributes (object)
+        + name: Three (string, required)
+            Name of product
+        + company: OnePlus (string, required)
+            Company of product
+        + version: 2016 (string, required)
+            Version of product
+
++ Response 200 (application/json)
+    
+    + Body
+        {
+            company: "OnePlus",
+            id: 6,
+            message: "Product has been updated",
+            name: "One",
+            version: "2013"
+        }
+
+### Delete a product [DELETE]
+
++ Response 204 (application/json)
+
+## Product creation and getting list of the same [/products]
+
+### Add a product [PATCH]
+
++ Request (application/json)
+
+    + Attributes (object)
+        + name: Three (string, required)
+            Name of product
+        + company: OnePlus (string, required)
+            Company of product
+        + version: 2016 (string, required)
+            Version of product
+
+
++ Response 200 (application/json)
+
+    + Body
+        {
+          company: "OnePlus",
+          id: 6,
+          message: "Product has been created",
+          name: "Three",
+          version: "2016"
+        }
+
+### Get all products [GET]
+
+
++ Response 200 (application/json)
+
+    + Body
+        [
+            {
+                id: 1,
+                name: "MacBook",
+                company: "Apple",
+                version: "2014"
+            },
+            {
+                id: 2,
+                name: "iPhone",
+                company: "Apple",
+                version: "6"
+            },
+            {
+                id: 3,
+                name: "iPhone",
+                company: "Apple",
+                version: "5"
+            },
+            {
+                id: 5,
+                name: "Two",
+                company: "OnePlus",
+                version: "2014"
+            }
+        ]
