@@ -1,5 +1,7 @@
 package inventorymanagement.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -20,6 +22,7 @@ import inventorymanagement.constants.Constants;
 import inventorymanagement.model.HistoryModel;
 import inventorymanagement.model.IncomingHistoryModel;
 import inventorymanagement.model.IncomingReturnModel;
+import inventorymanagement.model.InventoryModel;
 import inventorymanagement.service.HistoryServiceInterface;
 
 /**
@@ -93,5 +96,12 @@ public class HistoryController {
     }
 
     return historyService.returnItem(id, historyModel);
+  }
+  
+  @RequestMapping(value = "/history/user/{id}", method = RequestMethod.GET)
+  @ResponseBody
+  @ResponseStatus(HttpStatus.OK)
+  public List<InventoryModel> getByUserId(@PathVariable int id) throws BadRequestException {
+    return historyService.getHistoryByUserId(id);
   }
 }

@@ -1,6 +1,7 @@
 package inventorymanagement.service;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -20,6 +21,7 @@ import inventorymanagement.entities.User;
 import inventorymanagement.model.HistoryModel;
 import inventorymanagement.model.IncomingHistoryModel;
 import inventorymanagement.model.IncomingReturnModel;
+import inventorymanagement.model.InventoryModel;
 import inventorymanagement.model.OutgoingHistoryModel;
 import inventorymanagement.utilities.HistoryServiceUtils;
 
@@ -148,5 +150,19 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
       }
 
     }
+  }
+  
+  @Override
+  @Transactional
+  public List<InventoryModel> getHistoryByUserId(int id)
+      throws BadRequestException{
+
+    if (id <= 0) {
+      throw new BadRequestException("Required parameters are either missing or invalid");
+    }
+    
+    List<History> history = historyDaoImpl.getByUserId(id);
+    List<InventoryModel> inventory = historyServiceUtils.mapHistoryToInventory(history);
+    return inventory;
   }
 }

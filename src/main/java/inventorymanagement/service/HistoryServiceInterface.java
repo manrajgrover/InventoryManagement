@@ -1,10 +1,13 @@
 package inventorymanagement.service;
 
+import java.util.List;
+
 import inti.ws.spring.exception.client.BadRequestException;
 import inti.ws.spring.exception.client.NotFoundException;
 import inventorymanagement.model.HistoryModel;
 import inventorymanagement.model.IncomingHistoryModel;
 import inventorymanagement.model.IncomingReturnModel;
+import inventorymanagement.model.InventoryModel;
 
 /**
  * Service that allows issuing of items and returning of the same
@@ -38,4 +41,6 @@ public interface HistoryServiceInterface {
    */
   HistoryModel returnItem(int issueNumber, IncomingReturnModel historyModel)
       throws NotFoundException, BadRequestException;
+
+  List<InventoryModel> getHistoryByUserId(int id) throws BadRequestException;
 }

@@ -36,6 +36,9 @@ app.config(/*@ngInject*/function($routeProvider) {
   }).when('/userRequests', {
     controller: 'userRequestsController',
     templateUrl: 'dist/views/userRequests.html'
+  }).when('/inventory', {
+    controller: 'inventoryController',
+    templateUrl: 'dist/views/inventory.html'
   }).otherwise({
     redirectTo: '/'
   });
@@ -171,6 +174,9 @@ app.controller("dashboardController", /*@ngInject*/function($scope, $http, $loca
 
       if (data > 0) {
         $scope.requestButton = true;
+        $scope.requestId = id;
+      } else {
+        $scope.requestButton = false;
         $scope.requestId = id;
       }
     }).error(function() {
@@ -696,6 +702,19 @@ app.controller("itemController", /*@ngInject*/function($http, $scope, $timeout, 
 
 });
 
-app.controller("profileController", /*@ngInject*/function($scope, $location, sessionService) {
-  $scope.session = sessionService.getSession();
+app.controller("profileController", /*@ngInject*/function($scope, $location, $http, sessionService) {
+  let session = sessionService.getSession();
+  $scope.session = session;
 });
+
+app.controller("inventoryController", /*@ngInject*/function($scope, $location, $http, sessionService) {
+  let session = sessionService.getSession();
+  $scope.session = session;
+
+  $http.get(`history/user/${session.id}`).success(function(data) {
+    $scope.data = data;
+  }).error(function() {
+    console.log("Error");
+  });
+});
+
