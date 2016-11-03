@@ -98,6 +98,13 @@ public class HistoryController {
     return historyService.returnItem(id, historyModel);
   }
   
+  /**
+   * Controller method to get inventory of particular user
+   * 
+   * @param id {@link Integer} ID of user
+   * @return {@link InventoryModel} List of Inventory owned by user
+   * @throws BadRequestException Thrown when any of the field is empty
+   */
   @RequestMapping(value = "/history/user/{id}", method = RequestMethod.GET)
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)

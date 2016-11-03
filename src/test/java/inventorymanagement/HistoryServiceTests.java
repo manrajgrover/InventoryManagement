@@ -3,6 +3,8 @@ package inventorymanagement;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.junit.Test;
@@ -18,6 +20,7 @@ import inventorymanagement.constants.Constants;
 import inventorymanagement.model.HistoryModel;
 import inventorymanagement.model.IncomingHistoryModel;
 import inventorymanagement.model.IncomingReturnModel;
+import inventorymanagement.model.InventoryModel;
 import inventorymanagement.service.HistoryServiceInterface;
 
 @RunWith(SpringRunner.class)
@@ -111,5 +114,19 @@ public class HistoryServiceTests {
 
     assertEquals(hm.getAvailability(), true);
     assertEquals(hm.getMessage(), Constants.ITEM_ALREADY_RETURNED);
+  }
+  
+  @Test
+  public void getHistoryByUserIdTests() throws BadRequestException {
+
+    List<InventoryModel> hm = historyService.getHistoryByUserId(1);
+
+    assertEquals(hm.size(), 1);
+  }
+  
+  @Test(expected = BadRequestException.class)
+  public void getHistoryByUserIdNoUserIdTests() throws BadRequestException {
+
+    List<InventoryModel> hm = historyService.getHistoryByUserId(-1);
   }
 }

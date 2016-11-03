@@ -152,6 +152,10 @@ public class HistoryServiceImpl implements HistoryServiceInterface {
     }
   }
   
+  /*
+   * (non-Javadoc)
+   * @see inventorymanagement.service.HistoryServiceInterface#getHistoryByUserId(int)
+   */
   @Override
   @Transactional
   public List<InventoryModel> getHistoryByUserId(int id)

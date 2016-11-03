@@ -42,5 +42,11 @@ public interface HistoryServiceInterface {
   HistoryModel returnItem(int issueNumber, IncomingReturnModel historyModel)
       throws NotFoundException, BadRequestException;
 
+  /**
+   * Method that handles requests to get inventory of a user
+   * @param id {@link Integer} Id of user
+   * @return {@link InventoryModel} List of inventory owned by user
+   * @throws BadRequestException Thrown when any of the field is empty
+   */
   List<InventoryModel> getHistoryByUserId(int id) throws BadRequestException;
 }

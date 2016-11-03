@@ -47,7 +47,7 @@ public interface RequestServiceInterface {
    * Method to update a request's reply
    * 
    * @param id {@link Integer} Id of Request
-   * @param request {@link IncomingUpdateModel} contains details required to update a request
+   * @param request {@link IncomingUpdateRequest} contains details required to update a request
    * @return {@link RequestModel}
    * @throws BadRequestException Thrown when any of the field is empty
    * @throws NotFoundException Thrown when request with given id does not exist in database
