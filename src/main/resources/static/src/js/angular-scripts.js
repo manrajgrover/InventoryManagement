@@ -193,9 +193,21 @@ app.controller("dashboardController", /*@ngInject*/function($scope, $http, $loca
       userId: userId,
       productId: productId
     }).success(function() {
-      $scope.message = "Item requested";
+      jQuery('#requestMessage').removeClass('alert-danger');
+      jQuery('#requestMessage').addClass('alert-success');
+      $scope.requestMessageShow = true;
+      $scope.requestMessage = "Item requested";
+      $timeout(function(){
+        $scope.requestMessageShow = false;
+      }, 3000);
     }).error(function(data) {
-      $scope.message = "Error requesting the item";
+      jQuery('#requestMessage').removeClass('alert-success');
+      jQuery('#requestMessage').addClass('alert-danger');
+      $scope.requestMessageShow = true;
+      $scope.requestMessage = "Error requesting the item";
+      $timeout(function(){
+        $scope.requestMessageShow = false;
+      }, 3000);
     });
 
   }
