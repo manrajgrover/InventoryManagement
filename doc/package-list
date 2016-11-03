@@ -1,1 +1,5 @@
+inventorymanagement
+inventorymanagement.config
+inventorymanagement.constants
 inventorymanagement.controller
+inventorymanagement.service
