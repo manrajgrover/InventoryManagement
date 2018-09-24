@@ -1,5 +1,5 @@
 # Practo Tech Inventory Management System
-[![Travis](https://img.shields.io/travis/ManrajGrover/InventoryManagement.svg)](https://github.com/ManrajGrover/InventoryManagement)
+[![Travis](https://img.shields.io/travis/manrajgrover/InventoryManagement.svg)](https://github.com/manrajgrover/InventoryManagement)
 
 Inventory Management System provide easy and efficient management of technical inventory at Practo.
 
