@@ -1,8 +1,8 @@
 security:
   oauth2:
     client:
-      clientId: 500564727706-96lvmciib2c61p5jb13tkkq3ieu7r53e.apps.googleusercontent.com
-      clientSecret: VsvIumjPhc2IKlJ-l_fV111H
+      clientId: YOUR-CLIENT-ID
+      clientSecret: YOUR-CLIENT-SECRET
       accessTokenUri: https://www.googleapis.com/oauth2/v4/token
       userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth?prompt=consent
       clientAuthenticationScheme: form
@@ -32,4 +32,3 @@ logging:
             springframework:
                 web: DEBUG
         root: WARN
-      
